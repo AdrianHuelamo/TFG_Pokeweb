@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Home } from './components/home/home';
 import { Login } from './components/login/login';
-import { TestConexion } from './components/test-conexion/test-conexion';
 import { PokeDetail } from './components/details/poke-detail/poke-detail';
 import { About } from './components/details/tabs/about/about';
 import { Stats } from './components/details/tabs/stats/stats';
@@ -19,7 +18,6 @@ const routes: Routes = [
   { 
     path: 'login', component: Login 
   },
-  { path: 'test', component: TestConexion },
 
   {
     path: 'pokemon/:id',

@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Login } from './components/login/login';
-import { TestConexion } from './components/test-conexion/test-conexion';
 import { Home } from './components/home/home';
 import { Navbar } from './components/navbar/navbar';
 import { PokeDetail } from './components/details/poke-detail/poke-detail';
@@ -19,7 +18,6 @@ import { Moves } from './components/details/tabs/moves/moves';
   declarations: [
     App,
     Login,
-    TestConexion,
     Home,
     Navbar,
     PokeDetail,

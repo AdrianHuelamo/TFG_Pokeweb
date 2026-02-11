@@ -90,10 +90,10 @@
   <button class="btn btn-outline-danger mt-3" (click)="resetearFiltros()">Limpiar filtros</button>
 </div>
 
-<div class="text-center mt-5" *ngIf="!cargando && pokemonsVisibles.length < listaFiltrada.length">
-  <button (click)="cargarMas()" class="btn btn-dark btn-lg rounded-pill px-5 py-3 shadow fs-5">
-    ⬇ Cargar Más
-  </button>
+<div *ngIf="cargandoMas" class="text-center py-4 my-2">
+  <div class="spinner-border text-secondary" role="status">
+      <span class="visually-hidden">Cargando más...</span>
+  </div>
 </div>
 
 <button class="btn-scroll-top"

@@ -8,7 +8,8 @@
     <div class="d-flex justify-content-between align-items-baseline border-bottom border-3 mb-4 pb-2 mt-2">
          <h1 class="display-5 fw-bold text-uppercase text-dark mb-0">{{ pokemon.name }}</h1>
          <div class="d-flex align-items-center gap-3">
-             <span class="fs-2 fw-bold text-muted">#{{ pokemon.id | number:'3.0' }}</span>
+             <span class="fs-2 fw-bold text-muted">#{{ (pokemon.id || 0) | number:'3.0' }}</span>
+             
              <button class="btn btn-outline-dark btn-lg fw-bold px-4 py-2 shadow-sm" routerLink="/home">
                 Volver
              </button>
@@ -19,7 +20,7 @@
         
         <div class="col-12 col-lg-5 d-flex flex-column">
             <div class="main-img-box shadow-sm mb-3">
-                <img [src]="isShiny ? pokemon.imageShiny : pokemon.imageNormal" 
+                <img [src]="isShiny ? (pokemon.imageShiny || '') : (pokemon.imageNormal || '')" 
                      [alt]="pokemon.name" 
                      class="img-fluid pokemon-main-sprite"
                      [class.shiny-filter]="isShiny">
@@ -34,7 +35,7 @@
         <div class="col-12 col-lg-7 d-flex flex-column">
             
             <div class="mb-4">
-                <span *ngFor="let t of pokemon.types" 
+                <span *ngFor="let t of (pokemon.types || [])" 
                       class="badge rounded-pill border border-light px-3 py-2 me-2 fs-5 shadow-sm"
                       [style.background-color]="getColor(t.type.name)">
                     {{ t.type.name | uppercase }}
@@ -43,7 +44,7 @@
 
             <div class="mb-4 bg-white shadow-sm p-4 rounded-3 border">
                 <h5 class="fw-bold mb-2 text-muted">Entrada Pokédex:</h5>
-                <p class="lead fst-italic mb-0" style="font-size: 1.1rem;">"{{ pokemon.description }}"</p>
+                <p class="lead fst-italic mb-0" style="font-size: 1.1rem;">"{{ pokemon.description || 'Sin descripción disponible.' }}"</p>
              </div>
 
             <div class="card border-0 shadow-sm flex-grow-1 mt-2">

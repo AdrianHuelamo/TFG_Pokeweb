@@ -3,7 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { PokeService } from '../../../services/pokewebservices';
 import { PokemonDataServices } from '../../../services/pokemondataservices';
 import { forkJoin } from 'rxjs';
-import { environment } from '../../../../environments/environment'; // <--- Importar
+import { environment } from '../../../../environments/environment';
+import { Pokemon } from '../../../common/pokemoninterface';
 
 @Component({
   selector: 'app-poke-detail',
@@ -13,12 +14,10 @@ import { environment } from '../../../../environments/environment'; // <--- Impo
 })
 export class PokeDetail implements OnInit {
 
-  pokemon: any = null;
+  pokemon: Pokemon | null = null; 
   isShiny: boolean = false; 
   cargando: boolean = true; 
   
-  // NOTA: 'allTypes' y 'typeColors' eliminados, usamos environment
-
   constructor(
     private route: ActivatedRoute,
     private pokeService: PokeService,
@@ -40,7 +39,6 @@ export class PokeDetail implements OnInit {
     this.pokemon = null; 
     this.isShiny = false; 
     
-    // Aquí podríamos usar environment.pokeApiUrl pero como ya viene en el servicio, lo dejamos así o lo concatenamos
     const pokemonReq = this.pokeService.getPokemonDetails(`https://pokeapi.co/api/v2/pokemon/${id}/`);
     const speciesReq = this.pokeService.getPokemonDetails(`https://pokeapi.co/api/v2/pokemon-species/${id}/`);
 
@@ -54,6 +52,7 @@ export class PokeDetail implements OnInit {
         this.pokemon = {
           id: pk.id,
           name: pk.name,
+          url: `https://pokeapi.co/api/v2/pokemon/${pk.id}/`,
           types: pk.types,
           height: pk.height,
           weight: pk.weight,
@@ -101,9 +100,10 @@ export class PokeDetail implements OnInit {
   }
 
   calcularDebilidades(typeDataList: any[]) {
+    if (!this.pokemon) return;
+
     let multipliers: { [key: string]: number } = {};
     
-    // USO DE ENVIRONMENT
     environment.pokemonTypeNames.forEach(type => multipliers[type] = 1); 
 
     typeDataList.forEach((typeData: any) => {
@@ -129,7 +129,6 @@ export class PokeDetail implements OnInit {
       this.isShiny = !this.isShiny;
   }
 
-  // USO DE ENVIRONMENT
   getColor(type: string): string {
       return environment.pokemonTypeColors[type] || '#777';
   }

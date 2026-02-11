@@ -8,21 +8,27 @@ export class PokemonDataServices {
   private pokemonSource = new BehaviorSubject<any>(null);
   pokemon$ = this.pokemonSource.asObservable();
 
-  private homeState: any = null;
+  // Ya no necesitamos la variable 'homeState' aquí
+  // private homeState: any = null; 
 
   setPokemon(pokemon: any) {
     this.pokemonSource.next(pokemon);
   }
 
+  // --- CAMBIO: USAR SESSION STORAGE ---
+
   saveHomeState(state: any) {
-    this.homeState = state;
+    // Convertimos el objeto a texto (JSON) para guardarlo
+    sessionStorage.setItem('homeState', JSON.stringify(state));
   }
 
   getHomeState() {
-    return this.homeState;
+    const state = sessionStorage.getItem('homeState');
+    // Si existe, lo convertimos de texto a objeto. Si no, devolvemos null.
+    return state ? JSON.parse(state) : null;
   }
 
   clearHomeState() {
-    this.homeState = null;
+    sessionStorage.removeItem('homeState');
   }
 }

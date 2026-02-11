@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { PokeService } from '../../services/pokewebservices';
 import { PokemonDataServices } from '../../services/pokemondataservices';
-import { forkJoin } from 'rxjs';
-import { environment } from '../../../environments/environment'; // <--- Importar
+import { forkJoin, fromEvent, Subscription } from 'rxjs'; 
+import { environment } from '../../../environments/environment';
+import { Pokemon } from '../../common/pokemoninterface';
 
 @Component({
   selector: 'app-home',
@@ -12,14 +13,15 @@ import { environment } from '../../../environments/environment'; // <--- Importa
 })
 export class Home implements OnInit, OnDestroy {
 
-  listaGlobal: any[] = [];      
-  listaFiltrada: any[] = [];    
-  pokemonsVisibles: any[] = []; 
+  listaGlobal: Pokemon[] = [];      
+  listaFiltrada: Pokemon[] = [];    
+  pokemonsVisibles: Pokemon[] = []; 
   listaTipos: any[] = [];       
   
   offset: number = 0;
   limitePorPagina: number = 24;
-  cargando: boolean = true; 
+  cargando: boolean = true;      
+  cargandoMas: boolean = false;  
 
   busqueda: string = '';
   ordenActual: string = 'id-asc';
@@ -27,8 +29,7 @@ export class Home implements OnInit, OnDestroy {
   tipoSeleccionado: string = 'all';
 
   mostrarBotonSubir: boolean = false;
-
-  // NOTA: Hemos borrado 'regiones' y 'typeColors' de aquí porque ahora vienen de environment
+  private scrollSubscription: Subscription | undefined;
 
   constructor(
       private pokeService: PokeService, 
@@ -37,11 +38,18 @@ export class Home implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    
+    // Escuchamos el scroll (Solo para cargar más pokemon y mostrar botón subir)
+    this.scrollSubscription = fromEvent(window, 'scroll').subscribe(() => {
+        this.checkScroll();
+    });
+
     const estadoGuardado = this.dataService.getHomeState();
 
     if (estadoGuardado) {
-        console.log("Restaurando sesión anterior...");
+        console.log("Restaurando datos de sesión...");
         
+        // Recuperamos los datos guardados en SessionStorage
         this.listaTipos = estadoGuardado.listaTipos || []; 
         this.listaGlobal = estadoGuardado.listaGlobal;
         this.listaFiltrada = estadoGuardado.listaFiltrada;
@@ -54,12 +62,10 @@ export class Home implements OnInit, OnDestroy {
         this.ordenActual = estadoGuardado.ordenActual;
 
         this.cargando = false;
-
-        setTimeout(() => {
-            window.scrollTo(0, estadoGuardado.scrollPosition);
-        }, 50);
+        // YA NO HACEMOS SCROLL AUTOMÁTICO
 
     } else {
+        // Carga inicial normal
         this.pokeService.getTypesList().subscribe(data => {
             this.listaTipos = data.results.filter((t: any) => 
                 t.name !== 'stellar' && t.name !== 'unknown' && t.name !== 'shadow'
@@ -70,9 +76,9 @@ export class Home implements OnInit, OnDestroy {
         this.pokeService.getAllPokemons().subscribe({
           next: (data) => {
             if(data && data.results) {
-                this.listaGlobal = data.results.map((poke: any) => {
+                this.listaGlobal = data.results.map((poke) => {
                     const id = poke.url.split('/').filter(Boolean).pop();
-                    poke.id = parseInt(id);
+                    poke.id = parseInt(id || '0');
                     poke.image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
                     return poke;
                 });
@@ -90,6 +96,11 @@ export class Home implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+      if (this.scrollSubscription) {
+          this.scrollSubscription.unsubscribe();
+      }
+
+      // Guardamos el estado de los DATOS (no del scroll)
       const estado = {
           listaTipos: this.listaTipos, 
           listaGlobal: this.listaGlobal,
@@ -99,8 +110,7 @@ export class Home implements OnInit, OnDestroy {
           busqueda: this.busqueda,
           regionSeleccionada: this.regionSeleccionada,
           tipoSeleccionado: this.tipoSeleccionado,
-          ordenActual: this.ordenActual,
-          scrollPosition: window.scrollY
+          ordenActual: this.ordenActual
       };
 
       this.dataService.saveHomeState(estado);
@@ -122,15 +132,14 @@ export class Home implements OnInit, OnDestroy {
     }
 
     if (this.regionSeleccionada !== 'all') {
-        // USO DE ENVIRONMENT
         const rango = environment.regions[this.regionSeleccionada];
-        resultados = resultados.filter(p => p.id >= rango.min && p.id <= rango.max);
+        resultados = resultados.filter(p => (p.id!) >= rango.min && (p.id!) <= rango.max);
     }
 
     const texto = this.busqueda.toLowerCase().trim();
     if (texto !== '') {
         resultados = resultados.filter(p => 
-            p.name.includes(texto) || p.id.toString() === texto
+            p.name.includes(texto) || (p.id!).toString() === texto
         );
     }
 
@@ -140,33 +149,34 @@ export class Home implements OnInit, OnDestroy {
     this.cargarMas();
   }
 
-  buscar() {
-      this.aplicarFiltros(); 
-  }
+  buscar() { this.aplicarFiltros(); }
 
   resetearFiltros() {
       this.busqueda = '';
       this.regionSeleccionada = 'all';
       this.tipoSeleccionado = 'all';
       this.ordenActual = 'id-asc';
-
       this.aplicarFiltros();
   }
 
-  ordenarListaInterna(lista: any[]) {
-      if (this.ordenActual === 'id-asc') lista.sort((a, b) => a.id - b.id);
-      if (this.ordenActual === 'id-desc') lista.sort((a, b) => b.id - a.id);
+  ordenarListaInterna(lista: Pokemon[]) {
+      if (this.ordenActual === 'id-asc') lista.sort((a, b) => (a.id!) - (b.id!));
+      if (this.ordenActual === 'id-desc') lista.sort((a, b) => (b.id!) - (a.id!));
       if (this.ordenActual === 'name-asc') lista.sort((a, b) => a.name.localeCompare(b.name));
       if (this.ordenActual === 'name-desc') lista.sort((a, b) => b.name.localeCompare(a.name));
   }
 
   cargarMas() {
+    if (this.cargandoMas) return;
+
     const nuevosBasicos = this.listaFiltrada.slice(this.offset, this.offset + this.limitePorPagina);
     
     if (nuevosBasicos.length === 0) {
         this.cargando = false; 
         return;
     }
+
+    this.cargandoMas = true;
 
     const peticiones = nuevosBasicos.map(poke => this.pokeService.getPokemonDetails(poke.url));
 
@@ -181,25 +191,36 @@ export class Home implements OnInit, OnDestroy {
 
             this.pokemonsVisibles = [...this.pokemonsVisibles, ...nuevosCompletos];
             this.offset += this.limitePorPagina;
+            
             this.cargando = false; 
+            this.cargandoMas = false; 
             this.cd.detectChanges();
         },
         error: (err) => {
             console.error(err);
             this.cargando = false;
+            this.cargandoMas = false;
         }
     });
   }
 
-  // USO DE ENVIRONMENT
   getColor(type: string): string { 
       return environment.pokemonTypeColors[type] || '#777'; 
   }
 
-  @HostListener('window:scroll')
   checkScroll() {
     const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    
     this.mostrarBotonSubir = scrollPosition >= 400;
+
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    
+    if ((windowHeight + scrollPosition) >= documentHeight - 500) {
+        if (!this.cargando && !this.cargandoMas && this.pokemonsVisibles.length < this.listaFiltrada.length) {
+            this.cargarMas();
+        }
+    }
   }
 
   subirArriba() {
