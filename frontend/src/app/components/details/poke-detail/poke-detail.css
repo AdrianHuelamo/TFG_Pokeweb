@@ -1,0 +1,53 @@
+.main-img-box {
+    background: white;
+    border-radius: 20px;
+    padding: 20px; 
+    text-align: center;
+    border: 2px solid #e5e7eb;
+    
+    /* ALTURA FIJA PARA EVITAR SALTOS */
+    height: 500px; 
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.pokemon-main-sprite {
+    width: auto;
+    max-width: 85%; 
+    max-height: 450px; 
+    height: auto;
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.shiny-filter {
+    filter: drop-shadow(0 10px 15px rgba(255, 215, 0, 0.6)) brightness(1.1);
+    transform: scale(1.05);
+}
+
+.btn-shiny {
+    background: linear-gradient(45deg, #FFD700, #ffec8b);
+    color: #333;
+    border: 2px solid #e6c200;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+}
+.btn-shiny:hover {
+    background: linear-gradient(45deg, #ffec8b, #FFD700);
+    transform: translateY(-3px);
+}
+
+.nav-link.active {
+    color: #333 !important;
+    border-bottom: 4px solid #30A7D7 !important;
+}
+
+.lead {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    border-left: 5px solid #ddd;
+    padding-left: 20px;
+}

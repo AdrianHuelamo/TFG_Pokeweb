@@ -1,0 +1,40 @@
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+
+import { AppRoutingModule } from './app-routing-module';
+import { App } from './app';
+import { Login } from './components/login/login';
+import { TestConexion } from './components/test-conexion/test-conexion';
+import { Home } from './components/home/home';
+import { Navbar } from './components/navbar/navbar';
+import { PokeDetail } from './components/details/poke-detail/poke-detail';
+import { About } from './components/details/tabs/about/about';
+import { Stats } from './components/details/tabs/stats/stats';
+import { Evolutions } from './components/details/tabs/evolutions/evolutions';
+import { Moves } from './components/details/tabs/moves/moves';
+
+@NgModule({
+  declarations: [
+    App,
+    Login,
+    TestConexion,
+    Home,
+    Navbar,
+    PokeDetail,
+    About,
+    Stats,
+    Evolutions,
+    Moves
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule, 
+    FormsModule
+  ],
+  providers: [],
+  bootstrap: [App]
+})
+export class AppModule { }

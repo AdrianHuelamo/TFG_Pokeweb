@@ -1,0 +1,68 @@
+/* Contenedor de la carta */
+.evo-card {
+    transition: transform 0.2s, opacity 0.2s;
+    opacity: 0.6;
+    filter: grayscale(0.4);
+    cursor: pointer;
+    background: white;
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    min-width: 110px; /* Ancho mínimo para que no se aplasten */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.evo-card:hover {
+    transform: scale(1.05);
+    opacity: 1;
+    filter: grayscale(0);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 10;
+    border-color: #ccc;
+}
+
+/* El Pokémon actual se ve destacado y limpio */
+.evo-card.current {
+    opacity: 1;
+    filter: grayscale(0);
+    border: 2px solid #2AA9D9;
+    pointer-events: none;
+    transform: scale(1.05);
+}
+
+.evo-img {
+    width: 80px; 
+    height: 80px; 
+    object-fit: contain;
+}
+
+/* Contenedor de la flecha y requisito */
+.arrow-horizontal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 60px; /* Espacio para la flecha */
+}
+
+.req-badge {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    color: #555;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    white-space: nowrap;
+    margin-bottom: -5px; /* Pegarlo a la flecha */
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

@@ -1,0 +1,22 @@
+.flavor-text p {
+    font-style: italic;
+    color: #555;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    border-left: 4px solid #ddd;
+    padding-left: 15px;
+}
+
+.info-card {
+    background-color: white !important;
+    border: 1px solid #eee;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,42 @@
+:host {
+    --poke-yellow: #FFCB05;
+}
+
+.navbar-collapse {
+    justify-content: flex-end;
+}
+
+.navbar-brand {
+    display: none; 
+}
+
+.nav-link {
+    color: rgba(255,255,255,0.9) !important; 
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin: 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-link:hover {
+    color: var(--poke-yellow) !important;
+}
+
+.nav-link.active {
+    color: white !important;
+    border-bottom: 2px solid white;
+}
+
+.btn-login-nav {
+    border: 2px solid rgba(255,255,255,0.6);
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 8px; 
+    padding: 5px 20px !important;
+    color: white !important;
+}
+
+.btn-login-nav:hover {
+    background-color: white;
+    color: #b02a37 !important; /* Rojo oscuro al hacer hover */
+}

@@ -1,0 +1,62 @@
+<div class="animate-fade-in p-3 text-center w-100">
+    <h5 class="fw-bold mb-4">Cadena Evolutiva</h5>
+
+    <div *ngIf="cargando" class="text-muted py-4">
+        <div class="spinner-border spinner-border-sm text-secondary" role="status"></div>
+        Cargando familia...
+    </div>
+
+    <div *ngIf="!cargando && evolutionTree.length > 0" class="d-flex justify-content-center align-items-center overflow-auto py-3">
+        
+        <ng-container *ngFor="let base of evolutionTree">
+            
+            <div class="d-flex align-items-center">
+                <div class="evo-card" 
+                     [class.current]="base.name === pokemon.name"
+                     [routerLink]="['/pokemon', base.id]">
+                    <img [src]="base.image" [alt]="base.name" class="evo-img mb-2">
+                    <div class="fw-bold text-capitalize small">{{ base.name }}</div>
+                </div>
+
+                <div *ngIf="base.evolves_to.length > 0" class="d-flex flex-column gap-3 ms-3">
+                    
+                    <div *ngFor="let evo1 of base.evolves_to" class="d-flex align-items-center">
+                        
+                        <div class="arrow-horizontal mx-2 text-center">
+                            <small class="req-badge">{{ evo1.req }}</small>
+                            <div class="text-muted fs-4">→</div>
+                        </div>
+
+                        <div class="evo-card" 
+                             [class.current]="evo1.name === pokemon.name"
+                             [routerLink]="['/pokemon', evo1.id]">
+                            <img [src]="evo1.image" [alt]="evo1.name" class="evo-img mb-2">
+                            <div class="fw-bold text-capitalize small">{{ evo1.name }}</div>
+                        </div>
+
+                        <div *ngIf="evo1.evolves_to.length > 0" class="d-flex flex-column gap-3 ms-3">
+                            
+                            <div *ngFor="let evo2 of evo1.evolves_to" class="d-flex align-items-center">
+                                <div class="arrow-horizontal mx-2 text-center">
+                                    <small class="req-badge">{{ evo2.req }}</small>
+                                    <div class="text-muted fs-4">→</div>
+                                </div>
+
+                                <div class="evo-card" 
+                                     [class.current]="evo2.name === pokemon.name"
+                                     [routerLink]="['/pokemon', evo2.id]">
+                                    <img [src]="evo2.image" [alt]="evo2.name" class="evo-img mb-2">
+                                    <div class="fw-bold text-capitalize small">{{ evo2.name }}</div>
+                                </div>
+                            </div>
+
+                        </div> </div> 
+                </div> </div>
+        </ng-container>
+
+    </div>
+
+    <div *ngIf="!cargando && evolutionTree.length === 0" class="text-muted fst-italic">
+        Datos no disponibles.
+    </div>
+</div>

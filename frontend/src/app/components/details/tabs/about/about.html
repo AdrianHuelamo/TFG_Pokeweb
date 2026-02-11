@@ -1,0 +1,77 @@
+<div *ngIf="pokemon" class="animate-fade-in p-3">
+    
+    <h5 class="fw-bold mb-3">Fisiología</h5>
+    <div class="info-card shadow-sm p-4 mb-4 d-flex justify-content-around bg-light rounded-4 border">
+        <div class="text-center">
+            <small class="text-muted d-block fw-bold mb-2 text-uppercase">Altura</small>
+            <span class="fs-4 fw-bold">{{ pokemon.height / 10 }} m</span>
+        </div>
+        <div class="vr opacity-25"></div> 
+        <div class="text-center">
+            <small class="text-muted d-block fw-bold mb-2 text-uppercase">Peso</small>
+            <span class="fs-4 fw-bold">{{ pokemon.weight / 10 }} kg</span>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        
+        <div class="col-12 col-md-6 mb-3 mb-md-0">
+            <h5 class="fw-bold mb-3">Habilidades</h5>
+            <div class="d-flex flex-column gap-2">
+                <div *ngFor="let ab of pokemon.abilities" class="p-2 border rounded bg-white shadow-sm d-flex justify-content-between align-items-center">
+                    <span class="text-capitalize fw-bold text-secondary">{{ ab.ability.name.replace('-', ' ') }}</span>
+                    <span *ngIf="ab.is_hidden" class="badge bg-warning text-dark" style="font-size: 0.7rem;">Oculta</span>
+                    <span *ngIf="!ab.is_hidden" class="badge bg-light text-secondary border">Normal</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <h5 class="fw-bold mb-3">Crianza (Grupos Huevo)</h5>
+            <div class="d-flex flex-wrap gap-2">
+                 <span *ngFor="let egg of pokemon.eggGroups" class="badge rounded-pill bg-info text-dark border border-info-subtle px-3 py-2 fs-6 text-capitalize">
+                    🥚 {{ egg.name.replace('-', ' ') }}
+                 </span>
+            </div>
+             <p *ngIf="pokemon.eggGroups.length === 0" class="text-muted small mt-2">Desconocido</p>
+        </div>
+
+    </div>
+
+    <div class="mb-4">
+        
+        <h5 class="fw-bold mb-3 text-danger">Debilidades</h5>
+        <div class="d-flex flex-wrap gap-2 mb-4">
+            <span *ngFor="let weak of pokemon.weaknesses" 
+                  class="badge rounded-1 px-3 py-2 text-white d-flex align-items-center shadow-sm"
+                  [style.background-color]="getWeaknessColor(weak.name)">
+                <span class="text-uppercase me-2" style="font-size: 0.9rem;">{{ weak.name }}</span>
+                <span class="badge bg-white text-danger rounded-pill fw-bold">x{{ weak.multiplier }}</span>
+            </span>
+            <p *ngIf="pokemon.weaknesses.length === 0" class="text-muted small fst-italic">Sin debilidades.</p>
+        </div>
+
+        <h5 class="fw-bold mb-3 text-success">Resistencias</h5>
+        <div class="d-flex flex-wrap gap-2 mb-4">
+            <span *ngFor="let res of pokemon.resistances" 
+                  class="badge rounded-1 px-3 py-2 text-white d-flex align-items-center shadow-sm"
+                  [style.background-color]="getWeaknessColor(res.name)">
+                <span class="text-uppercase me-2" style="font-size: 0.9rem;">{{ res.name }}</span>
+                <span class="badge bg-white text-success rounded-pill fw-bold">x{{ res.multiplier }}</span>
+            </span>
+            <p *ngIf="pokemon.resistances.length === 0" class="text-muted small fst-italic">Sin resistencias.</p>
+        </div>
+
+        <h5 class="fw-bold mb-3 text-secondary">Inmunidades</h5>
+        <div class="d-flex flex-wrap gap-2">
+            <span *ngFor="let imm of pokemon.immunities" 
+                  class="badge rounded-1 px-3 py-2 text-white d-flex align-items-center shadow-sm"
+                  [style.background-color]="getWeaknessColor(imm.name)"> <span class="text-uppercase me-2" style="font-size: 0.9rem;">{{ imm.name }}</span>
+                <span class="badge bg-white text-dark rounded-pill fw-bold shadow-sm">x0</span>
+            </span>
+             <p *ngIf="pokemon.immunities.length === 0" class="text-muted small fst-italic">Sin inmunidades.</p>
+        </div>
+
+    </div>
+
+</div>

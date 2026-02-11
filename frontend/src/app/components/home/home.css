@@ -1,0 +1,122 @@
+.page-background {
+    background-color: #d1d5db; 
+    min-height: 100vh;
+}
+
+.pokedex-case {
+    width: 100%;
+    max-width: 1400px;
+    border-bottom: 12px solid #b02a37;
+    position: relative;
+    transition: max-width 0.3s;
+}
+
+.camera-lens {
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle at 30% 30%, #5FD4FF, #0d6efd);
+    border-radius: 50%;
+    border: 5px solid white;
+    position: relative;
+    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+}
+.camera-lens::after {
+    content: ''; position: absolute; top: 12px; left: 15px;
+    width: 25px; height: 15px; background: rgba(255,255,255,0.6);
+    border-radius: 50%; transform: rotate(-45deg);
+}
+
+.pokedex-screen {
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.08);
+    min-height: 500px;
+    background-color: #ffffff !important;
+}
+
+.img-circle-container {
+    width: 160px;
+    height: 160px;
+    background-color: #f1f3f5;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.img-circle-container img {
+    max-width: 130px;
+    max-height: 130px;
+    filter: drop-shadow(0 8px 5px rgba(0,0,0,0.15));
+    transition: transform 0.2s;
+}
+
+.poke-card {
+    transition: transform 0.2s;
+    cursor: pointer;
+    background-color: white;
+    border-radius: 20px;
+}
+.poke-card:hover {
+    transform: translateY(-8px);
+    border: 2px solid #0d6efd !important;
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+}
+.poke-card:hover .img-circle-container {
+    background-color: #e9ecef;
+    transform: scale(1.05);
+}
+.poke-card:hover img {
+    transform: scale(1.2);
+}
+
+.form-select, .form-control {
+    background-color: #f8f9fa;
+    border-width: 2px;
+}
+.form-select:focus, .form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: none;
+}
+
+/* ... (estilos anteriores igual) ... */
+
+/* --- BOTÓN VOLVER ARRIBA (Minimalista) --- */
+.btn-scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    z-index: 1000;
+    
+    /* Diseño Plano (Flat) y Limpio */
+    background-color: #333; /* Gris oscuro elegante (o usa #dc3545 si prefieres rojo) */
+    color: white;
+    border: none;
+    
+    /* Centrado perfecto del icono */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Sombra suave */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    
+    /* Animaciones */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-scroll-top:hover {
+    background-color: #000; /* Se oscurece un poco al pasar el ratón */
+    transform: translateY(-5px); /* Se eleva ligeramente */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+}
+
+.btn-scroll-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}

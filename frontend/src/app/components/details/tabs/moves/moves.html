@@ -1,0 +1,59 @@
+<div class="animate-fade-in p-3">
+    <h5 class="fw-bold mb-4">Movimientos por Nivel</h5>
+
+    <div *ngIf="cargando" class="text-center py-4 text-muted">
+        <div class="spinner-border spinner-border-sm" role="status"></div>
+        <small class="ms-2">Analizando movimientos...</small>
+    </div>
+
+    <div *ngIf="!cargando" class="d-flex flex-column gap-3">
+        
+        <div class="table-responsive shadow-sm rounded-4 border">
+            <table class="table table-hover mb-0 align-middle text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th class="py-3 text-secondary text-uppercase small" style="width: 20%;">Nivel</th>
+                        <th class="py-3 text-secondary text-uppercase small" style="width: 40%;">Movimiento</th>
+                        <th class="py-3 text-secondary text-uppercase small" style="width: 40%;">Tipo</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let move of movesToShow">
+                        <td class="fw-bold text-primary">{{ move.level }}</td>
+                        <td class="text-capitalize fw-bold text-dark">{{ move.name }}</td>
+                        <td>
+                            <span class="badge rounded-pill border text-white px-3 py-2 text-capitalize shadow-sm"
+                                  [style.background-color]="getColor(move.type)">
+                                {{ move.type }}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr *ngIf="movesList.length === 0">
+                        <td colspan="3" class="p-4 text-muted fst-italic">No hay datos de movimientos por nivel.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div *ngIf="movesList.length > elementsPP" class="d-flex justify-content-between align-items-center mt-2 px-2">
+            
+            <button class="btn btn-outline-secondary btn-sm px-3" 
+                    (click)="prevPage()" 
+                    [disabled]="currentPage === 1">
+                ◀ Anterior
+            </button>
+
+            <span class="text-muted small fw-bold">
+                Página {{ currentPage }} de {{ totalPages }}
+            </span>
+
+            <button class="btn btn-outline-secondary btn-sm px-3" 
+                    (click)="nextPage()" 
+                    [disabled]="currentPage === totalPages">
+                Siguiente ▶
+            </button>
+
+        </div>
+
+    </div>
+</div>
