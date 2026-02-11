@@ -1,18 +1,25 @@
 <div class="row g-2 mb-4 align-items-end animate-fade-in">
-  
   <div class="col-12 col-md-4">
     <label class="form-label fw-bold text-secondary ms-1 mb-1 small">Búsqueda</label>
     <div class="input-group">
       <span class="input-group-text bg-white border-secondary">🔍</span>
-      <input type="text" class="form-control border-secondary fw-bold" placeholder="Nombre o ID..." [(ngModel)]="busqueda" (input)="buscar()">
+      <input
+        type="text"
+        class="form-control border-secondary fw-bold"
+        placeholder="Nombre o ID..."
+        [(ngModel)]="busqueda"
+        (input)="buscar()"
+      />
     </div>
   </div>
 
   <div class="col-6 col-md-2">
     <label class="form-label fw-bold text-secondary ms-1 mb-1 small">Región</label>
-    <select class="form-select border-secondary text-secondary fw-bold" 
-            [(ngModel)]="regionSeleccionada" 
-            (change)="aplicarFiltros()">
+    <select
+      class="form-select border-secondary text-secondary fw-bold"
+      [(ngModel)]="regionSeleccionada"
+      (change)="aplicarFiltros()"
+    >
       <option value="all">Pokedex nacional</option>
       <option value="kanto">Kanto (1)</option>
       <option value="johto">Johto (2)</option>
@@ -27,20 +34,24 @@
   </div>
 
   <div class="col-6 col-md-2">
-     <label class="form-label fw-bold text-secondary ms-1 mb-1 small">Tipo</label>
-     <select class="form-select border-secondary text-secondary fw-bold text-capitalize" 
-             [(ngModel)]="tipoSeleccionado" 
-             (change)="aplicarFiltros()">
+    <label class="form-label fw-bold text-secondary ms-1 mb-1 small">Tipo</label>
+    <select
+      class="form-select border-secondary text-secondary fw-bold text-capitalize"
+      [(ngModel)]="tipoSeleccionado"
+      (change)="aplicarFiltros()"
+    >
       <option value="all">Todos</option>
       <option *ngFor="let t of listaTipos" [value]="t.name">{{ t.name }}</option>
     </select>
   </div>
 
   <div class="col-10 col-md-3">
-     <label class="form-label fw-bold text-secondary ms-1 mb-1 small">Ordenación</label>
-     <select class="form-select border-secondary text-secondary fw-bold" 
-             [(ngModel)]="ordenActual" 
-             (change)="aplicarFiltros()">
+    <label class="form-label fw-bold text-secondary ms-1 mb-1 small">Ordenación</label>
+    <select
+      class="form-select border-secondary text-secondary fw-bold"
+      [(ngModel)]="ordenActual"
+      (change)="aplicarFiltros()"
+    >
       <option value="id-asc">Num. Ascendente</option>
       <option value="id-desc">Num. Descendente</option>
       <option value="name-asc">Nombre (A-Z)</option>
@@ -49,13 +60,19 @@
   </div>
 
   <div class="col-2 col-md-1">
-      <button 
-          class="btn btn-danger w-100 border-secondary" 
-          (click)="resetearFiltros()" 
-          title="Borrar Filtros"
-          [disabled]="busqueda === '' && regionSeleccionada === 'all' && tipoSeleccionado === 'all' && ordenActual === 'id-asc'">
-          Limpiar
-      </button>
+    <button
+      class="btn btn-danger w-100 border-secondary"
+      (click)="resetearFiltros()"
+      title="Borrar Filtros"
+      [disabled]="
+        busqueda === '' &&
+        regionSeleccionada === 'all' &&
+        tipoSeleccionado === 'all' &&
+        ordenActual === 'id-asc'
+      "
+    >
+      Limpiar
+    </button>
   </div>
 </div>
 
@@ -64,19 +81,27 @@
   <h3 class="mt-4 text-muted fs-5">Atrapando Pokémon...</h3>
 </div>
 
-<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-3 row-cols-xxl-4 g-4" *ngIf="!cargando">
+<div
+  class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4"
+  *ngIf="!cargando"
+>
   <div class="col" *ngFor="let poke of pokemonsVisibles">
-    <div class="card h-100 border-0 shadow-sm poke-card" [routerLink]="['/pokemon', poke.id]">
+    <div class="card h-100 shadow-sm pokemon-card" [routerLink]="['/pokemon', poke.id]">
       <div class="card-body text-center p-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
-           <span class="badge bg-light text-secondary border fs-6">#{{ poke.id }}</span>
+          <span class="badge bg-light text-secondary border fs-6">#{{ poke.id }}</span>
         </div>
         <div class="img-circle-container mx-auto mb-3">
-          <img [src]="poke.image" [alt]="poke.name" class="img-fluid" loading="lazy">
+          <img [src]="poke.image" [alt]="poke.name" class="img-fluid" loading="eager" />
         </div>
         <h3 class="fw-bold text-dark text-capitalize mb-3">{{ poke.name }}</h3>
         <div class="d-flex justify-content-center gap-2 flex-wrap">
-          <span *ngFor="let t of poke.types" class="badge rounded-pill border border-light px-3 py-2" [style.background-color]="getColor(t.type.name)" style="font-size: 0.9rem;">
+          <span
+            *ngFor="let t of poke.types"
+            class="badge rounded-pill border border-light px-3 py-2"
+            [style.background-color]="getColor(t.type.name)"
+            style="font-size: 0.9rem"
+          >
             {{ t.type.name }}
           </span>
         </div>
@@ -92,17 +117,26 @@
 
 <div *ngIf="cargandoMas" class="text-center py-4 my-2">
   <div class="spinner-border text-secondary" role="status">
-      <span class="visually-hidden">Cargando más...</span>
+    <span class="visually-hidden">Cargando más...</span>
   </div>
 </div>
 
-<button class="btn-scroll-top"
-        [class.show]="mostrarBotonSubir"
-        (click)="subirArriba()"
-        title="Volver arriba">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
-    </svg>
-
+<button
+  class="btn-scroll-top"
+  [class.show]="mostrarBotonSubir"
+  (click)="subirArriba()"
+  title="Volver arriba"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    fill="currentColor"
+    viewBox="0 0 16 16"
+  >
+    <path
+      fill-rule="evenodd"
+      d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"
+    />
+  </svg>
 </button>

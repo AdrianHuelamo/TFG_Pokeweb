@@ -13,6 +13,7 @@ import { About } from './components/details/tabs/about/about';
 import { Stats } from './components/details/tabs/stats/stats';
 import { Evolutions } from './components/details/tabs/evolutions/evolutions';
 import { Moves } from './components/details/tabs/moves/moves';
+import { Comunidad } from './components/comunidad/comunidad';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { Moves } from './components/details/tabs/moves/moves';
     About,
     Stats,
     Evolutions,
-    Moves
+    Moves,
+    Comunidad
   ],
   imports: [
     BrowserModule,

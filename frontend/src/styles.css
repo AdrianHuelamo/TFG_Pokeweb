@@ -49,7 +49,7 @@
 
 .pokedex-screen {
     box-shadow: inset 0 0 20px rgba(0,0,0,0.08);
-    min-height: 600px; /* Altura mínima de la pantalla blanca */
+    min-height: 600px; 
     background-color: #ffffff !important;
 }
 
@@ -58,4 +58,14 @@ app-navbar nav.poke-navbar {
     border-bottom: none !important;
     box-shadow: none !important;
     padding: 0 !important;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+body, html {
+    overflow-x: hidden;
+    width: 100%;
 }

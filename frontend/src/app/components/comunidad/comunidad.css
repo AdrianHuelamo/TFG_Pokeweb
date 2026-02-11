@@ -1,0 +1,141 @@
+.hero-card {
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25) !important;
+}
+
+.hero-row {
+    height: 240px; 
+}
+
+.hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    object-position: center top; 
+}
+
+.hero-badge {
+    background-color: #ffcb05; 
+    color: #3b4cca; 
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 2;
+}
+
+.text-truncate-multiline {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 768px) {
+    .hero-row {
+        height: auto; 
+    }
+    .hero-img {
+        height: 200px;
+    }
+}
+
+.news-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+    background-color: white;
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+}
+
+.card-img-top {
+    height: 200px;         
+    width: 100%;
+    object-fit: contain;   
+    background-color: #ffffff; 
+    padding: 10px;         
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); 
+    z-index: 9999; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    backdrop-filter: blur(5px); 
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content-custom {
+    background: white;
+    width: 100%;
+    max-width: 800px;
+    max-height: 90vh; 
+    border-radius: 12px;
+    overflow-y: auto; 
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.3s ease-out;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: rgba(255,255,255,0.9);
+    border: none;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 10;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+}
+
+.close-btn:hover {
+    background: #ff4d4d;
+    color: white;
+}
+
+.animate-fade-in { animation: fadeIn 0.6s ease-out; }
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .hero-row {
+        height: auto; 
+        flex-direction: column; 
+    }
+    .hero-img {
+        height: 200px; 
+    }
+    .hero-card .col-md-8 {
+        padding-top: 0;
+    }
+}

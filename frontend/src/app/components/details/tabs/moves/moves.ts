@@ -13,16 +13,14 @@ import { environment } from '../../../../../environments/environment';
 export class Moves implements OnInit {
   pokemon: any;
   
-  movesList: any[] = [];    // Lista COMPLETA (Master)
-  movesToShow: any[] = [];  // Lista VISIBLE (Paginada) - Inicializa vacío
+  movesList: any[] = [];   
+  movesToShow: any[] = [];  
   
   cargando: boolean = true;
   
-  // Variables de Paginación
   currentPage: number = 1;
   totalPages: number = 0;
-  elementsPP: number = 4; // Elementos por página (puedes cambiarlo a 5, 10...)
-
+  elementsPP: number = 4; 
   constructor(
       private dataService: PokemonDataServices,
       private pokeService: PokeService,
@@ -40,7 +38,6 @@ export class Moves implements OnInit {
 
   procesarMovimientos(moves: any[]) {
       this.cargando = true;
-      // Reseteamos paginación al cambiar de pokemon
       this.currentPage = 1;
       this.movesToShow = [];
 
@@ -71,7 +68,6 @@ export class Moves implements OnInit {
 
       forkJoin(requests).subscribe({
           next: (detalles: any[]) => {
-              // 1. Guardamos la lista COMPLETA con los tipos
               this.movesList = tempMoves.map((move: any, index: number) => {
                   return {
                       ...move,
@@ -79,10 +75,8 @@ export class Moves implements OnInit {
                   };
               });
 
-              // 2. Calculamos total de páginas
               this.totalPages = Math.ceil(this.movesList.length / this.elementsPP);
 
-              // 3. Mostramos la primera página
               this.updateView();
 
               this.cargando = false;
@@ -91,19 +85,16 @@ export class Moves implements OnInit {
           error: (err) => {
               console.error('Error cargando tipos de movimientos', err);
               this.movesList = tempMoves; 
-              this.updateView(); // Intentamos mostrar aunque falle el tipo
+              this.updateView();
               this.cargando = false;
               this.cd.detectChanges(); 
           }
       });
   }
 
-  // --- LÓGICA DE PAGINACIÓN ---
-
   updateView() {
       const start = (this.currentPage - 1) * this.elementsPP;
       const end = start + this.elementsPP;
-      // Cortamos el array maestro para mostrar solo los necesarios
       this.movesToShow = this.movesList.slice(start, end);
   }
 
@@ -121,7 +112,6 @@ export class Moves implements OnInit {
       }
   }
 
-  // Opcional: Para ir a una página concreta si quisieras
   goToPage(page: number) {
       this.currentPage = page;
       this.updateView();

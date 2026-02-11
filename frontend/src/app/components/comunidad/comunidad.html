@@ -1,0 +1,112 @@
+<div class="container animate-fade-in py-4 mb-5">
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+      <h2 class="fw-bold text-dark mb-0">Comunidad <span class="text-danger">PokéWeb</span></h2>
+      <small class="text-muted">Noticias, eventos y actualizaciones.</small>
+    </div>
+  </div>
+
+  <div *ngIf="cargando" class="text-center py-5">
+    <div class="spinner-border text-danger" role="status"></div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger text-center shadow-sm">
+    <h4 class="alert-heading">¡Vaya!</h4>
+    <p>No hemos podido conectar con el centro de noticias.</p>
+  </div>
+
+  <div *ngIf="!cargando && !error">
+    <div *ngIf="noticiaDestacada" class="card hero-card shadow mb-5 overflow-hidden" (click)="abrirNoticia(noticiaDestacada)">
+        <div class="row g-0 hero-row"> <div class="col-md-4 position-relative h-100">
+                <img [src]="noticiaDestacada.imagen" class="hero-img" alt="Destacada">
+                <span class="position-absolute top-0 start-0 m-2 badge hero-badge py-1 px-2 shadow small">
+                    ★ Destacada
+                </span>
+            </div>
+
+            <div class="col-md-8 d-flex align-items-center">
+                <div class="card-body p-3 p-lg-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <small class="text-warning fw-bold">{{ noticiaDestacada.created_at | date:'longDate' }}</small>
+                    </div>
+                    
+                    <h3 class="card-title fw-bold mb-2 text-white h4">{{ noticiaDestacada.titulo }}</h3>
+                    
+                    <p class="card-text text-light opacity-75 mb-3 small text-truncate-multiline">
+                        {{ noticiaDestacada.resumen }}
+                    </p>
+                    
+                    <button class="btn btn-sm btn-outline-light rounded-pill px-3">Leer más</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4
+      class="fw-bold mb-3 border-start border-4 border-danger ps-3"
+      *ngIf="restoNoticias.length > 0"
+    >
+      Últimas Novedades
+    </h4>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <div class="col" *ngFor="let noticia of restoNoticias">
+        <div class="card h-100 news-card border-0 shadow-sm" (click)="abrirNoticia(noticia)">
+          <div class="position-relative">
+            <img [src]="noticia.imagen" class="card-img-top" alt="Imagen" />
+            <span class="position-absolute bottom-0 end-0 m-2 badge bg-dark opacity-75">
+              {{ noticia.created_at | date: 'dd MMM' }}
+            </span>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title fw-bold text-dark">{{ noticia.titulo }}</h5>
+            <p class="card-text text-muted small flex-grow-1">
+              {{ noticia.resumen | slice: 0 : 100 }}...
+            </p>
+            <div class="mt-3 pt-3 border-top text-end">
+              <span class="text-danger fw-bold small">Leer más &raquo;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!noticiaDestacada && restoNoticias.length === 0" class="text-center py-5">
+      <h3 class="text-muted">No hay noticias disponibles.</h3>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="noticiaSeleccionada" (click)="cerrarNoticia()">
+  <div class="modal-content-custom" (click)="$event.stopPropagation()">
+    <button class="close-btn shadow-sm" (click)="cerrarNoticia()">&times;</button>
+
+    <div class="w-100" style="height: 300px; overflow: hidden">
+      <img
+        [src]="noticiaSeleccionada.imagen"
+        class="w-100 h-100"
+        style="object-fit: cover"
+        alt="Header"
+      />
+    </div>
+
+    <div class="p-4 p-md-5">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <span class="badge bg-danger rounded-pill px-3">Noticia</span>
+        <span class="text-muted small">{{
+          noticiaSeleccionada.created_at | date: 'fullDate'
+        }}</span>
+      </div>
+
+      <h1 class="fw-bold mb-4 text-dark">{{ noticiaSeleccionada.titulo }}</h1>
+
+      <div class="fs-5 text-secondary" style="white-space: pre-line; line-height: 1.8">
+        {{ noticiaSeleccionada.contenido }}
+      </div>
+
+      <div class="mt-5 pt-4 border-top">
+        <p class="mb-0 text-muted fst-italic">Escrito por el Equipo PokéWeb</p>
+      </div>
+    </div>
+  </div>
+</div>

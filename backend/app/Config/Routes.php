@@ -7,10 +7,8 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 
-// Rutas de tu API (Login y Registro)
+
 $routes->post('api/login', 'Api::login');
 $routes->post('api/register', 'Api::register');
 
-// [NUEVO] Esta línea es la CLAVE.
-// Atrapa todas las peticiones de comprobación (OPTIONS) y las manda al controlador.
-$routes->options('(:any)', 'Api::options');
+$routes->get('api/noticias', 'Noticias::index');

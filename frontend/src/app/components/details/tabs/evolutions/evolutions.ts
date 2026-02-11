@@ -37,13 +37,10 @@ export class Evolutions implements OnInit {
       this.cargando = true;
       this.pokeService.getPokemonDetails(url).subscribe({
           next: (data: any) => {
-              // 1. Procesamos el árbol recursivamente
               const treeNode = this.processEvolutionNode(data.chain);
               
-              // 2. Extraemos todos los IDs para pedir las fotos de golpe
               const allIds = this.collectIds(treeNode);
               
-              // 3. Cargamos las imágenes
               this.loadImages(allIds, treeNode);
           },
           error: (err) => {
@@ -54,12 +51,10 @@ export class Evolutions implements OnInit {
       });
   }
 
-  // Función recursiva que construye el árbol
   processEvolutionNode(node: any): any {
       const speciesId = node.species.url.split('/').filter(Boolean).pop();
       let req = "";
 
-      // Traducir requisito
       if (node.evolution_details && node.evolution_details.length > 0) {
           const d = node.evolution_details[0];
           if (d.min_level) req = `Nvl ${d.min_level}`;
@@ -68,7 +63,7 @@ export class Evolutions implements OnInit {
           else if (d.trigger.name === "trade") req = "Intercambio";
           else if (d.known_move) req = `Mov: ${d.known_move.name}`;
           else if (d.location) req = "Lugar Esp.";
-          else if (d.time_of_day) req = d.time_of_day; // Día/Noche
+          else if (d.time_of_day) req = d.time_of_day; 
           else req = "?";
       }
 
@@ -76,8 +71,7 @@ export class Evolutions implements OnInit {
           name: node.species.name,
           id: speciesId,
           req: req,
-          image: '', // Se rellenará luego
-          // ¡Aquí está la magia! Procesamos TODOS los hijos, no solo el [0]
+          image: '', 
           evolves_to: node.evolves_to.map((child: any) => this.processEvolutionNode(child))
       };
   }

@@ -76,9 +76,6 @@
     box-shadow: none;
 }
 
-/* ... (estilos anteriores igual) ... */
-
-/* --- BOTÓN VOLVER ARRIBA (Minimalista) --- */
 .btn-scroll-top {
     position: fixed;
     bottom: 30px;
@@ -88,20 +85,16 @@
     border-radius: 50%;
     z-index: 1000;
     
-    /* Diseño Plano (Flat) y Limpio */
-    background-color: #333; /* Gris oscuro elegante (o usa #dc3545 si prefieres rojo) */
+    background-color: #333; 
     color: white;
     border: none;
     
-    /* Centrado perfecto del icono */
     display: flex;
     align-items: center;
     justify-content: center;
     
-    /* Sombra suave */
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     
-    /* Animaciones */
     opacity: 0;
     visibility: hidden;
     transform: translateY(20px);
@@ -110,8 +103,8 @@
 }
 
 .btn-scroll-top:hover {
-    background-color: #000; /* Se oscurece un poco al pasar el ratón */
-    transform: translateY(-5px); /* Se eleva ligeramente */
+    background-color: #000; 
+    transform: translateY(-5px); 
     box-shadow: 0 6px 15px rgba(0,0,0,0.4);
 }
 

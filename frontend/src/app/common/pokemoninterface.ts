@@ -1,4 +1,3 @@
-// Respuesta de la API para la lista (Home)
 export interface PokeListResponse {
     count: number;
     next: string | null;
@@ -6,36 +5,30 @@ export interface PokeListResponse {
     results: Pokemon[];
 }
 
-// El modelo principal de Pokémon (Sirve para Home y Detalles)
 export interface Pokemon {
-    // Campos básicos (Home)
     id?: number;
     name: string;
     url: string;
-    image?: string;       // Usado en Home
+    image?: string;       
     types?: PokemonType[]; 
 
-    // Campos detallados (PokeDetail) - Opcionales (?)
     height?: number;
     weight?: number;
     description?: string;
-    imageNormal?: string; // Usado en Detalle
-    imageShiny?: string;  // Usado en Detalle
+    imageNormal?: string; 
+    imageShiny?: string;  
     speciesUrl?: string;
     
-    // Arrays de datos complejos
     stats?: PokemonStat[];
     abilities?: PokemonAbility[];
-    moves?: any[];        // Dejamos moves como any[] por ahora porque es gigante
+    moves?: any[];        
     eggGroups?:  { name: string; url: string }[];
     
-    // Combate
     weaknesses?: TypeMultiplier[];
     resistances?: TypeMultiplier[];
     immunities?: TypeMultiplier[];
 }
 
-// Sub-interfaces para mantener el orden
 export interface PokemonType {
     slot: number;
     type: {

@@ -25,12 +25,14 @@ class Cors extends BaseConfig
      *  }
      */
     public array $default = [
-    'allowedOrigins' => ['*'], 
-    'allowedOriginsPatterns' => [],
-    'supportsCredentials' => true,
-    'allowedHeaders' => ['*'], 
-    'exposedHeaders' => [],
-    'allowedMethods' => ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
-    'maxAge' => 7200,
-];
+        // CAMBIO AQUÍ: Quita el '*' y pon tu URL de Angular
+        'allowedOrigins' => ['http://localhost:4200'], 
+        
+        'allowedOriginsPatterns' => [],
+        'supportsCredentials' => true, // Esto es lo que obligaba a quitar el *
+        'allowedHeaders' => ['*'],
+        'exposedHeaders' => [],
+        'allowedMethods' => ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
+        'maxAge' => 7200,
+    ];
 }
