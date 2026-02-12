@@ -46,9 +46,7 @@ export class Home implements OnInit, OnDestroy {
 
     const estadoGuardado = this.dataService.getHomeState();
 
-    if (estadoGuardado) {
-        console.log("Restaurando datos de sesión...");
-        
+    if (estadoGuardado) {        
         // Recuperamos los datos guardados en SessionStorage
         this.listaTipos = estadoGuardado.listaTipos || []; 
         this.listaGlobal = estadoGuardado.listaGlobal;

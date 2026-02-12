@@ -1,19 +1,65 @@
-<div class="login-container">
-    <h2>Iniciar Sesión en PokeWeb</h2>
-    
-    <form (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label>Email:</label>
-            <input type="email" name="email" [(ngModel)]="user.email" required placeholder="ash@pueblopaleta.com">
+<div class="container py-5">
+    <div class="row justify-content-center animate-fade-in">
+        <div class="col-md-6 col-lg-5">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                
+                <div class="card-header bg-danger text-white text-center py-4">
+                    <h3 class="fw-bold mb-0">¡Hola de nuevo!</h3>
+                    <small>Accede a tu cuenta de Entrenador</small>
+                </div>
+
+                <div class="card-body p-4 p-md-5">
+                    
+                    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+                        
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-secondary small">Correo Electrónico</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-0"><i class="bi bi-envelope-fill"></i></span>
+                                <input type="email" class="form-control bg-light border-0" 
+                                       placeholder="ash@pueblopaleta.com" 
+                                       name="email" 
+                                       [(ngModel)]="user.email" 
+                                       required email>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-secondary small">Contraseña</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-0"><i class="bi bi-lock-fill"></i></span>
+                                <input type="password" class="form-control bg-light border-0" 
+                                       placeholder="******" 
+                                       name="password" 
+                                       [(ngModel)]="user.password" 
+                                       required>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mb-4">
+                            <button type="submit" class="btn btn-danger rounded-pill fw-bold py-2 shadow-sm hover-scale"
+                                    [disabled]="!loginForm.form.valid || cargando">
+                                <span *ngIf="cargando" class="spinner-border spinner-border-sm me-2"></span>
+                                <span *ngIf="!cargando">Iniciar Sesión</span>
+                            </button>
+                        </div>
+
+                        <div class="text-center small">
+                            <span class="text-muted">¿No tienes cuenta? </span>
+                            <a routerLink="/register" class="text-danger fw-bold text-decoration-none">
+                                Regístrate aquí
+                            </a>
+                        </div>
+
+                    </form>
+
+                    <div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center small animate-fade-in d-flex align-items-center justify-content-center">
+                        <i class="bi bi-exclamation-circle-fill me-2"></i>
+                        {{ errorMsg }}
+                    </div>
+
+                </div>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label>Contraseña:</label>
-            <input type="password" name="password" [(ngModel)]="user.password" required>
-        </div>
-
-        <button type="submit">Entrar</button>
-    </form>
-
-    <p *ngIf="mensajeError" style="color: red; margin-top: 10px;">{{ mensajeError }}</p>
+    </div>
 </div>

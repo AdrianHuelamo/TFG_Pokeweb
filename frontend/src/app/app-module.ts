@@ -15,6 +15,7 @@ import { Evolutions } from './components/details/tabs/evolutions/evolutions';
 import { Moves } from './components/details/tabs/moves/moves';
 import { Comunidad } from './components/comunidad/comunidad';
 import { NoticiaDetails } from './components/noticia-details/noticia-details';
+import { Register } from './components/register/register';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { NoticiaDetails } from './components/noticia-details/noticia-details';
     Evolutions,
     Moves,
     Comunidad,
-    NoticiaDetails
+    NoticiaDetails,
+    Register
   ],
   imports: [
     BrowserModule,

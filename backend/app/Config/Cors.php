@@ -24,15 +24,13 @@ class Cors extends BaseConfig
      *      maxAge: int,
      *  }
      */
-    public array $default = [
-        // CAMBIO AQUÍ: Quita el '*' y pon tu URL de Angular
-        'allowedOrigins' => ['http://localhost:4200'], 
-        
+    public $default = [
+        'allowedOrigins'         => ['http://localhost:4200'], // Tu Angular
         'allowedOriginsPatterns' => [],
-        'supportsCredentials' => true, // Esto es lo que obligaba a quitar el *
-        'allowedHeaders' => ['*'],
-        'exposedHeaders' => [],
-        'allowedMethods' => ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
-        'maxAge' => 7200,
+        'supportsCredentials'    => true,
+        'allowedHeaders'         => ['*'], // Permitir todas las cabeceras
+        'allowedMethods'         => ['*'], // Permitir todos los métodos (GET, POST, etc)
+        'exposedHeaders'         => [],
+        'maxAge'                 => 7200,
     ];
 }

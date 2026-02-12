@@ -1,40 +1,49 @@
-<nav class="navbar navbar-expand-lg navbar-dark poke-navbar shadow-sm sticky-top">
-  <div class="container-fluid">
-    <button
-      class="navbar-toggler border-0"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
-      aria-controls="navbarNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span
-        class="navbar-toggler-icon"
-        style="filter: invert(89%) sepia(21%) saturate(7000%) hue-rotate(359deg) brightness(105%) contrast(105%);"
-      ></span>
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+  <div class="container">
+
+    <button class="navbar-toggler" type="button" (click)="toggleMenu()">
+      <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto align-items-center">
-        <li class="nav-item">
-          <a class="nav-link px-3" routerLink="/home" routerLinkActive="active">
-            Inicio
-          </a>
-        </li>
+    <div class="collapse navbar-collapse" [class.show]="menuAbierto" id="navbarNav">
+      
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
         
         <li class="nav-item">
-          <a class="nav-link px-3" routerLink="/comunidad" routerLinkActive="active">
-            Comunidad
-          </a>
+          <a class="nav-link" routerLink="/home" routerLinkActive="active">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/comunidad" routerLinkActive="active">Comunidad</a>
         </li>
 
-        <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
-          <a class="nav-link btn-login-nav px-4 py-2 rounded-pill" routerLink="/login" routerLinkActive="active-login">
+        <li class="nav-item ms-lg-3"></li>
+
+        <li class="nav-item" *ngIf="!userService.isLoggedIn()">
+          <a class="btn btn-light text-danger fw-bold rounded-pill px-5 py-2 shadow-sm btn-acceder-custom" 
+             routerLink="/login">
             Acceder
           </a>
         </li>
+
+        <li class="nav-item dropdown" *ngIf="userService.isLoggedIn()">
+          <a class="nav-link dropdown-toggle text-white fw-bold" 
+             style="cursor: pointer"
+             (click)="toggleMenuDesplegable($event)">
+             Hola, {{ userService.getUsuarioActual()?.username }}
+          </a>
+          
+          <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-4" 
+              [class.show]="desplegableAbierto">
+            <li>
+                <button class="dropdown-item text-danger" (click)="cerrarSesion()">
+                    Cerrar Sesión
+                </button>
+            </li>
+          </ul>
+        </li>
+
       </ul>
+
     </div>
   </div>
 </nav>
