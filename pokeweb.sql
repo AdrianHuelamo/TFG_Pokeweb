@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-02-2026 a las 21:36:51
+-- Tiempo de generación: 12-02-2026 a las 23:23:15
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -67,7 +67,23 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`) VALUES
-(1, 'ash', 'ash@pueblopaleta.com', '$2y$10$Au.01ARfTF8wzf3RfmYTGe2QnQbL5jM5myRmGiQ2WJJegkcDtRdGy', 'entrenador', '2026-02-06 14:05:58');
+(1, 'ash', 'ash@pueblopaleta.com', '$2y$10$Au.01ARfTF8wzf3RfmYTGe2QnQbL5jM5myRmGiQ2WJJegkcDtRdGy', 'entrenador', '2026-02-06 14:05:58'),
+(2, 'adri', 'adri41104@gmail.com', '$2y$10$uQKQD3UmFSCs3mSIzJofOuMl72xkPGxxktv9HzlZtxYbiHvpm9Khq', 'entrenador', '2026-02-12 18:57:56'),
+(3, 'adahi', 'adahi@psoe.com', '$2y$10$Ra3GKiDbfJSd/L51YVSmUOeMg0EgY5EUz/Xf3ULozVNHGEdkk3YUm', 'entrenador', '2026-02-12 18:59:04'),
+(4, 'jorge', 'jorge@gmail.com', '$2y$10$ccdQtRUedlHvtiQebOEkPuW8HXAJJ9M7Z4rmpM/SUlRiwKE3pJfaC', 'entrenador', '2026-02-12 20:45:49');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `user_capturas`
+--
+
+CREATE TABLE `user_capturas` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `pokemon_id` int(11) NOT NULL,
+  `fecha_captura` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Índices para tablas volcadas
@@ -88,6 +104,13 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `email` (`email`);
 
 --
+-- Indices de la tabla `user_capturas`
+--
+ALTER TABLE `user_capturas`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_user_pokemon` (`user_id`,`pokemon_id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -101,7 +124,23 @@ ALTER TABLE `noticias`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `user_capturas`
+--
+ALTER TABLE `user_capturas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `user_capturas`
+--
+ALTER TABLE `user_capturas`
+  ADD CONSTRAINT `user_capturas_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
