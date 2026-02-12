@@ -1,0 +1,18 @@
+/* src/app/components/noticia-details/noticia-details.css */
+
+.text-justify {
+    text-align: justify;
+}
+
+.article-content {
+    line-height: 1.9; /* Un poco más de aire para leer mejor */
+    white-space: pre-line;
+}
+
+.animate-fade-in { 
+    animation: fadeIn 0.8s ease-out; 
+}
+@keyframes fadeIn { 
+    from { opacity: 0; transform: translateY(20px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}

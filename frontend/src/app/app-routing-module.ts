@@ -8,6 +8,7 @@ import { Stats } from './components/details/tabs/stats/stats';
 import { Evolutions } from './components/details/tabs/evolutions/evolutions';
 import { Moves } from './components/details/tabs/moves/moves';
 import { Comunidad } from './components/comunidad/comunidad';
+import { NoticiaDetails } from './components/noticia-details/noticia-details';
 
 const routes: Routes = [
   { 
@@ -21,6 +22,9 @@ const routes: Routes = [
   },
   { 
     path: 'comunidad', component: Comunidad 
+  },
+  { 
+    path: 'noticia/:id', component: NoticiaDetails 
   },
   {
     path: 'pokemon/:id',

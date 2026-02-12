@@ -17,4 +17,8 @@ export class ComunidadService {
   getNoticias(): Observable<NoticiasResponse> {
     return this.http.get<NoticiasResponse>(this.apiUrl);
   }
+
+  getNoticiaById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`); 
+  }
 }

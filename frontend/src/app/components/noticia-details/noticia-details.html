@@ -1,0 +1,53 @@
+<div class="container py-5 animate-fade-in" *ngIf="noticia && !cargando && !error">
+    
+    <div class="mb-4">
+        <a routerLink="/comunidad" class="btn btn-outline-danger rounded-pill px-4 hover-scale">
+            <i class="bi bi-arrow-left me-2"></i> Volver a Comunidad
+        </a>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-lg-10 mx-auto text-center">
+            <h1 class="display-4 fw-bold text-dark mb-3">{{ noticia.titulo }}</h1>
+            
+            <div class="text-muted d-flex justify-content-center align-items-center">
+                <i class="bi bi-calendar-event me-2"></i>
+                <span>{{ noticia.created_at | date:'longDate' }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <img [src]="noticia.imagen" 
+                 class="w-100 rounded-4 shadow" 
+                 style="height: 350px; object-fit: cover; object-position: center;" 
+                 alt="Imagen Noticia">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-9 mx-auto">
+            
+            <div class="fs-5 text-secondary article-content text-justify">
+                {{ noticia.contenido }}
+            </div>
+
+            <div class="mt-5 pt-4 border-top text-end">
+                <span class="text-muted fst-italic small">
+                    Redacción PokéWeb
+                </span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div *ngIf="cargando" class="text-center py-5 my-5">
+    <div class="spinner-border text-danger" style="width: 3rem; height: 3rem;" role="status"></div>
+</div>
+
+<div *ngIf="error" class="text-center py-5 my-5">
+    <h3 class="text-muted fw-bold opacity-50 mb-3">No se pudo cargar la noticia.</h3>
+    <a routerLink="/comunidad" class="btn btn-danger rounded-pill px-4">Volver</a>
+</div>
