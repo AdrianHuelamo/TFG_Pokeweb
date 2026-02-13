@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 12-02-2026 a las 23:23:15
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Servidor: localhost
+-- Tiempo de generación: 13-02-2026 a las 11:08:32
+-- Versión del servidor: 8.0.43-0ubuntu0.24.04.2
+-- Versión de PHP: 8.4.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,14 +28,14 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `noticias` (
-  `id` int(11) NOT NULL,
-  `titulo` varchar(255) NOT NULL,
-  `resumen` text DEFAULT NULL,
-  `contenido` longtext NOT NULL,
-  `imagen` varchar(255) DEFAULT NULL,
-  `autor_id` int(11) DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `destacada` tinyint(1) DEFAULT 0
+  `id` int NOT NULL,
+  `titulo` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `resumen` text COLLATE utf8mb4_general_ci,
+  `contenido` longtext COLLATE utf8mb4_general_ci NOT NULL,
+  `imagen` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `autor_id` int DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `destacada` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -54,12 +54,12 @@ INSERT INTO `noticias` (`id`, `titulo`, `resumen`, `contenido`, `imagen`, `autor
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `role` enum('admin','campeon','entrenador') DEFAULT 'entrenador',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `id` int NOT NULL,
+  `username` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `role` enum('admin','campeon','entrenador') COLLATE utf8mb4_general_ci DEFAULT 'entrenador',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -70,7 +70,11 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`
 (1, 'ash', 'ash@pueblopaleta.com', '$2y$10$Au.01ARfTF8wzf3RfmYTGe2QnQbL5jM5myRmGiQ2WJJegkcDtRdGy', 'entrenador', '2026-02-06 14:05:58'),
 (2, 'adri', 'adri41104@gmail.com', '$2y$10$uQKQD3UmFSCs3mSIzJofOuMl72xkPGxxktv9HzlZtxYbiHvpm9Khq', 'entrenador', '2026-02-12 18:57:56'),
 (3, 'adahi', 'adahi@psoe.com', '$2y$10$Ra3GKiDbfJSd/L51YVSmUOeMg0EgY5EUz/Xf3ULozVNHGEdkk3YUm', 'entrenador', '2026-02-12 18:59:04'),
-(4, 'jorge', 'jorge@gmail.com', '$2y$10$ccdQtRUedlHvtiQebOEkPuW8HXAJJ9M7Z4rmpM/SUlRiwKE3pJfaC', 'entrenador', '2026-02-12 20:45:49');
+(4, 'jorge', 'jorge@gmail.com', '$2y$10$ccdQtRUedlHvtiQebOEkPuW8HXAJJ9M7Z4rmpM/SUlRiwKE3pJfaC', 'entrenador', '2026-02-12 20:45:49'),
+(5, 'pablo', 'pablo@hotmail.com', '$2y$12$zrPWENFFwr2oRZ5i5.lXUujHPUkLzzg3U7vNxOA80wlwMYXltAcni', 'entrenador', '2026-02-13 08:43:11'),
+(6, 'jorgue', 'jorge@hotmail.com', '$2y$12$LQVF119f182NcgVsjyzhyed3ZU5PRzjcwAjj3KYgKITUae8oBomAi', 'entrenador', '2026-02-13 09:15:04'),
+(7, 'joselu', 'joselu@gmail.com', '$2y$12$YNsL/afMsXIJzWgR5SV0Qeqt/Lel/256b92NdvpomD1IYE4ZSGehK', 'entrenador', '2026-02-13 09:36:43'),
+(8, 'adahi', 'adahi@vox.com', '$2y$12$PYJuBQt/1zsR/ZPhXi5eCuer4osKUaj/aDvZiCY.nmI0xX1oU/CgO', 'entrenador', '2026-02-13 10:53:02');
 
 -- --------------------------------------------------------
 
@@ -79,10 +83,10 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`
 --
 
 CREATE TABLE `user_capturas` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `pokemon_id` int(11) NOT NULL,
-  `fecha_captura` datetime DEFAULT current_timestamp()
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `pokemon_id` int NOT NULL,
+  `fecha_captura` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -100,7 +104,6 @@ ALTER TABLE `noticias`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
@@ -118,19 +121,19 @@ ALTER TABLE `user_capturas`
 -- AUTO_INCREMENT de la tabla `noticias`
 --
 ALTER TABLE `noticias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `user_capturas`
 --
 ALTER TABLE `user_capturas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas

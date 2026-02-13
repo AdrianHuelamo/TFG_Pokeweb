@@ -9,74 +9,85 @@ class Auth extends ResourceController
 {
     protected $format = 'json';
 
-    // --- 1. REGISTRO (Ya lo tenías, lo dejo igual) ---
     public function register()
     {
+        // 1. Recoger el JSON primero
+        $input = $this->request->getJSON(true); // 'true' devuelve un array asociativo
+
+        if (!$input) {
+            return $this->fail('No se han recibido datos JSON validos.', 400);
+        }
+
+        // 2. Definir las reglas de seguridad
         $rules = [
-            'username' => 'required|min_length[3]|is_unique[users.username]',
+            'username' => 'required|min_length[3]',
             'email'    => 'required|valid_email|is_unique[users.email]',
             'password' => [
                 'rules'  => 'required|min_length[8]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/]',
-                'errors' => ['regex_match' => 'La contraseña debe tener mayúsculas, minúsculas, números y símbolos.']
+                'errors' => [
+                    'regex_match' => 'La contraseña debe tener mayúscula, minúscula, número y símbolo.'
+                ]
             ],
             'confirmPassword' => 'required|matches[password]'
         ];
 
-        if (!$this->validate($rules)) {
-            return $this->fail($this->validator->getErrors());
+        // 3. Ejecutar la validación explícita sobre el JSON ($input)
+        $this->validator = \Config\Services::validation();
+        $this->validator->setRules($rules);
+
+        if (!$this->validator->run($input)) {
+            // Si falla, devolvemos los errores exactos
+            return $this->fail($this->validator->getErrors(), 400);
         }
 
-        $json = $this->request->getJSON();
+        // 4. Si todo está bien, guardamos
         $userModel = new UserModel();
         $data = [
-            'username'   => $json->username,
-            'email'      => $json->email,
-            'password'   => password_hash($json->password, PASSWORD_BCRYPT),
+            'username'   => $input['username'],
+            'email'      => $input['email'],
+            'password'   => password_hash($input['password'], PASSWORD_BCRYPT),
             'role'       => 'entrenador',
             'created_at' => date('Y-m-d H:i:s')
         ];
 
         try {
             $userModel->insert($data);
-            return $this->respondCreated(['mensaje' => 'Registro OK']);
+            return $this->respondCreated(['mensaje' => 'Registro completado con éxito']);
         } catch (\Exception $e) {
-            return $this->failServerError('Error en base de datos.');
+            return $this->failServerError('Error al guardar en la base de datos.');
         }
     }
 
-    // --- 2. LOGIN (¡FALTABA ESTO!) ---
     public function login()
     {
-        // Validamos que lleguen los datos básicos
+        // Recogemos JSON
+        $input = $this->request->getJSON(true);
+
         $rules = [
             'email'    => 'required|valid_email',
             'password' => 'required'
         ];
 
-        if (!$this->validate($rules)) {
-            return $this->fail($this->validator->getErrors());
+        $this->validator = \Config\Services::validation();
+        $this->validator->setRules($rules);
+
+        if (!$this->validator->run($input)) {
+            return $this->fail($this->validator->getErrors(), 400);
         }
 
-        // Recogemos los datos de Angular
-        $json = $this->request->getJSON();
         $userModel = new UserModel();
-
-        // 1. Buscar usuario por Email
-        $user = $userModel->where('email', $json->email)->first();
+        $user = $userModel->where('email', $input['email'])->first();
 
         if (!$user) {
-            return $this->failNotFound('Este correo no está registrado.');
+            return $this->failNotFound('Usuario no encontrado.');
         }
 
-        // 2. Comprobar Contraseña (password_verify compara la escrita con la encriptada)
-        if (!password_verify($json->password, $user['password'])) {
-            return $this->fail('La contraseña es incorrecta.', 401);
+        if (!password_verify($input['password'], $user['password'])) {
+            return $this->fail('Contraseña incorrecta.', 401);
         }
 
-        // 3. ¡Éxito! Quitamos la contraseña del array por seguridad antes de enviarlo
         unset($user['password']);
 
-        // Enviamos la respuesta a Angular
         return $this->respond([
             'status' => 200,
             'mensaje' => 'Login correcto',
