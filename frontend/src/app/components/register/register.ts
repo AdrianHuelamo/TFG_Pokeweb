@@ -22,10 +22,11 @@ export class Register {
   successMsg: string = '';
   cargando: boolean = false;
 
+  // Variables visuales fuerza
   passwordStrength: number = 0;
-  strengthColor: string = 'transparent';
-  strengthText: string = '';
+  strengthColor: string = '#ccc';
 
+  // Requisitos (usados en el HTML pequeño)
   requirements = {
     length: false,
     upper: false,
@@ -39,6 +40,7 @@ export class Register {
   checkStrength() {
     const p = this.user.password || '';
     
+    // Evaluar reglas
     this.requirements.length = p.length >= 8;
     this.requirements.upper = /[A-Z]/.test(p);
     this.requirements.lower = /[a-z]/.test(p);
@@ -48,29 +50,31 @@ export class Register {
     const met = Object.values(this.requirements).filter(v => v).length;
     this.passwordStrength = met * 20;
 
-    if (this.passwordStrength === 0) {
-      this.strengthColor = 'transparent';
-      this.strengthText = '';
-    } else if (this.passwordStrength <= 40) {
-      this.strengthColor = '#dc3545';
-      this.strengthText = 'Débil';
-    } else if (this.passwordStrength <= 80) {
-      this.strengthColor = '#ffc107';
-      this.strengthText = 'Media';
-    } else {
-      this.strengthColor = '#198754';
-      this.strengthText = 'Fuerte';
+    // Colores tipo "semáforo"
+    if (this.passwordStrength < 40) this.strengthColor = '#dc3545';      // Rojo
+    else if (this.passwordStrength < 100) this.strengthColor = '#ffc107'; // Amarillo
+    else this.strengthColor = '#198754';                                  // Verde
+  }
+
+  getConfirmColor(): string {
+    // Si no ha escrito nada en confirmar, borde gris estándar (o el que uses en ds-input)
+    if (!this.user.confirmPassword) {
+      return '#aaa'; 
     }
+    // Si coinciden: VERDE, si no: ROJO
+    return this.user.password === this.user.confirmPassword ? '#198754' : '#dc3545';
   }
 
   onSubmit() {
+    // 1. Validar coincidencia
     if (this.user.password !== this.user.confirmPassword) {
       this.errorMsg = 'Las contraseñas no coinciden.';
       return;
     }
 
+    // 2. Validar fuerza (Evitar error 400 del backend)
     if (this.passwordStrength < 100) {
-       this.errorMsg = 'La contraseña no es segura. Debe cumplir todos los requisitos.';
+       this.errorMsg = 'La contraseña es muy débil. Usa mayúsculas, números y símbolos.';
        return;
     }
 
@@ -79,24 +83,22 @@ export class Register {
     
     this.userService.register(this.user).subscribe({
       next: (resp) => {
-        this.successMsg = '¡Cuenta creada! Redirigiendo...';
-        setTimeout(() => this.router.navigate(['/login']), 2000);
+        this.successMsg = '¡Registrado! Vamos al login...';
+        setTimeout(() => this.router.navigate(['/login']), 1500);
       },
       error: (err) => {
         this.cargando = false;
-        console.log("Error detallado:", err); // Para verlo en consola F12
+        console.log("Error register:", err);
         
-        // --- DETECTAR Y MOSTRAR EL ERROR REAL DEL BACKEND ---
         if (err.error && err.error.messages) {
           const mensajes = err.error.messages;
-          // Si es un objeto, unimos los valores, si es texto, lo mostramos
           if (typeof mensajes === 'object') {
              this.errorMsg = Object.values(mensajes).join('. ');
           } else {
              this.errorMsg = String(mensajes);
           }
         } else {
-          this.errorMsg = 'Error en el servidor. Inténtalo más tarde.';
+          this.errorMsg = 'Error de conexión con el servidor.';
         }
       }
     });

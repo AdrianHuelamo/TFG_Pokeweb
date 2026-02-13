@@ -1,65 +1,93 @@
-<div class="container py-5">
-    <div class="row justify-content-center animate-fade-in">
-        <div class="col-md-6 col-lg-5">
-            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
-                
-                <div class="card-header bg-danger text-white text-center py-4">
-                    <h3 class="fw-bold mb-0">¡Hola de nuevo!</h3>
-                    <small>Accede a tu cuenta de Entrenador</small>
-                </div>
-
-                <div class="card-body p-4 p-md-5">
-                    
-                    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-                        
-                        <div class="mb-4">
-                            <label class="form-label fw-bold text-secondary small">Correo Electrónico</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-0"><i class="bi bi-envelope-fill"></i></span>
-                                <input type="email" class="form-control bg-light border-0" 
-                                       placeholder="ash@pueblopaleta.com" 
-                                       name="email" 
-                                       [(ngModel)]="user.email" 
-                                       required email>
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label fw-bold text-secondary small">Contraseña</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-0"><i class="bi bi-lock-fill"></i></span>
-                                <input type="password" class="form-control bg-light border-0" 
-                                       placeholder="******" 
-                                       name="password" 
-                                       [(ngModel)]="user.password" 
-                                       required>
-                            </div>
-                        </div>
-
-                        <div class="d-grid gap-2 mb-4">
-                            <button type="submit" class="btn btn-danger rounded-pill fw-bold py-2 shadow-sm hover-scale"
-                                    [disabled]="!loginForm.form.valid || cargando">
-                                <span *ngIf="cargando" class="spinner-border spinner-border-sm me-2"></span>
-                                <span *ngIf="!cargando">Iniciar Sesión</span>
-                            </button>
-                        </div>
-
-                        <div class="text-center small">
-                            <span class="text-muted">¿No tienes cuenta? </span>
-                            <a routerLink="/register" class="text-danger fw-bold text-decoration-none">
-                                Regístrate aquí
-                            </a>
-                        </div>
-
-                    </form>
-
-                    <div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center small animate-fade-in d-flex align-items-center justify-content-center">
-                        <i class="bi bi-exclamation-circle-fill me-2"></i>
-                        {{ errorMsg }}
-                    </div>
-
-                </div>
-            </div>
+<div class="login-container animate-fade-in">
+  
+  <div class="nintendo-ds">
+    
+    <div class="ds-screen-frame top-frame">
+      <div class="screen top-screen">
+        <div class="rpg-box">
+          <p class="mb-0">
+            ¡Hola de nuevo! <br>
+            Introduce tus credenciales para cargar la partida.
+          </p>
         </div>
+      </div>
     </div>
+
+    <div class="ds-hinge">
+      <div class="hinge-barrel"></div>
+      <div class="text-muted fw-bold small">POKÉWEB</div>
+      <div class="hinge-barrel d-flex align-items-center justify-content-end px-2">
+         <div class="power-light"></div>
+      </div>
+    </div>
+
+    <div class="ds-bottom-half">
+      
+      <div class="controls-left">
+        <div class="d-pad">
+          <div class="d-pad-h"></div>
+          <div class="d-pad-v"></div>
+          <div class="d-pad-center"></div>
+        </div>
+      </div>
+
+      <div class="ds-screen-frame bottom-frame">
+        <div class="screen bottom-screen px-4">
+          
+          <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+            
+            <div class="text-center mb-3">
+              <h5 class="fw-bold text-secondary">CONTINUAR PARTIDA</h5>
+            </div>
+
+            <div class="mb-3">
+              <input type="email" class="form-control ds-input" 
+                     placeholder="Tu Poké-Email" 
+                     name="email" [(ngModel)]="user.email" required>
+            </div>
+
+            <div class="mb-4">
+              <input type="password" class="form-control ds-input" 
+                     placeholder="Tu Contraseña" 
+                     name="password" [(ngModel)]="user.password" required>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-login" [disabled]="!loginForm.form.valid || cargando">
+                <span *ngIf="!cargando">ENTRAR (PRESS START)</span>
+                <span *ngIf="cargando">CARGANDO...</span>
+              </button>
+            </div>
+
+            <div class="text-center mt-3">
+              <span class="text-muted small">¿No tienes partida guardada?</span><br>
+              <a routerLink="/register" class="fw-bold text-danger text-decoration-none" style="cursor: pointer;">
+                ► CREAR NUEVA PARTIDA
+              </a>
+            </div>
+
+          </form>
+
+          <div *ngIf="errorMsg" class="alert alert-danger mt-3 py-2 text-center fw-bold small shadow-sm">
+            {{ errorMsg }}
+          </div>
+
+        </div>
+      </div>
+
+      <div class="controls-right">
+        <div class="action-buttons">
+          <div class="ds-btn btn-x">X</div>
+          <div class="ds-btn btn-y">Y</div>
+          <div class="ds-btn btn-a">A</div>
+          <div class="ds-btn btn-b">B</div>
+        </div>
+        <div class="start-select">
+          <div class="ss-btn">SELECT</div>
+          <div class="ss-btn">START</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/userservices';
-// Importamos la interfaz correcta
 import { UserLogin } from '../../common/userinterface'; 
 
 @Component({
@@ -12,19 +11,15 @@ import { UserLogin } from '../../common/userinterface';
 })
 export class Login {
 
-  // Usamos la interfaz UserLogin
   user: UserLogin = {
     email: '',
     password: ''
   };
 
   errorMsg: string = '';
-  cargando: boolean = false;
+  cargando: boolean = false; // Variable para el botón de carga
 
-  constructor(
-    private userService: UserService, 
-    private router: Router
-  ) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   onSubmit() {
     this.cargando = true;
@@ -32,21 +27,30 @@ export class Login {
 
     this.userService.login(this.user).subscribe({
       next: (resp) => {
-        this.cargando = false;
-        
-        // AQUÍ GUARDAMOS LA SESIÓN (TOKEN)
-        if(resp.status === 200 && resp.data) {
-          // Guardamos el usuario en el navegador
-          localStorage.setItem('usuario', JSON.stringify(resp.data));
-          
-          // Redirigimos al Home o Comunidad
-          this.router.navigate(['/home']);
-        }
+        // Guardamos el token/usuario en el servicio (ya lo hace el servicio con tap, pero aseguramos)
+        // Redirigimos al Home
+        setTimeout(() => {
+            this.router.navigate(['/']);
+            this.cargando = false;
+        }, 1000); // Pequeño delay dramático estilo juego cargando
       },
       error: (err) => {
-        console.error('Error login:', err);
         this.cargando = false;
-        this.errorMsg = err.error.messages?.error || 'Usuario o contraseña incorrectos.';
+        console.error('Error login:', err);
+        
+        // Intentar leer el mensaje de error del backend
+        if (err.error && err.error.messages) {
+            // Si es un objeto de mensajes
+            if (typeof err.error.messages === 'object') {
+                this.errorMsg = Object.values(err.error.messages).join(' ');
+            } else {
+                this.errorMsg = err.error.messages;
+            }
+        } else if (err.error && err.error.error) {
+            this.errorMsg = err.error.error; // A veces viene aquí
+        } else {
+            this.errorMsg = 'Credenciales incorrectas o error de conexión.';
+        }
       }
     });
   }
