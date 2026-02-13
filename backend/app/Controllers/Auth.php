@@ -8,6 +8,7 @@ use App\Models\UserModel;
 class Auth extends ResourceController
 {
     protected $format = 'json';
+    protected $helpers = ['jwt'];
 
     public function register()
     {
@@ -60,38 +61,40 @@ class Auth extends ResourceController
 
     public function login()
     {
-        // Recogemos JSON
+        // 1. Recoger datos
         $input = $this->request->getJSON(true);
-
-        $rules = [
-            'email'    => 'required|valid_email',
-            'password' => 'required'
-        ];
-
-        $this->validator = \Config\Services::validation();
-        $this->validator->setRules($rules);
-
-        if (!$this->validator->run($input)) {
-            return $this->fail($this->validator->getErrors(), 400);
-        }
-
         $userModel = new UserModel();
-        $user = $userModel->where('email', $input['email'])->first();
 
-        if (!$user) {
-            return $this->failNotFound('Usuario no encontrado.');
-        }
+        // 2. Validar usuario
+        $user = $userModel->where('email', $input['email'] ?? '')->first();
+        if (!$user) return $this->failNotFound('Usuario no encontrado.');
 
-        if (!password_verify($input['password'], $user['password'])) {
+        if (!password_verify($input['password'] ?? '', $user['password'])) {
             return $this->fail('Contraseña incorrecta.', 401);
         }
 
-        unset($user['password']);
+        // 3. GENERAR TOKEN (Usando nuestro helper manual)
+        $headers = ['alg' => 'HS256', 'typ' => 'JWT'];
+        $payload = [
+            'uid' => $user['id'],
+            'name' => $user['username'],
+            'role' => $user['role'],
+            'exp' => (time() + 3600) // 1 hora de vida
+        ];
 
+        // Llamamos a la función del helper que creamos
+        $token = generate_jwt($headers, $payload, getenv('JWT_SECRET'));
+
+        // 4. Responder
         return $this->respond([
             'status' => 200,
             'mensaje' => 'Login correcto',
-            'data'   => $user
+            'token' => $token,
+            'user' => [ // Enviamos datos básicos para la UI
+                'id' => $user['id'],
+                'username' => $user['username'],
+                'role' => $user['role']
+            ]
         ]);
     }
 }

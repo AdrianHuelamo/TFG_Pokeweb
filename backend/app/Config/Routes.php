@@ -7,12 +7,26 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 
+// GRUPO API
 $routes->group('api', function($routes) {
     
-    $routes->post('register', 'Auth::register'); // Registro de usuario
-    $routes->post('login', 'Auth::login');       // Inicio de sesión
+    // --- 1. RUTAS PÚBLICAS (No necesitan token) ---
+    
+    // Auth
+    $routes->post('register', 'Auth::register');
+    $routes->post('login', 'Auth::login');
 
-    $routes->get('noticias', 'Noticias::index');
-    $routes->get('noticias/(:num)', 'Noticias::show/$1'); // Noticia individual
+    // Noticias (AQUÍ ESTABA EL ERROR)
+    $routes->get('noticias', 'Noticias::index');           // Listar todas
+    $routes->get('noticias/(:num)', 'Noticias::show/$1');  // <--- ESTA LÍNEA FALTABA
+
+    // --- 2. RUTAS PRIVADAS (Necesitan Token) ---
+    $routes->group('', ['filter' => 'auth'], function($routes) {
+        
+        // Pokémon y Capturas
+        $routes->post('pokemon/toggle', 'Pokemon::toggleCatch');
+        $routes->get('pokemon/capturas/(:num)', 'Pokemon::getCapturas/$1');
+        
+    });
 
 });

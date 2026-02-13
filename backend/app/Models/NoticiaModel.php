@@ -12,6 +12,5 @@ class NoticiaModel extends Model
     protected $returnType       = 'array';
     protected $allowedFields = ['titulo', 'resumen', 'contenido', 'imagen', 'autor_id', 'destacada'];
     
-    // Fechas automáticas
-    protected $useTimestamps = false; // Ya usamos current_timestamp en la BD
+    protected $useTimestamps = false; 
 }
