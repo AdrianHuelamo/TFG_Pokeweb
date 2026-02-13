@@ -22,12 +22,10 @@ export class Register {
   successMsg: string = '';
   cargando: boolean = false;
 
-  // Feedback de contraseña
   passwordStrength: number = 0;
   strengthColor: string = 'transparent';
   strengthText: string = '';
 
-  // Requisitos individuales
   requirements = {
     length: false,
     upper: false,
@@ -41,30 +39,27 @@ export class Register {
   checkStrength() {
     const p = this.user.password || '';
     
-    // Evaluar requisitos individuales
     this.requirements.length = p.length >= 8;
     this.requirements.upper = /[A-Z]/.test(p);
     this.requirements.lower = /[a-z]/.test(p);
     this.requirements.number = /[0-9]/.test(p);
     this.requirements.special = /[^A-Za-z0-9]/.test(p);
 
-    // Calcular progreso
     const met = Object.values(this.requirements).filter(v => v).length;
     this.passwordStrength = met * 20;
 
-    // Configurar color y texto
     if (this.passwordStrength === 0) {
       this.strengthColor = 'transparent';
       this.strengthText = '';
     } else if (this.passwordStrength <= 40) {
-      this.strengthColor = '#dc3545'; // Rojo
-      this.strengthText = 'Contraseña débil';
+      this.strengthColor = '#dc3545';
+      this.strengthText = 'Débil';
     } else if (this.passwordStrength <= 80) {
-      this.strengthColor = '#ffc107'; // Amarillo
-      this.strengthText = 'Contraseña media';
+      this.strengthColor = '#ffc107';
+      this.strengthText = 'Media';
     } else {
-      this.strengthColor = '#198754'; // Verde
-      this.strengthText = 'Contraseña fuerte y segura';
+      this.strengthColor = '#198754';
+      this.strengthText = 'Fuerte';
     }
   }
 
@@ -74,21 +69,34 @@ export class Register {
       return;
     }
 
+    if (this.passwordStrength < 100) {
+       this.errorMsg = 'La contraseña no es segura. Debe cumplir todos los requisitos.';
+       return;
+    }
+
     this.cargando = true;
     this.errorMsg = '';
+    
     this.userService.register(this.user).subscribe({
       next: (resp) => {
-        this.successMsg = '¡Registro completado! Redirigiendo...';
-        this.cargando = false;
+        this.successMsg = '¡Cuenta creada! Redirigiendo...';
         setTimeout(() => this.router.navigate(['/login']), 2000);
       },
       error: (err) => {
         this.cargando = false;
+        console.log("Error detallado:", err); // Para verlo en consola F12
+        
+        // --- DETECTAR Y MOSTRAR EL ERROR REAL DEL BACKEND ---
         if (err.error && err.error.messages) {
-          const firstError = Object.values(err.error.messages)[0];
-          this.errorMsg = typeof firstError === 'string' ? firstError : 'Error en el registro';
+          const mensajes = err.error.messages;
+          // Si es un objeto, unimos los valores, si es texto, lo mostramos
+          if (typeof mensajes === 'object') {
+             this.errorMsg = Object.values(mensajes).join('. ');
+          } else {
+             this.errorMsg = String(mensajes);
+          }
         } else {
-          this.errorMsg = 'Error al registrar. Inténtalo más tarde.';
+          this.errorMsg = 'Error en el servidor. Inténtalo más tarde.';
         }
       }
     });
