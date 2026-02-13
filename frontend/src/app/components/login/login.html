@@ -37,7 +37,7 @@
           <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
             
             <div class="text-center mb-3">
-              <h5 class="fw-bold text-secondary">CONTINUAR PARTIDA</h5>
+              <h5 class="fw-bold text-secondary">INICIA SESIÓN</h5>
             </div>
 
             <div class="mb-3">
@@ -54,15 +54,15 @@
 
             <div class="d-grid">
               <button type="submit" class="btn btn-login" [disabled]="!loginForm.form.valid || cargando">
-                <span *ngIf="!cargando">ENTRAR (PRESS START)</span>
+                <span *ngIf="!cargando">ENTRAR</span>
                 <span *ngIf="cargando">CARGANDO...</span>
               </button>
             </div>
 
             <div class="text-center mt-3">
-              <span class="text-muted small">¿No tienes partida guardada?</span><br>
+              <span class="text-muted small">¿No tienes cuenta?</span><br>
               <a routerLink="/register" class="fw-bold text-danger text-decoration-none" style="cursor: pointer;">
-                ► CREAR NUEVA PARTIDA
+                CREAR UNA CUENTA
               </a>
             </div>
 

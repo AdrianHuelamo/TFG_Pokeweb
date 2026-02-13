@@ -7,7 +7,7 @@
         <div class="dialog-box animate-text">
           <p class="mb-0 fw-bold">
             ¡Hola! Soy el <b>Profesor Cañamo.</b> <br>
-            ¡Rellena tu ficha de Entrenador en la pantalla táctil de abajo para comenzar!
+            ¡ADENTRATE EN EL MUNDO POKÉMON!
           </p>
         </div>
       </div>
@@ -15,7 +15,7 @@
 
     <div class="ds-hinge">
       <div class="hinge-barrel"></div>
-      <div class="hinge-middle text-muted fw-bold">NINTENDO DS</div>
+      <div class="hinge-middle text-muted fw-bold">POKÉWEB</div>
       <div class="hinge-barrel d-flex align-items-center justify-content-end px-2">
          <div class="power-light on"></div>
       </div>
@@ -42,7 +42,7 @@
             </div>
 
             <div class="mb-3">
-              <label class="fw-bold text-secondary small text-uppercase">Poké-Email</label>
+              <label class="fw-bold text-secondary small text-uppercase">Email</label>
               <input type="email" class="form-control form-control-sm ds-input" 
                      placeholder="ash@pkmn.com" name="email" [(ngModel)]="user.email" required>
             </div>
@@ -76,13 +76,13 @@
 
             <button type="submit" class="btn btn-start"
                     [disabled]="!registerForm.form.valid || user.password !== user.confirmPassword || passwordStrength < 100 || cargando">
-              <span *ngIf="!cargando">COMENZAR AVENTURA (START)</span>
+              <span *ngIf="!cargando">COMENZAR AVENTURA</span>
               <span *ngIf="cargando">GUARDANDO DATOS...</span>
             </button>
 
             <div class="text-center mt-3">
               <a routerLink="/login" class="small text-danger text-decoration-none fw-bold login-link">
-                VOLVER AL TÍTULO (LOGIN)
+                INICIAR SESION
               </a>
             </div>
 
