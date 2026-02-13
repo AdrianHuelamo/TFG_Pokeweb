@@ -10,6 +10,7 @@ import { Moves } from './components/details/tabs/moves/moves';
 import { Comunidad } from './components/comunidad/comunidad';
 import { NoticiaDetails } from './components/noticia-details/noticia-details';
 import { Register } from './components/register/register';
+import { Profile } from './components/profile/profile';
 
 const routes: Routes = [
   { 
@@ -29,6 +30,9 @@ const routes: Routes = [
   },
   { 
     path: 'register', component: Register 
+  },
+  { 
+    path: 'profile', component: Profile 
   },
   {
     path: 'pokemon/:id',

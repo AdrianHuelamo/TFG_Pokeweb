@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { PokeService } from '../../services/pokewebservices';
 import { PokemonDataServices } from '../../services/pokemondataservices';
+import { UserService } from '../../services/userservices'; 
 import { forkJoin, fromEvent, Subscription } from 'rxjs'; 
 import { environment } from '../../../environments/environment';
 import { Pokemon } from '../../common/pokemoninterface';
@@ -18,6 +19,10 @@ export class Home implements OnInit, OnDestroy {
   pokemonsVisibles: Pokemon[] = []; 
   listaTipos: any[] = [];       
   
+  // Variables para capturas
+  capturados: number[] = [];
+  usuario: any = null;
+
   offset: number = 0;
   limitePorPagina: number = 24;
   cargando: boolean = true;      
@@ -34,149 +39,142 @@ export class Home implements OnInit, OnDestroy {
   constructor(
       private pokeService: PokeService, 
       private cd: ChangeDetectorRef,
-      private dataService: PokemonDataServices
+      private dataService: PokemonDataServices,
+      public userService: UserService 
   ) {}
 
   ngOnInit(): void {
-    
-    // Escuchamos el scroll (Solo para cargar más pokemon y mostrar botón subir)
-    this.scrollSubscription = fromEvent(window, 'scroll').subscribe(() => {
-        this.checkScroll();
-    });
-
-    const estadoGuardado = this.dataService.getHomeState();
-
-    if (estadoGuardado) {        
-        // Recuperamos los datos guardados en SessionStorage
-        this.listaTipos = estadoGuardado.listaTipos || []; 
-        this.listaGlobal = estadoGuardado.listaGlobal;
-        this.listaFiltrada = estadoGuardado.listaFiltrada;
-        this.pokemonsVisibles = estadoGuardado.pokemonsVisibles;
-        this.offset = estadoGuardado.offset;
-        
-        this.busqueda = estadoGuardado.busqueda;
-        this.regionSeleccionada = estadoGuardado.regionSeleccionada;
-        this.tipoSeleccionado = estadoGuardado.tipoSeleccionado;
-        this.ordenActual = estadoGuardado.ordenActual;
-
-        this.cargando = false;
-        // YA NO HACEMOS SCROLL AUTOMÁTICO
-
+    // ... tu código de restaurar estado ...
+    const savedState = this.dataService.getHomeState();
+    if (savedState) {
+        this.restaurarEstado(savedState);
     } else {
-        // Carga inicial normal
-        this.pokeService.getTypesList().subscribe(data => {
-            this.listaTipos = data.results.filter((t: any) => 
-                t.name !== 'stellar' && t.name !== 'unknown' && t.name !== 'shadow'
-            );
-        });
+        this.cargarPokemonsIniciales();
+    }
+    
+    this.iniciarScrollListener();
+    this.pokeService.getTypesList().subscribe(data => this.listaTipos = data.results);
 
-        this.cargando = true;
-        this.pokeService.getAllPokemons().subscribe({
-          next: (data) => {
-            if(data && data.results) {
-                this.listaGlobal = data.results.map((poke) => {
-                    const id = poke.url.split('/').filter(Boolean).pop();
-                    poke.id = parseInt(id || '0');
-                    poke.image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
-                    return poke;
-                });
-                
-                this.listaFiltrada = [...this.listaGlobal];
-                this.cargarMas(); 
-            }
-          },
-          error: (err) => { 
-              console.error(err); 
-              this.cargando = false; 
-          }
-        });
+    // --- AQUÍ ESTÁ LA CLAVE ---
+    this.usuario = this.userService.getUsuarioActual();
+    
+    console.log("1. Usuario recuperado en Init:", this.usuario); // CHIVATO 1
+
+    if (this.usuario && this.usuario.id) {
+        this.cargarCapturas();
+    } else {
+        console.warn("No hay usuario logueado, no cargo capturas.");
     }
   }
 
   ngOnDestroy(): void {
-      if (this.scrollSubscription) {
-          this.scrollSubscription.unsubscribe();
-      }
-
-      // Guardamos el estado de los DATOS (no del scroll)
-      const estado = {
-          listaTipos: this.listaTipos, 
-          listaGlobal: this.listaGlobal,
-          listaFiltrada: this.listaFiltrada,
-          pokemonsVisibles: this.pokemonsVisibles,
-          offset: this.offset,
-          busqueda: this.busqueda,
-          regionSeleccionada: this.regionSeleccionada,
-          tipoSeleccionado: this.tipoSeleccionado,
-          ordenActual: this.ordenActual
-      };
-
-      this.dataService.saveHomeState(estado);
-  }
-
-  async aplicarFiltros() {
-    this.cargando = true; 
-    this.pokemonsVisibles = [];
-    this.offset = 0;
-
-    let resultados = [...this.listaGlobal];
-
-    if (this.tipoSeleccionado !== 'all') {
-        try {
-            const data = await this.pokeService.getPokemonsByType(this.tipoSeleccionado).toPromise();
-            const pokemonsDeTipo = data.pokemon.map((p: any) => p.pokemon.name);
-            resultados = resultados.filter(p => pokemonsDeTipo.includes(p.name));
-        } catch (error) { console.error(error); }
+    if (this.scrollSubscription) {
+      this.scrollSubscription.unsubscribe();
     }
-
-    if (this.regionSeleccionada !== 'all') {
-        const rango = environment.regions[this.regionSeleccionada];
-        resultados = resultados.filter(p => (p.id!) >= rango.min && (p.id!) <= rango.max);
-    }
-
-    const texto = this.busqueda.toLowerCase().trim();
-    if (texto !== '') {
-        resultados = resultados.filter(p => 
-            p.name.includes(texto) || (p.id!).toString() === texto
-        );
-    }
-
-    this.ordenarListaInterna(resultados);
-
-    this.listaFiltrada = resultados;
-    this.cargarMas();
+    this.dataService.saveHomeState({
+        listaGlobal: this.listaGlobal,
+        listaFiltrada: this.listaFiltrada,
+        pokemonsVisibles: this.pokemonsVisibles,
+        offset: this.offset,
+        filtros: {
+            busqueda: this.busqueda,
+            orden: this.ordenActual,
+            region: this.regionSeleccionada,
+            tipo: this.tipoSeleccionado
+        },
+        scroll: window.scrollY
+    });
   }
 
-  buscar() { this.aplicarFiltros(); }
+  // --- MÉTODOS DE CAPTURA ---
 
-  resetearFiltros() {
-      this.busqueda = '';
-      this.regionSeleccionada = 'all';
-      this.tipoSeleccionado = 'all';
-      this.ordenActual = 'id-asc';
-      this.aplicarFiltros();
-  }
-
-  ordenarListaInterna(lista: Pokemon[]) {
-      if (this.ordenActual === 'id-asc') lista.sort((a, b) => (a.id!) - (b.id!));
-      if (this.ordenActual === 'id-desc') lista.sort((a, b) => (b.id!) - (a.id!));
-      if (this.ordenActual === 'name-asc') lista.sort((a, b) => a.name.localeCompare(b.name));
-      if (this.ordenActual === 'name-desc') lista.sort((a, b) => b.name.localeCompare(a.name));
-  }
-
-  cargarMas() {
-    if (this.cargandoMas) return;
-
-    const nuevosBasicos = this.listaFiltrada.slice(this.offset, this.offset + this.limitePorPagina);
+  cargarCapturas() {
+    if (!this.usuario?.id) return;
     
-    if (nuevosBasicos.length === 0) {
-        this.cargando = false; 
+    this.userService.getCapturasUsuario(this.usuario.id).subscribe({
+        next: (ids: any[]) => { // Ponemos 'any' por si vienen strings
+            
+            // --- LA SOLUCIÓN: Convertir todo a números (Number) ---
+            this.capturados = ids.map(id => Number(id));
+            
+            console.log("Capturas cargadas y convertidas:", this.capturados);
+            this.cd.detectChanges(); 
+        },
+        error: (err) => console.error('Error cargando capturas', err)
+    });
+  }
+
+  toggleCaptura(pokemonId: number | undefined, event: Event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    // Comprobación de seguridad: si el ID no existe, no hacemos nada
+    if (!pokemonId) return;
+
+    if (!this.userService.isLoggedIn()) {
+        alert("Inicia sesión para capturar Pokémon");
         return;
     }
 
-    this.cargandoMas = true;
+    const index = this.capturados.indexOf(pokemonId);
+    if (index === -1) {
+        this.capturados.push(pokemonId);
+    } else {
+        this.capturados.splice(index, 1);
+    }
 
-    const peticiones = nuevosBasicos.map(poke => this.pokeService.getPokemonDetails(poke.url));
+    this.userService.toggleCaptura(this.usuario.id, pokemonId).subscribe({
+        next: () => console.log('Captura OK'),
+        error: (err) => {
+            console.error(err);
+            this.cargarCapturas();
+        }
+    });
+  }
+
+  esCapturado(id: number | undefined): boolean {
+    if (!id) return false;
+    return this.capturados.includes(id);
+  }
+
+  // --- CARGA DE DATOS ---
+
+  cargarPokemonsIniciales() {
+    this.cargando = true;
+    this.pokeService.getAllPokemons().subscribe({
+      next: (response) => {
+          this.listaGlobal = response.results.map((poke: any) => {
+              const urlParts = poke.url.split('/');
+              const id = parseInt(urlParts[urlParts.length - 2]);
+              return {
+                  id: id,
+                  name: poke.name,
+                  url: poke.url,
+                  image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`,
+                  types: []
+              };
+          });
+
+          this.listaFiltrada = [...this.listaGlobal];
+          this.cargarDetallesDeVisibles();
+      },
+      error: (err) => {
+          console.error('Error cargando lista:', err);
+          this.cargando = false;
+      }
+    });
+  }
+
+  cargarDetallesDeVisibles() {
+    const nuevosBasicos = this.listaFiltrada.slice(this.offset, this.offset + this.limitePorPagina);
+    
+    if (nuevosBasicos.length === 0) {
+        this.cargando = false;
+        this.cargandoMas = false;
+        return;
+    }
+
+    const peticiones = nuevosBasicos.map(p => this.pokeService.getPokemonDetails(p.url));
 
     forkJoin(peticiones).subscribe({
         next: (detalles: any[]) => {
@@ -202,13 +200,57 @@ export class Home implements OnInit, OnDestroy {
     });
   }
 
+  cargarMas() {
+    if (this.cargandoMas || this.pokemonsVisibles.length >= this.listaFiltrada.length) return;
+    this.cargandoMas = true;
+    this.cargarDetallesDeVisibles();
+  }
+
+  // --- FILTROS (Aquí estaba el error) ---
+
+  aplicarFiltros() {
+    let res = this.listaGlobal;
+
+    // 1. Región
+    if (this.regionSeleccionada !== 'all') {
+       const regions: any[] = (environment as any).pokemonRegions || [];
+       const regionData = regions.find(r => r.value === this.regionSeleccionada);
+       
+       if (regionData) {
+           // SOLUCIÓN: Usamos (p.id || 0) para decirle a TS que si es undefined, use 0
+           res = res.filter(p => (p.id || 0) >= regionData.min && (p.id || 0) <= regionData.max);
+       }
+    }
+
+    // 2. Búsqueda
+    if (this.busqueda.trim()) {
+       const term = this.busqueda.toLowerCase();
+       // SOLUCIÓN: Verificamos si p.id existe antes de convertir a string
+       res = res.filter(p => p.name.includes(term) || (p.id ? p.id.toString() : '') === term);
+    }
+
+    this.listaFiltrada = res;
+    this.pokemonsVisibles = [];
+    this.offset = 0;
+    this.cargando = true;
+    this.cargarDetallesDeVisibles();
+  }
+
+  buscar() { this.aplicarFiltros(); }
+  resetearFiltros() {
+      this.busqueda = '';
+      this.regionSeleccionada = 'all';
+      this.tipoSeleccionado = 'all';
+      this.aplicarFiltros();
+  }
+
   getColor(type: string): string { 
-      return environment.pokemonTypeColors[type] || '#777'; 
+      const colors: any = (environment as any).pokemonTypeColors || {};
+      return colors[type] || '#777'; 
   }
 
   checkScroll() {
     const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-    
     this.mostrarBotonSubir = scrollPosition >= 400;
 
     const windowHeight = window.innerHeight;
@@ -221,10 +263,28 @@ export class Home implements OnInit, OnDestroy {
     }
   }
 
-  subirArriba() {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth' 
-    });
+  iniciarScrollListener() {
+      this.scrollSubscription = fromEvent(window, 'scroll').subscribe(() => {
+          this.checkScroll();
+      });
+  }
+
+  scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  restaurarEstado(state: any) {
+      this.listaGlobal = state.listaGlobal || [];
+      this.listaFiltrada = state.listaFiltrada || [];
+      this.pokemonsVisibles = state.pokemonsVisibles || [];
+      this.offset = state.offset || 0;
+      this.busqueda = state.filtros?.busqueda || '';
+      this.regionSeleccionada = state.filtros?.region || 'all';
+      this.tipoSeleccionado = state.filtros?.tipo || 'all';
+
+      if (state.scroll) {
+          setTimeout(() => window.scrollTo(0, state.scroll), 100);
+      }
+      this.cargando = false;
   }
 }

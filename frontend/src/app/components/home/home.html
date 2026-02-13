@@ -67,6 +67,13 @@
 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-3 row-cols-xxl-4 g-4" *ngIf="!cargando">
   <div class="col" *ngFor="let poke of pokemonsVisibles">
     <div class="card h-100 border-0 shadow-sm poke-card" [routerLink]="['/pokemon', poke.id]">
+      <div *ngIf="userService.isLoggedIn()" 
+             class="pokeball-btn"
+             [class.atrapado]="esCapturado(poke.id)"
+             (click)="toggleCaptura(poke.id, $event)"
+             title="Capturar / Liberar">
+            <i class="bi" [ngClass]="esCapturado(poke.id) ? 'bi-vinyl-fill' : 'bi-vinyl'"></i>
+        </div>
       <div class="card-body text-center p-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
            <span class="badge bg-light text-secondary border fs-6">#{{ poke.id }}</span>
@@ -98,8 +105,7 @@
 
 <button class="btn-scroll-top"
         [class.show]="mostrarBotonSubir"
-        (click)="subirArriba()"
-        title="Volver arriba">
+        (click)="scrollToTop()">
     
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>

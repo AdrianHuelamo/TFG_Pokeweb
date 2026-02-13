@@ -34,6 +34,12 @@
           
           <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-4" 
               [class.show]="desplegableAbierto">
+            <li *ngIf="userService.getUsuarioActual()?.role !== 'admin'">
+                <a class="dropdown-item fw-bold rounded-3 py-2" routerLink="/profile" (click)="desplegableAbierto = false">
+                    <i class="bi bi-card-heading me-2 text-primary"></i> Mi Perfil
+                </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
             <li>
                 <button class="dropdown-item text-danger" (click)="cerrarSesion()">
                     Cerrar Sesión

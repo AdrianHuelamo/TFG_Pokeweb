@@ -120,3 +120,85 @@
     visibility: visible;
     transform: translateY(0);
 }
+
+.pokeball-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 50;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    /* DIBUJO DE LA POKÉBALL (Gris por defecto/Sin capturar) */
+    background: linear-gradient(
+        to bottom,
+        #ddd 0%,    /* Arriba Gris claro */
+        #ddd 45%,
+        #333 45%,   /* Línea negra central */
+        #333 55%,
+        #fff 55%,   /* Abajo Blanco */
+        #fff 100%
+    );
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    
+    /* Estado apagado: un poco transparente */
+    opacity: 0.6; 
+    filter: grayscale(100%); 
+}
+
+/* BOTÓN CENTRAL DE LA POKÉBALL */
+.pokeball-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background-color: white;
+    border: 2px solid #333;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+/* HOVER: Al pasar el ratón se ilumina un poco */
+.pokeball-btn:hover {
+    transform: scale(1.1);
+    opacity: 0.9;
+}
+
+/* --- ESTADO CAPTURADO (A TODO COLOR) --- */
+.pokeball-btn.atrapado {
+    /* Color Rojo Oficial Pokémon */
+    background: linear-gradient(
+        to bottom,
+        #ff0000 0%, 
+        #cc0000 45%,
+        #333 45%,
+        #333 55%,
+        #fff 55%,
+        #fff 100%
+    );
+    opacity: 1; /* Totalmente visible */
+    filter: none; /* Quitamos escala de grises */
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.6); /* Brillo rojo */
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; /* Animación al capturar */
+}
+
+/* El botón central brilla rojo al atrapar */
+.pokeball-btn.atrapado::after {
+    background-color: #ffcccc; 
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+}
+
+/* --- ANIMACIÓN DE AGITAR (SHAKE) --- */
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0) rotate(-5deg); }
+  20%, 80% { transform: translate3d(2px, 0, 0) rotate(5deg); }
+  30%, 50%, 70% { transform: translate3d(-3px, 0, 0) rotate(-5deg); }
+  40%, 60% { transform: translate3d(3px, 0, 0) rotate(5deg); }
+}

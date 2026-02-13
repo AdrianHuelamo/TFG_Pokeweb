@@ -1,6 +1,6 @@
 /* === ESTRUCTURA PRINCIPAL === */
 .register-container {
-    min-height: 100vh;
+    min-height: 80vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -60,7 +60,7 @@
 
 .top-screen {
     height: 400px; /* Más alta */
-    background-image: url('/assets/profesor.png'); /* Asegura que esta imagen existe */
+    background-image: url('/assets/profesor.webp'); /* Asegura que esta imagen existe */
     background-size: cover;
     background-position: center 20%;
     position: relative;

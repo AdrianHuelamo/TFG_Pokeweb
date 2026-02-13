@@ -10,31 +10,38 @@ import { UserService } from '../../services/userservices';
 })
 export class Navbar implements OnInit {
 
+  // Ya no necesitamos la variable 'usuario' local porque usamos el servicio en el HTML
+  // para mayor reactividad, pero la podemos dejar por si acaso la usas en otro lado.
   usuario: any = null;
-  menuAbierto: boolean = false;      // Para el menú móvil
-  desplegableAbierto: boolean = false; // Para el menú de usuario
+  
+  menuAbierto: boolean = false;      
+  desplegableAbierto: boolean = false; 
 
   constructor(public userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
+    // Carga inicial (opcional ahora que el HTML llama al servicio)
     this.usuario = this.userService.getUsuarioActual();
   }
 
-  // Abre/Cierra el menú hamburguesa en móvil
   toggleMenu() {
     this.menuAbierto = !this.menuAbierto;
   }
 
-  // Abre/Cierra el desplegable del usuario
   toggleMenuDesplegable(event: Event) {
-    event.preventDefault(); // Evita que el enlace recargue o haga cosas raras
+    event.preventDefault(); 
     event.stopPropagation();
     this.desplegableAbierto = !this.desplegableAbierto;
   }
 
+  // Cierra el menú si se hace click fuera (HostListener opcional)
+  // Por ahora lo simplificamos en el cerrar sesión
+  
   cerrarSesion() {
     this.desplegableAbierto = false;
+    this.menuAbierto = false;
     this.userService.logout();
+    this.usuario = null;
     this.router.navigate(['/home']);
   }
 }

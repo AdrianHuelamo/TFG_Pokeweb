@@ -85,4 +85,51 @@ export class UserService {
       this.getAuthHeaders()
     );
   }
+
+  getAvatarUrl(avatarName: string | null): string {
+    // 1. Si no hay nombre, devolvemos la imagen local (assets)
+    if (!avatarName) {
+        return 'assets/profesor.png'; 
+    }
+
+    // 2. Si ya es una URL completa (ej: http...), la devolvemos tal cual
+    if (avatarName.startsWith('http')) {
+        return avatarName;
+    }
+
+    // 3. LIMPIEZA CRÍTICA DE LA URL
+    // Tu apiUrl actual es: ".../backend/public/index.php/api/"
+    // El error es que al quitar solo 'api/', se queda el 'index.php'.
+    
+    // Paso A: Quitamos 'index.php/api/' completo si existe
+    let baseUrl = this.apiUrl.replace('index.php/api/', '');
+    
+    // Paso B: Por si acaso tu environment fuera diferente, limpiamos restos
+    baseUrl = baseUrl.replace('api/', '');      // Quita 'api/' si queda suelto
+    baseUrl = baseUrl.replace('index.php/', ''); // Quita 'index.php/' si queda suelto
+
+    // 4. Aseguramos que la URL termine en '/'
+    if (!baseUrl.endsWith('/')) {
+        baseUrl += '/';
+    }
+
+    // URL Final esperada: http://localhost/TFG_Pokeweb/backend/public/uploads/avatars/default.webp
+    return `${baseUrl}uploads/avatars/${avatarName}`;
+  }
+  // Subir imagen (usa FormData porque enviamos ficheros)
+  uploadAvatar(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('avatar', file);
+    
+    return this.http.post(`${this.apiUrl}user/avatar`, formData, this.getAuthHeaders());
+  }
+
+  // Cambiar contraseña
+  changePassword(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}user/password`, data, this.getAuthHeaders());
+  }
+
+  getUserData(): Observable<any> {
+    return this.http.get(`${this.apiUrl}user/me`, this.getAuthHeaders());
+  }
 }

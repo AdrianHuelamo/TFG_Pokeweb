@@ -1,0 +1,198 @@
+<div class="profile-container animate-fade-in">
+  <div class="container py-4">
+    
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="trainer-card d-flex flex-column flex-md-row align-items-center gap-4">
+          
+          <div class="avatar-wrapper">
+            <img [src]="avatarUrl" alt="Avatar" class="trainer-avatar">
+            <label for="avatarInput" class="avatar-overlay">
+              <i class="bi bi-camera-fill mb-1 fs-4"></i>
+              <span>CAMBIAR</span>
+            </label>
+            <input type="file" id="avatarInput" class="d-none" (change)="onFileSelected($event)" accept="image/*">
+          </div>
+
+          <div class="text-center text-md-start">
+            <h5 class="text-white-50 mb-0 text-uppercase fw-bold">{{ usuario?.role || 'Entrenador' }}</h5>
+            <h1 class="mb-0 fw-bold">{{ usuario?.username || 'Sin Nombre' }}</h1>
+            <p class="mb-0 text-white-50 small mt-1">ID Entrenador: #{{ usuario?.id | number:'4.0-0' }}</p>
+          </div>
+          
+          <div class="ms-md-auto text-center text-md-end">
+            <h2 class="fw-bold mb-0">{{ capturados.length }}</h2>
+            <small class="text-white-50">Pokémon Registrados</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      
+      <div class="col-lg-8">
+        
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="stat-circle-card">
+              <div class="stat-label mb-2">Total Capturados</div>
+              <div class="big-number text-primary">
+                {{ capturados.length }} <span class="text-muted fs-6">/ 1025</span>
+              </div>
+              <div class="progress mt-3" style="height: 6px;">
+                <div class="progress-bar bg-primary" [style.width.%]="porcentajeTotal"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="stat-circle-card">
+              <div class="stat-label mb-2">Progreso Global</div>
+              <div class="big-number" [style.color]="getColorPorcentaje(porcentajeTotal)">
+                {{ porcentajeTotal | number:'1.0-1' }}%
+              </div>
+              <small class="text-muted">¡Hazte con todos!</small>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="stat-circle-card">
+              <div class="stat-label mb-2">Por Descubrir</div>
+              <div class="big-number text-secondary">
+                {{ 1025 - capturados.length }}
+              </div>
+              <small class="text-muted">Pokémon restantes</small>
+            </div>
+          </div>
+        </div>
+
+        <h4 class="fw-bold text-secondary mb-3 ps-2 border-start border-4 border-danger">
+            Medallas Regionales
+        </h4>
+        
+        <div *ngIf="cargando" class="text-center py-5">
+           <div class="spinner-border text-danger"></div>
+           <p class="mt-2 text-muted">Cargando datos...</p>
+        </div>
+
+        <div *ngIf="!cargando" class="row row-cols-1 row-cols-md-2 g-3">
+          
+          <div class="col" *ngFor="let region of statsRegiones">
+            <div class="region-card h-100 d-flex flex-column" [class.gold-border]="region.completado">
+              
+              <i class="bi bi-award-fill medal-icon" *ngIf="region.completado"></i>
+
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="region-name">{{ region.nombre | titlecase }}</span>
+                <span class="badge" 
+                      [ngClass]="region.completado ? 'bg-success' : 'bg-light text-dark border'">
+                  {{ region.porcentaje | number:'1.0-0' }}%
+                </span>
+              </div>
+
+              <div class="d-flex justify-content-between small fw-bold text-muted mb-1">
+                <span>{{ region.capturados }} atrapados</span>
+                <span>{{ region.total }} total</span>
+              </div>
+
+              <div class="progress mb-3">
+                <div class="progress-bar" 
+                     [class.completed]="region.completado"
+                     [style.width.%]="region.porcentaje">
+                </div>
+              </div>
+              
+              <small *ngIf="region.completado" class="text-success fw-bold d-block text-center animate-fade-in mb-2">
+                 ¡MAESTRO DE {{ region.nombre | uppercase }}!
+              </small>
+
+              <div class="mt-auto"></div>
+
+              <button class="btn btn-sm w-100 fw-bold btn-outline-light text-secondary border-0 bg-light" 
+                      (click)="toggleRegion(region)">
+                 <span *ngIf="!region.desplegado">Ver Detalles ▼</span>
+                 <span *ngIf="region.desplegado">Ocultar ▲</span>
+              </button>
+
+              <div *ngIf="region.desplegado" class="mt-3 pt-2 border-top animate-fade-in">
+                 <div class="mb-2 small fw-bold text-muted d-flex justify-content-between">
+                    <span>Pokédex Regional:</span>
+                    <span class="text-success">Verdes = Tienes</span>
+                 </div>
+                 
+                 <div class="d-flex flex-wrap gap-1" style="max-height: 200px; overflow-y: auto;">
+                    <span *ngFor="let id of region.listaCapturados" 
+                          class="badge bg-success bg-opacity-75 border border-success" 
+                          style="font-size: 0.7rem; width: 35px; cursor:default;" title="Capturado">
+                      {{ id }}
+                    </span>
+                    <span *ngFor="let id of region.listaFaltantes" 
+                          class="badge bg-light text-muted border" 
+                          style="font-size: 0.7rem; width: 35px; cursor:default;" title="Falta">
+                      {{ id }}
+                    </span>
+                 </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 sticky-top" style="top: 20px; z-index: 1;">
+          <div class="card-body p-4">
+            <h5 class="fw-bold text-secondary mb-3"><i class="bi bi-gear-fill me-2"></i>Ajustes</h5>
+            <hr>
+            
+            <button class="btn w-100 fw-bold py-2 mb-3 d-flex justify-content-between align-items-center"
+                    [ngClass]="mostrarPassword ? 'btn-danger' : 'btn-outline-dark'"
+                    (click)="togglePasswordForm()">
+                <span><i class="bi bi-shield-lock me-2"></i> Cambiar Contraseña</span>
+                <i class="bi" [ngClass]="mostrarPassword ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+            </button>
+
+            <div *ngIf="mostrarPassword" class="animate-fade-in bg-light p-3 rounded border">
+                <form (ngSubmit)="onSubmitPassword()">
+                  
+                  <div class="mb-3">
+                    <label class="small text-muted fw-bold">Contraseña Actual</label>
+                    <input type="password" class="form-control bg-white" 
+                           [(ngModel)]="passData.currentPassword" name="curr" required>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="small text-muted fw-bold">Nueva Contraseña</label>
+                    <input type="password" class="form-control bg-white" 
+                           [(ngModel)]="passData.newPassword" name="new" required minlength="6">
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="small text-muted fw-bold">Confirmar Nueva</label>
+                    <input type="password" class="form-control bg-white" 
+                           [class.is-invalid]="passData.confirmPassword && passData.newPassword !== passData.confirmPassword"
+                           [(ngModel)]="passData.confirmPassword" name="conf" required>
+                  </div>
+
+                  <div *ngIf="msgError" class="alert alert-danger small p-2 mb-3">{{ msgError }}</div>
+                  <div *ngIf="msgSuccess" class="alert alert-success small p-2 mb-3">{{ msgSuccess }}</div>
+
+                  <button type="submit" class="btn btn-dark w-100 fw-bold btn-sm" 
+                          [disabled]="cargandoPass || !passData.newPassword || passData.newPassword !== passData.confirmPassword">
+                    <span *ngIf="cargandoPass">
+                        <span class="spinner-border spinner-border-sm me-1"></span> Procesando...
+                    </span>
+                    <span *ngIf="!cargandoPass">Confirmar Cambio</span>
+                  </button>
+
+                </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div> 
+  </div>
+</div>
