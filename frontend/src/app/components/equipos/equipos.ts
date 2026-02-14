@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router'; // IMPORTANTE
+import { Router } from '@angular/router';
 import { EquiposServices } from '../../services/equiposservices';
 
 @Component({
@@ -8,18 +8,16 @@ import { EquiposServices } from '../../services/equiposservices';
   styleUrls: ['./equipos.css'],
   standalone: false
 })
-export class Equipos implements OnInit { // <--- AQUÍ ESTABA EL FALLO (Ahora es Equipos)
+export class Equipos implements OnInit { // <--- Nombre correcto 'Equipos'
 
   equipos: any[] = [];
   cargando: boolean = true; 
 
-  // Variables Modal CREAR/EDITAR
   mostrarModalNombre: boolean = false;
   nombreEquipoInput: string = '';
   equipoEnEdicionId: number | null = null;
   guardandoEquipo: boolean = false;
 
-  // Variables Modal BUSCADOR POKÉMON
   mostrarModalBuscador: boolean = false;
   teamIdSeleccionado: number = 0;
   
@@ -30,7 +28,7 @@ export class Equipos implements OnInit { // <--- AQUÍ ESTABA EL FALLO (Ahora es
   constructor(
     private equiposService: EquiposServices,
     private cd: ChangeDetectorRef,
-    private router: Router 
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -65,12 +63,10 @@ export class Equipos implements OnInit { // <--- AQUÍ ESTABA EL FALLO (Ahora es
       });
   }
 
-  // --- NAVEGACIÓN A DETALLES ---
   irADetalle(pokemonId: number) {
     this.router.navigate(['/pokemon', pokemonId]); 
   }
 
-  // --- GESTIÓN EQUIPOS ---
   abrirModalCrear() {
       this.equipoEnEdicionId = null; 
       this.nombreEquipoInput = ''; 
@@ -92,7 +88,6 @@ export class Equipos implements OnInit { // <--- AQUÍ ESTABA EL FALLO (Ahora es
       this.guardandoEquipo = true;
 
       if (this.equipoEnEdicionId) {
-          // EDITAR
           this.equiposService.updateEquipo(this.equipoEnEdicionId, this.nombreEquipoInput).subscribe({
               next: () => {
                   this.cargarEquipos();
@@ -102,7 +97,6 @@ export class Equipos implements OnInit { // <--- AQUÍ ESTABA EL FALLO (Ahora es
               error: () => this.guardandoEquipo = false
           });
       } else {
-          // CREAR
           this.equiposService.createEquipo(this.nombreEquipoInput).subscribe({
               next: () => {
                   this.cargarEquipos();
@@ -115,12 +109,11 @@ export class Equipos implements OnInit { // <--- AQUÍ ESTABA EL FALLO (Ahora es
   }
 
   deleteEquipo(id: number) {
-    if(confirm("¿Borrar equipo?")) {
+    if(confirm("¿Seguro que quieres borrar este equipo?")) {
       this.equiposService.deleteEquipo(id).subscribe(() => this.cargarEquipos());
     }
   }
 
-  // --- GESTIÓN MIEMBROS ---
   abrirSelector(teamId: number) {
     this.teamIdSeleccionado = teamId;
     this.terminoBusqueda = '';
