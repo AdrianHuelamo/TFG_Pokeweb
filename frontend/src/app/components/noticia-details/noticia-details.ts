@@ -4,12 +4,12 @@ import { ComunidadService } from '../../services/comunidadservices';
 import { Noticia } from '../../common/noticiainterfaz';
 
 @Component({
-  selector: 'app-noticia-details', // IMPORTANTE: coincidir con tu carpeta
+  selector: 'app-noticia-details', 
   templateUrl: './noticia-details.html',
   styleUrls: ['./noticia-details.css'],
   standalone: false
 })
-export class NoticiaDetails implements OnInit { // IMPORTANTE: Nombre de la clase
+export class NoticiaDetails implements OnInit { 
 
   noticia: Noticia | null = null;
   cargando: boolean = true;
@@ -37,7 +37,6 @@ export class NoticiaDetails implements OnInit { // IMPORTANTE: Nombre de la clas
     this.cargando = true;
     this.error = false;
     
-    // Ojo: asegúrate de que tu servicio getNoticiaById ya NO tenga el "/noticias" duplicado
     this.comunidadService.getNoticiaById(id).subscribe({
       next: (resp) => {
         if(resp.status == 200 && resp.data) {

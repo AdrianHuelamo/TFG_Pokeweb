@@ -23,25 +23,21 @@ export class Comunidad implements OnInit {
   ngOnInit(): void {
     this.comunidadService.getNoticias().subscribe({
       next: (resp) => {
-        // Verificamos si la respuesta es correcta (status 200 o similar)
         if (resp.status == 200 && resp.data && resp.data.length > 0) {
           
           const todas = resp.data;
 
-          // 1. Buscamos la noticia destacada (la primera del array, ya que el backend las ordena)
           this.noticiaDestacada = todas[0];
 
-          // 2. El resto de noticias van al grid (quitamos la primera)
           this.restoNoticias = todas.slice(1);
           
         } else {
-            // Si no hay noticias, dejamos las listas vacías
             this.noticiaDestacada = null;
             this.restoNoticias = [];
         }
         
         this.cargando = false;
-        this.cd.detectChanges(); // Forzamos la actualización de la vista por si acaso
+        this.cd.detectChanges(); 
       },
       error: (err) => {
         console.error('Error cargando noticias:', err);

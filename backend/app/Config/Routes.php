@@ -7,25 +7,40 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 
-// GRUPO API
 $routes->group('api', function($routes) {
     
-    // --- 1. RUTAS PÚBLICAS (No necesitan token) ---
+    // =================================================
+    // 1. RUTAS PÚBLICAS (Cualquiera puede entrar)
+    // =================================================
     
-    // Auth
+    // Autenticación
     $routes->post('register', 'Auth::register');
     $routes->post('login', 'Auth::login');
 
-    // Noticias (AQUÍ ESTABA EL ERROR)
-    $routes->get('noticias', 'Noticias::index');           // Listar todas
-    $routes->get('noticias/(:num)', 'Noticias::show/$1');  // <--- ESTA LÍNEA FALTABA
+    // Noticias
+    $routes->get('noticias', 'Noticias::index');           // Ver lista
+    $routes->get('noticias/(:num)', 'Noticias::show/$1');  // Ver detalle
 
-    // --- 2. RUTAS PRIVADAS (Necesitan Token) ---
     $routes->group('', ['filter' => 'auth'], function($routes) {
         
-        // Pokémon y Capturas
+        // Perfil y Usuario
+        $routes->get('user/me', 'Auth::me');
+        $routes->post('user/avatar', 'Auth::uploadAvatar');
+        $routes->post('user/password', 'Auth::changePassword');
+
+        // Pokémon
         $routes->post('pokemon/toggle', 'Pokemon::toggleCatch');
         $routes->get('pokemon/capturas/(:num)', 'Pokemon::getCapturas/$1');
+
+        // === ESTO ES LO QUE TE FALTA (EQUIPOS) ===
+        $routes->get('teams', 'Teams::index');                 // Ver equipos
+        $routes->post('teams', 'Teams::create');               // Crear equipo
+        $routes->delete('teams/(:num)', 'Teams::delete/$1');   // Borrar equipo
+        
+        $routes->post('teams/add', 'Teams::addMember');        // Añadir poke
+        $routes->put('teams/(:num)', 'Teams::update/$1');
+        $routes->delete('teams/member/(:num)', 'Teams::removeMember/$1'); // Quitar poke
+        // =========================================
         
     });
 

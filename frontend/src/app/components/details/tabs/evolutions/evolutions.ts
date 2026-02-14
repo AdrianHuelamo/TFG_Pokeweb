@@ -11,7 +11,7 @@ import { forkJoin, of } from 'rxjs';
 })
 export class Evolutions implements OnInit {
   pokemon: any;
-  evolutionTree: any[] = []; // Ya no es una lista plana, es una estructura de niveles
+  evolutionTree: any[] = []; 
   cargando: boolean = true;
 
   constructor(

@@ -8,64 +8,67 @@ use App\Models\UserModel;
 class Auth extends ResourceController
 {
     protected $format = 'json';
-    protected $helpers = ['jwt'];
+    protected $helpers = ['jwt']; // Cargar nuestro helper manual
 
-    public function register()
+    // --- FUNCIÓN SEGURA PARA OBTENER EL USUARIO ---
+    private function getUserFromToken()
     {
-        // 1. Recoger el JSON primero
-        $input = $this->request->getJSON(true); // 'true' devuelve un array asociativo
-
-        if (!$input) {
-            return $this->fail('No se han recibido datos JSON validos.', 400);
+        // Intentar leer cabecera Authorization
+        $header = $this->request->getServer('HTTP_AUTHORIZATION');
+        
+        // Soporte extra para Apache/XAMPP si borra la cabecera
+        if (!$header) {
+            $header = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? null;
         }
 
-        // 2. Definir las reglas de seguridad
+        if ($header && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+            $token = $matches[1];
+            $secret = getenv('JWT_SECRET');
+            
+            // Usamos la función de nuestro helper
+            $decoded = is_jwt_valid($token, $secret);
+            
+            // Devolvemos como OBJETO para usar flecha -> (ej: $user->uid)
+            return $decoded ? (object) $decoded : null;
+        }
+        return null;
+    }
+
+    // 1. REGISTRO
+    public function register()
+    {
+        $input = $this->request->getJSON(true);
+        if (!$input) return $this->fail('Datos inválidos', 400);
+
         $rules = [
             'username' => 'required|min_length[3]',
             'email'    => 'required|valid_email|is_unique[users.email]',
-            'password' => [
-                'rules'  => 'required|min_length[8]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/]',
-                'errors' => [
-                    'regex_match' => 'La contraseña debe tener mayúscula, minúscula, número y símbolo.'
-                ]
-            ],
+            'password' => 'required|min_length[6]',
             'confirmPassword' => 'required|matches[password]'
         ];
 
-        // 3. Ejecutar la validación explícita sobre el JSON ($input)
-        $this->validator = \Config\Services::validation();
-        $this->validator->setRules($rules);
-
-        if (!$this->validator->run($input)) {
-            // Si falla, devolvemos los errores exactos
-            return $this->fail($this->validator->getErrors(), 400);
+        if (!$this->validate($rules)) {
+            return $this->fail($this->validator->getErrors());
         }
 
-        // 4. Si todo está bien, guardamos
         $userModel = new UserModel();
-        $data = [
-            'username'   => $input['username'],
-            'email'      => $input['email'],
-            'password'   => password_hash($input['password'], PASSWORD_BCRYPT),
-            'role'       => 'entrenador',
-            'created_at' => date('Y-m-d H:i:s')
-        ];
+        $userModel->insert([
+            'username' => $input['username'],
+            'email'    => $input['email'],
+            'password' => password_hash($input['password'], PASSWORD_DEFAULT),
+            'role'     => 'entrenador',
+            'avatar'   => 'default.webp' // <--- ESTA ES LA LÍNEA NUEVA
+        ]);
 
-        try {
-            $userModel->insert($data);
-            return $this->respondCreated(['mensaje' => 'Registro completado con éxito']);
-        } catch (\Exception $e) {
-            return $this->failServerError('Error al guardar en la base de datos.');
-        }
+        return $this->respondCreated(['status' => 201, 'mensaje' => 'Usuario registrado']);
     }
 
+    // 2. LOGIN
     public function login()
     {
-        // 1. Recoger datos
         $input = $this->request->getJSON(true);
         $userModel = new UserModel();
 
-        // 2. Validar usuario
         $user = $userModel->where('email', $input['email'] ?? '')->first();
         if (!$user) return $this->failNotFound('Usuario no encontrado.');
 
@@ -73,28 +76,119 @@ class Auth extends ResourceController
             return $this->fail('Contraseña incorrecta.', 401);
         }
 
-        // 3. GENERAR TOKEN (Usando nuestro helper manual)
+        // Generar Token
         $headers = ['alg' => 'HS256', 'typ' => 'JWT'];
         $payload = [
             'uid' => $user['id'],
             'name' => $user['username'],
             'role' => $user['role'],
-            'exp' => (time() + 3600) // 1 hora de vida
+            'exp' => (time() + 3600 * 2)
         ];
 
-        // Llamamos a la función del helper que creamos
         $token = generate_jwt($headers, $payload, getenv('JWT_SECRET'));
 
-        // 4. Responder
         return $this->respond([
             'status' => 200,
             'mensaje' => 'Login correcto',
             'token' => $token,
-            'user' => [ // Enviamos datos básicos para la UI
+            'user' => [
                 'id' => $user['id'],
                 'username' => $user['username'],
-                'role' => $user['role']
+                'role' => $user['role'],
+                'avatar' => $user['avatar'] ?? null // Enviamos avatar si existe
             ]
         ]);
+    }
+
+    // 3. SUBIR AVATAR (Protegido)
+    public function uploadAvatar()
+    {
+        $user = $this->getUserFromToken();
+        if (!$user) return $this->failUnauthorized('Sesión inválida');
+
+        $file = $this->request->getFile('avatar');
+
+        if (!$file || !$file->isValid()) {
+            return $this->fail('No se ha subido ningún archivo válido');
+        }
+
+        // Generar nombre único
+        $newName = $file->getRandomName();
+        
+        // Mover a la carpeta pública (asegúrate de crear esta carpeta)
+        $file->move(FCPATH . 'uploads/avatars', $newName);
+
+        // Actualizar Base de Datos
+        $userModel = new UserModel();
+        // Accedemos a ->uid o ['uid'] por seguridad
+        $uid = $user->uid ?? $user->data->uid ?? null; 
+        
+        if($uid) {
+            $userModel->update($uid, ['avatar' => $newName]);
+        }
+
+        return $this->respond([
+            'status' => 200, 
+            'mensaje' => 'Avatar actualizado', 
+            'avatar' => $newName
+        ]);
+    }
+
+    // 4. CAMBIAR CONTRASEÑA (Protegido)
+    public function changePassword()
+    {
+        $userToken = $this->getUserFromToken();
+        if (!$userToken) return $this->failUnauthorized();
+
+        $json = $this->request->getJSON();
+        
+        $current = $json->currentPassword ?? '';
+        $new = $json->newPassword ?? '';
+        $confirm = $json->confirmPassword ?? '';
+
+        if ($new !== $confirm) {
+            return $this->fail('Las contraseñas nuevas no coinciden');
+        }
+        if (strlen($new) < 6) {
+            return $this->fail('La contraseña nueva es muy corta');
+        }
+
+        $userModel = new UserModel();
+        // Obtener datos reales de la BD para verificar la contraseña vieja
+        $uid = $userToken->uid ?? null;
+        $dbUser = $userModel->find($uid);
+
+        if (!$dbUser || !password_verify($current, $dbUser['password'])) {
+            return $this->fail('La contraseña actual es incorrecta', 401);
+        }
+
+        // Guardar nueva
+        $userModel->update($uid, [
+            'password' => password_hash($new, PASSWORD_DEFAULT)
+        ]);
+
+        return $this->respond(['status' => 200, 'mensaje' => 'Contraseña actualizada']);
+    }
+
+    public function me()
+    {
+        $userToken = $this->getUserFromToken();
+        
+        if (!$userToken) {
+            return $this->failUnauthorized('Sesión inválida');
+        }
+
+        $userModel = new UserModel();
+        // Buscamos en la BD usando el ID del token
+        $data = $userModel->find($userToken->uid);
+
+        if (!$data) {
+            return $this->failNotFound('Usuario no encontrado');
+        }
+
+        // Devolvemos los datos (quitando la contraseña por seguridad)
+        unset($data['password']);
+        
+        return $this->respond($data);
     }
 }

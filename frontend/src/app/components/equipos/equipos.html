@@ -1,0 +1,129 @@
+<div class="equipos-container animate-fade-in p-4 position-relative">
+  
+  <div class="d-flex justify-content-between align-items-center mb-4 ps-2 border-start border-4 border-danger">
+      <h2 class="fw-bold text-secondary mb-0">Mis Equipos Pokémon</h2>
+      
+      <button *ngIf="equipos.length > 0 || cargando" 
+              class="btn btn-danger fw-bold shadow-sm d-flex align-items-center" 
+              (click)="abrirModalCrear()" [disabled]="cargando">
+          <i class="bi bi-plus-lg me-2"></i> Nuevo Equipo
+      </button>
+  </div>
+
+  <div *ngIf="cargando" class="text-center py-5 mt-5">
+      <div class="spinner-border text-danger" style="width: 3rem; height: 3rem;" role="status"></div>
+  </div>
+
+  <div class="row g-4" *ngIf="!cargando && equipos.length > 0">
+    <div class="col-12 col-md-6 col-xl-4" *ngFor="let equipo of equipos">
+      <div class="team-card h-100">
+        
+        <div class="team-header">
+          <div class="d-flex align-items-center gap-2 overflow-hidden">
+              <h5 class="mb-0 fw-bold text-truncate">{{ equipo.name }}</h5>
+              <button class="btn btn-sm text-white opacity-50 hover-opacity-100 p-0" 
+                      (click)="abrirModalEditar(equipo)" title="Cambiar nombre">
+                  <i class="bi bi-pencil-square"></i>
+              </button>
+          </div>
+
+          <button class="btn btn-sm btn-link text-white opacity-75 hover-opacity-100 p-0" 
+                  (click)="deleteEquipo(equipo.id)" title="Borrar Equipo">
+            <i class="bi bi-trash-fill fs-5"></i>
+          </button>
+        </div>
+
+        <div class="team-slots">
+          <div class="poke-slot filled animate-pop-in" 
+               *ngFor="let member of equipo.members"
+               (click)="irADetalle(member.pokemon_id)"
+               style="cursor: pointer" 
+               title="Ver detalles">
+             
+             <img [src]="getPokemonImage(member.pokemon_id)" draggable="false">
+             
+             <button class="btn-remove-member" 
+                     (click)="$event.stopPropagation(); removeMember(member.id)"
+                     title="Sacar del equipo">×</button>
+          </div>
+
+          <div class="poke-slot empty-slot-interactive" 
+               *ngFor="let empty of getEmptySlots(equipo.members.length)"
+               (click)="abrirSelector(equipo.id)" title="Añadir">
+             <i class="bi bi-plus-lg empty-icon"></i>
+             <span class="add-text">Añadir</span>
+          </div>
+        </div>
+        
+        <div class="p-2 text-center bg-white border-top">
+            <span class="badge rounded-pill text-bg-light border text-muted" 
+                  [ngClass]="{'border-success text-success bg-success-subtle': equipo.members.length === 6}">
+                <small class="fw-bold">{{ equipo.members.length }} / 6 Pokémon</small>
+            </span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!cargando && equipos.length === 0" class="empty-state-container text-center py-5 mt-4 rounded-5 shadow-sm border border-2">
+      <i class="bi bi-box2-heart display-1 text-danger opacity-50"></i>
+      <h3 class="fw-bold text-dark mt-3">¡Tu PC está vacío!</h3>
+      <button class="btn btn-danger btn-lg fw-bold px-5 mt-3 shadow" (click)="abrirModalCrear()">
+          Crear mi Primer Equipo
+      </button>
+  </div>
+
+</div>
+
+<div class="modal-backdrop fade show" *ngIf="mostrarModalNombre"></div>
+<div class="modal fade show d-block" tabindex="-1" *ngIf="mostrarModalNombre">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg rounded-4">
+      <div class="modal-header bg-danger text-white border-0">
+        <h5 class="modal-title fw-bold">
+            {{ equipoEnEdicionId ? 'Renombrar Equipo' : 'Nuevo Equipo' }}
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="cerrarModalNombre()"></button>
+      </div>
+      <div class="modal-body p-4 bg-light">
+          <input type="text" class="form-control form-control-lg shadow-sm border-0" 
+                 [(ngModel)]="nombreEquipoInput" placeholder="Nombre..." autofocus (keyup.enter)="guardarEquipo()">
+      </div>
+      <div class="modal-footer border-0 bg-white">
+        <button class="btn btn-outline-secondary rounded-pill" (click)="cerrarModalNombre()">Cancelar</button>
+        <button class="btn btn-danger rounded-pill fw-bold px-4" (click)="guardarEquipo()" [disabled]="!nombreEquipoInput.trim()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop fade show" *ngIf="mostrarModalBuscador" style="z-index: 1055;"></div>
+<div class="modal fade show d-block" tabindex="-1" *ngIf="mostrarModalBuscador" style="z-index: 1060;" (click)="cerrarSelector()">
+  <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable" (click)="$event.stopPropagation()">
+    <div class="modal-content border-0 shadow-lg rounded-4 h-75">
+      <div class="modal-header bg-dark text-white border-0 py-3">
+        <div class="input-group">
+            <span class="input-group-text bg-secondary text-white border-0"><i class="bi bi-search"></i></span>
+            <input type="text" class="form-control bg-dark text-white border-secondary shadow-none" 
+                   [(ngModel)]="terminoBusqueda" (ngModelChange)="filtrarPokemon()"
+                   placeholder="Buscar Pokémon..." autofocus>
+        </div>
+        <button type="button" class="btn-close btn-close-white ms-3" (click)="cerrarSelector()"></button>
+      </div>
+      <div class="modal-body bg-light p-3">
+          <div class="row row-cols-3 row-cols-md-4 row-cols-lg-5 g-3">
+              <div class="col" *ngFor="let p of listaPokemonFiltrada">
+                  <div class="card h-100 border-0 shadow-sm pokemon-select-card" (click)="seleccionarPokemon(p.id)">
+                      <div class="card-body p-2 text-center">
+                          <img [src]="getPokemonImage(p.id)" class="img-fluid mb-2" style="max-height: 80px;" loading="lazy">
+                          <small class="d-block fw-bold text-muted text-capitalize small-text">#{{p.id}}</small>
+                          <h6 class="fw-bold text-dark text-capitalize mb-0 small-text">{{ p.name }}</h6>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

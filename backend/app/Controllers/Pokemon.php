@@ -8,55 +8,79 @@ use App\Models\CapturaModel;
 class Pokemon extends ResourceController
 {
     protected $format = 'json';
+    protected $helpers = ['jwt']; // Aseguramos carga del helper
 
-    // 1. Alternar Captura (Atrapar / Soltar)
+    // --- FUNCIÓN SEGURA ---
+    private function getUserFromToken()
+    {
+        $header = $this->request->getServer('HTTP_AUTHORIZATION');
+        if (!$header) $header = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? null;
+
+        if ($header && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+            $token = $matches[1];
+            $secret = getenv('JWT_SECRET');
+            $decoded = is_jwt_valid($token, $secret);
+            return $decoded ? (object) $decoded : null;
+        }
+        return null;
+    }
+
+    // 1. ALTERNAR CAPTURA
     public function toggleCatch()
     {
-        $json = $this->request->getJSON();
+        $user = $this->getUserFromToken();
         
-        // Validar datos
-        if (!isset($json->user_id) || !isset($json->pokemon_id)) {
-            return $this->fail('Faltan datos (user_id o pokemon_id).');
+        if (!$user) {
+            return $this->failUnauthorized('Sesión expirada o inválida');
         }
 
-        $capturaModel = new CapturaModel();
+        $json = $this->request->getJSON();
+        $pokemonId = $json->pokemon_id ?? null;
 
-        // Verificar si ya lo tiene atrapado
-        $existe = $capturaModel->where('user_id', $json->user_id)
-                               ->where('pokemon_id', $json->pokemon_id)
+        if (!$pokemonId) return $this->fail('Falta ID Pokemon');
+
+        $capturaModel = new CapturaModel();
+        
+        // Acceso seguro al ID
+        $userId = $user->uid ?? null;
+
+        $existe = $capturaModel->where('user_id', $userId)
+                               ->where('pokemon_id', $pokemonId)
                                ->first();
 
         if ($existe) {
-            // Si existe, lo "Soltamos" (Borrar)
+            // Soltar
             $capturaModel->delete($existe['id']);
-            return $this->respond([
-                'status' => 'released', 
-                'mensaje' => 'Pokémon soltado'
-            ]);
+            return $this->respond(['status' => 'released']);
         } else {
-            // Si no existe, lo "Atrapamos" (Insertar)
+            // Atrapar
             $capturaModel->insert([
-                'user_id' => $json->user_id,
-                'pokemon_id' => $json->pokemon_id
+                'user_id' => $userId,
+                'pokemon_id' => $pokemonId
             ]);
-            return $this->respond([
-                'status' => 'caught', 
-                'mensaje' => 'Pokémon atrapado'
-            ]);
+            return $this->respond(['status' => 'caught']);
         }
     }
 
-    // 2. Obtener lista de IDs atrapados por el usuario
+    // 2. OBTENER CAPTURAS
     public function getCapturas($userId = null)
     {
-        if (!$userId) return $this->fail('Usuario no especificado');
+        // Si no viene ID en la URL, usamos el del token
+        if (!$userId) {
+            $user = $this->getUserFromToken();
+            $userId = $user->uid ?? null;
+        }
+
+        if (!$userId) return $this->fail('Usuario desconocido');
 
         $capturaModel = new CapturaModel();
-        // Obtenemos solo la columna pokemon_id
+        // Seleccionamos solo la columna pokemon_id para devolver array simple
         $data = $capturaModel->select('pokemon_id')->where('user_id', $userId)->findAll();
         
-        // Limpiamos el array para devolver solo números: [1, 4, 7, 25...]
         $ids = array_column($data, 'pokemon_id');
+
+        // Nos aseguramos de devolver números enteros, no strings
+        $ids = array_map('intval', $ids);
 
         return $this->respond($ids);
     }

@@ -14,13 +14,11 @@ export class Profile implements OnInit {
   capturados: number[] = [];
   cargando: boolean = true;
   
-  // Imagen por defecto SOLO mientras carga. Luego la BD manda.
-  avatarUrl: string = 'assets/default.jpg';
+  avatarUrl: string = 'assets/default.webp';
 
   porcentajeTotal: number = 0;
   statsRegiones: any[] = [];
 
-  // Variables Password
   mostrarPassword: boolean = false;
   passData = { currentPassword: '', newPassword: '', confirmPassword: '' };
   msgError: string = '';
@@ -33,22 +31,18 @@ export class Profile implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // 1. Cargamos datos frescos de la BASE DE DATOS
     this.cargarPerfilDesdeBD();
   }
 
   cargarPerfilDesdeBD() {
     this.cargando = true;
 
-    // Llamamos al nuevo endpoint 'user/me'
     this.userService.getUserData().subscribe({
       next: (data) => {
-        this.usuario = data; // Aquí tenemos el objeto real de la BD
+        this.usuario = data; 
         
-        // La BD nos dice qué foto poner. Si 'data.avatar' es null, el servicio pone la default.
         this.avatarUrl = this.userService.getAvatarUrl(data.avatar);
         
-        // Una vez tenemos el usuario, cargamos sus capturas
         this.cargarCapturas();
       },
       error: (err) => {
@@ -76,27 +70,19 @@ export class Profile implements OnInit {
     });
   }
 
-  // --- SUBIDA DE AVATAR ---
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
         this.userService.uploadAvatar(file).subscribe({
             next: (resp: any) => {
-                // El backend nos devuelve el nuevo nombre de archivo
-                // Actualizamos la vista inmediatamente
                 this.avatarUrl = this.userService.getAvatarUrl(resp.avatar);
                 alert("¡Foto actualizada y guardada en la Base de Datos!");
                 this.cd.detectChanges();
-                
-                // Opcional: Recargar todo el perfil para asegurar consistencia
-                // this.cargarPerfilDesdeBD(); 
             },
             error: (err) => alert("Error al subir imagen.")
         });
     }
   }
-
-  // ... (El resto de métodos: togglePasswordForm, onSubmitPassword, calcularEstadisticas... siguen IGUAL)
   
   togglePasswordForm() {
       this.mostrarPassword = !this.mostrarPassword;

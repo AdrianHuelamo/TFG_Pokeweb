@@ -1,0 +1,209 @@
+.equipos-container {
+    min-height: 100vh;
+    background-color: #ffffff; /* Blanco puro */
+    padding-bottom: 80px;
+}
+
+/* --- TARJETA DE EQUIPO --- */
+.team-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid #eef0f2;
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(220, 53, 69, 0.15);
+    border-color: #f8d7da;
+}
+
+.team-header {
+    /* Gradiente más moderno */
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid rgba(0,0,0,0.1);
+}
+
+.hover-opacity-100:hover {
+    opacity: 1 !important;
+}
+
+/* --- SLOTS (Huecos) --- */
+.team-slots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.poke-slot {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    /* Fondo de "Pokéball vacía" más detallado */
+    background: #f1f3f5;
+    background-image: radial-gradient(circle at center, #e9ecef 30%, transparent 31%),
+                      linear-gradient(to bottom, #dee2e6 50%, #ced4da 50%);
+    background-size: 100% 100%, 100% 4px;
+    background-position: center, center 50%;
+    background-repeat: no-repeat;
+    
+    border: 3px solid #dee2e6;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    overflow: hidden;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Slot Lleno */
+.poke-slot.filled {
+    border: 3px solid #4caf50;
+    background: linear-gradient(135deg, #ffffff 0%, #f0fff0 100%);
+    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
+}
+
+.poke-slot img {
+    width: 95%;
+    height: 95%;
+    object-fit: contain;
+    z-index: 2;
+    filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1));
+}
+
+/* Slot Vacío Interactivo */
+.empty-slot-interactive {
+    cursor: pointer;
+    color: #adb5bd;
+}
+
+.empty-slot-interactive:hover {
+    border-color: #dc3545;
+    background-color: #fff5f5;
+    color: #dc3545;
+    transform: scale(1.05);
+}
+
+.empty-icon {
+    font-size: 1.8rem;
+    transition: transform 0.2s;
+}
+
+.empty-slot-interactive:hover .empty-icon {
+    transform: rotate(90deg);
+}
+
+.add-text {
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 4px;
+    opacity: 0; /* Oculto por defecto */
+    transition: opacity 0.2s;
+}
+
+.empty-slot-interactive:hover .add-text {
+    opacity: 1; /* Visible al pasar el ratón */
+}
+
+
+/* Botón de eliminar miembro (X) */
+.btn-remove-member {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(220, 53, 69, 0.9);
+    color: white;
+    border: 2px solid white;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    font-size: 14px;
+    line-height: 1;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    padding: 0;
+}
+
+.btn-remove-member:hover {
+    background: #c82333;
+    transform: scale(1.1);
+}
+
+/* --- ESTADO VACÍO TEMATIZADO (Empty State) --- */
+.empty-state-container {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: #f8d7da !important;
+    /* Fondo opcional para la caja vacía, como un patrón de PC */
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20z' fill='%23dc3545' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+
+/* --- MODAL PROPIO (Ajustes para que se vea bien sobre todo) --- */
+.modal-backdrop.show {
+    opacity: 0.5; /* Oscurecer el fondo */
+    background-color: #000;
+}
+
+/* Animación suave para el modal */
+.modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out;
+    transform: scale(0.95);
+}
+.modal.show .modal-dialog {
+    transform: scale(1);
+}
+
+.pokemon-select-card {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background: white;
+}
+
+.pokemon-select-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important;
+    background-color: #fff0f0; /* Tinte rojo muy suave */
+    border: 1px solid #ffcccc !important;
+}
+
+.pokemon-select-card img {
+    transition: transform 0.2s;
+}
+
+.pokemon-select-card:hover img {
+    transform: scale(1.15);
+}
+
+.small-text {
+    font-size: 0.85rem;
+}
+
+/* Ajuste para que el input del buscador se vea bien en dark */
+.form-control::placeholder {
+    color: #adb5bd;
+}
+
+.poke-slot.filled {
+    cursor: pointer; /* Manita al pasar el ratón */
+}
+
+/* Efecto visual al pasar el ratón */
+.poke-slot.filled:hover {
+    transform: scale(1.05);
+    border-color: #0d6efd; /* Azul al hacer hover */
+}

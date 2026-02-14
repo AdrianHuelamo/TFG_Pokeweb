@@ -19,7 +19,6 @@ export class Home implements OnInit, OnDestroy {
   pokemonsVisibles: Pokemon[] = []; 
   listaTipos: any[] = [];       
   
-  // Variables para capturas
   capturados: number[] = [];
   usuario: any = null;
 
@@ -44,7 +43,6 @@ export class Home implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // ... tu código de restaurar estado ...
     const savedState = this.dataService.getHomeState();
     if (savedState) {
         this.restaurarEstado(savedState);
@@ -55,11 +53,8 @@ export class Home implements OnInit, OnDestroy {
     this.iniciarScrollListener();
     this.pokeService.getTypesList().subscribe(data => this.listaTipos = data.results);
 
-    // --- AQUÍ ESTÁ LA CLAVE ---
     this.usuario = this.userService.getUsuarioActual();
     
-    console.log("1. Usuario recuperado en Init:", this.usuario); // CHIVATO 1
-
     if (this.usuario && this.usuario.id) {
         this.cargarCapturas();
     } else {
@@ -86,17 +81,12 @@ export class Home implements OnInit, OnDestroy {
     });
   }
 
-  // --- MÉTODOS DE CAPTURA ---
-
   cargarCapturas() {
     if (!this.usuario?.id) return;
     
     this.userService.getCapturasUsuario(this.usuario.id).subscribe({
-        next: (ids: any[]) => { // Ponemos 'any' por si vienen strings
-            
-            // --- LA SOLUCIÓN: Convertir todo a números (Number) ---
-            this.capturados = ids.map(id => Number(id));
-            
+        next: (ids: any[]) => {
+            this.capturados = ids.map(id => Number(id));            
             console.log("Capturas cargadas y convertidas:", this.capturados);
             this.cd.detectChanges(); 
         },
@@ -107,10 +97,7 @@ export class Home implements OnInit, OnDestroy {
   toggleCaptura(pokemonId: number | undefined, event: Event) {
     event.stopPropagation();
     event.preventDefault();
-
-    // Comprobación de seguridad: si el ID no existe, no hacemos nada
     if (!pokemonId) return;
-
     if (!this.userService.isLoggedIn()) {
         alert("Inicia sesión para capturar Pokémon");
         return;
@@ -136,8 +123,6 @@ export class Home implements OnInit, OnDestroy {
     if (!id) return false;
     return this.capturados.includes(id);
   }
-
-  // --- CARGA DE DATOS ---
 
   cargarPokemonsIniciales() {
     this.cargando = true;
@@ -206,26 +191,20 @@ export class Home implements OnInit, OnDestroy {
     this.cargarDetallesDeVisibles();
   }
 
-  // --- FILTROS (Aquí estaba el error) ---
-
   aplicarFiltros() {
     let res = this.listaGlobal;
 
-    // 1. Región
     if (this.regionSeleccionada !== 'all') {
        const regions: any[] = (environment as any).pokemonRegions || [];
        const regionData = regions.find(r => r.value === this.regionSeleccionada);
        
        if (regionData) {
-           // SOLUCIÓN: Usamos (p.id || 0) para decirle a TS que si es undefined, use 0
            res = res.filter(p => (p.id || 0) >= regionData.min && (p.id || 0) <= regionData.max);
        }
     }
 
-    // 2. Búsqueda
     if (this.busqueda.trim()) {
        const term = this.busqueda.toLowerCase();
-       // SOLUCIÓN: Verificamos si p.id existe antes de convertir a string
        res = res.filter(p => p.name.includes(term) || (p.id ? p.id.toString() : '') === term);
     }
 

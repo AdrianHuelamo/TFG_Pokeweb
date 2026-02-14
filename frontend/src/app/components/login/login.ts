@@ -17,7 +17,7 @@ export class Login {
   };
 
   errorMsg: string = '';
-  cargando: boolean = false; // Variable para el botón de carga
+  cargando: boolean = false;
 
   constructor(private userService: UserService, private router: Router) {}
 
@@ -27,27 +27,23 @@ export class Login {
 
     this.userService.login(this.user).subscribe({
       next: (resp) => {
-        // Guardamos el token/usuario en el servicio (ya lo hace el servicio con tap, pero aseguramos)
-        // Redirigimos al Home
         setTimeout(() => {
             this.router.navigate(['/']);
             this.cargando = false;
-        }, 1000); // Pequeño delay dramático estilo juego cargando
+        }, 1000);
       },
       error: (err) => {
         this.cargando = false;
         console.error('Error login:', err);
         
-        // Intentar leer el mensaje de error del backend
         if (err.error && err.error.messages) {
-            // Si es un objeto de mensajes
             if (typeof err.error.messages === 'object') {
                 this.errorMsg = Object.values(err.error.messages).join(' ');
             } else {
                 this.errorMsg = err.error.messages;
             }
         } else if (err.error && err.error.error) {
-            this.errorMsg = err.error.error; // A veces viene aquí
+            this.errorMsg = err.error.error; 
         } else {
             this.errorMsg = 'Credenciales incorrectas o error de conexión.';
         }

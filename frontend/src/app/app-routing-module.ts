@@ -11,6 +11,7 @@ import { Comunidad } from './components/comunidad/comunidad';
 import { NoticiaDetails } from './components/noticia-details/noticia-details';
 import { Register } from './components/register/register';
 import { Profile } from './components/profile/profile';
+import { Equipos } from './components/equipos/equipos';
 
 const routes: Routes = [
   { 
@@ -33,6 +34,9 @@ const routes: Routes = [
   },
   { 
     path: 'profile', component: Profile 
+  },
+  { 
+    path: 'equipos', component: Equipos 
   },
   {
     path: 'pokemon/:id',
