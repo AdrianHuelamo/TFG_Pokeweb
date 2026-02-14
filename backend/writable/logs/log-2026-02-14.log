@@ -1,0 +1,264 @@
+CRITICAL - 2026-02-14 15:37:14 --> CodeIgniter\Database\Exceptions\DataException: There is no data to update.
+[Method: POST, Route: api/user/avatar]
+in SYSTEMPATH\BaseModel.php on line 993.
+ 1 SYSTEMPATH\BaseModel.php(993): CodeIgniter\Database\Exceptions\DataException::forEmptyDataset('update')
+ 2 SYSTEMPATH\Model.php(860): CodeIgniter\BaseModel->update([...], [])
+ 3 APPPATH\Controllers\Auth.php(127): CodeIgniter\Model->update('2', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->uploadAvatar()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 15:37:30 --> CodeIgniter\Database\Exceptions\DataException: There is no data to update.
+[Method: POST, Route: api/user/avatar]
+in SYSTEMPATH\BaseModel.php on line 993.
+ 1 SYSTEMPATH\BaseModel.php(993): CodeIgniter\Database\Exceptions\DataException::forEmptyDataset('update')
+ 2 SYSTEMPATH\Model.php(860): CodeIgniter\BaseModel->update([...], [])
+ 3 APPPATH\Controllers\Auth.php(127): CodeIgniter\Model->update('2', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->uploadAvatar()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 15:46:16 --> CodeIgniter\Database\Exceptions\DataException: There is no data to update.
+[Method: POST, Route: api/teams/1/favorite]
+in SYSTEMPATH\BaseModel.php on line 993.
+ 1 SYSTEMPATH\BaseModel.php(993): CodeIgniter\Database\Exceptions\DataException::forEmptyDataset('update')
+ 2 SYSTEMPATH\Model.php(860): CodeIgniter\BaseModel->update(null, [])
+ 3 APPPATH\Controllers\Teams.php(175): CodeIgniter\Model->update()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Teams->setFavorite('1')
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Teams))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 15:52:44 --> CodeIgniter\Database\Exceptions\DataException: There is no data to update.
+[Method: POST, Route: api/teams/1/favorite]
+in SYSTEMPATH\BaseModel.php on line 993.
+ 1 SYSTEMPATH\BaseModel.php(993): CodeIgniter\Database\Exceptions\DataException::forEmptyDataset('update')
+ 2 SYSTEMPATH\Model.php(860): CodeIgniter\BaseModel->update(null, [])
+ 3 APPPATH\Controllers\Teams.php(175): CodeIgniter\Model->update()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Teams->setFavorite('1')
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Teams))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:16:54 --> CodeIgniter\Database\Exceptions\DataException: There is no data to update.
+[Method: POST, Route: api/user/avatar]
+in SYSTEMPATH\BaseModel.php on line 993.
+ 1 SYSTEMPATH\BaseModel.php(993): CodeIgniter\Database\Exceptions\DataException::forEmptyDataset('update')
+ 2 SYSTEMPATH\Model.php(860): CodeIgniter\BaseModel->update([...], [])
+ 3 APPPATH\Controllers\Auth.php(127): CodeIgniter\Model->update('2', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->uploadAvatar()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:18:05 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 213.
+ 1 APPPATH\Controllers\Auth.php(213): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 213)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:19:05 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 213.
+ 1 APPPATH\Controllers\Auth.php(213): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 213)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:20:05 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 213.
+ 1 APPPATH\Controllers\Auth.php(213): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 213)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:21:05 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 213.
+ 1 APPPATH\Controllers\Auth.php(213): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 213)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:22:05 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 213.
+ 1 APPPATH\Controllers\Auth.php(213): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 213)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:23:05 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 213.
+ 1 APPPATH\Controllers\Auth.php(213): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 213)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:24:39 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 213.
+ 1 APPPATH\Controllers\Auth.php(213): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 213)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:25:40 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 213.
+ 1 APPPATH\Controllers\Auth.php(213): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 213)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:26:41 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 213.
+ 1 APPPATH\Controllers\Auth.php(213): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 213)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:27:42 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 213.
+ 1 APPPATH\Controllers\Auth.php(213): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 213)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:28:43 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 213.
+ 1 APPPATH\Controllers\Auth.php(213): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 213)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:29:44 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 213.
+ 1 APPPATH\Controllers\Auth.php(213): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 213)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:30:45 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 213.
+ 1 APPPATH\Controllers\Auth.php(213): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 213)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:31:04 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 222.
+ 1 APPPATH\Controllers\Auth.php(222): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 222)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:31:05 --> CodeIgniter\Database\Exceptions\DataException: There is no data to update.
+[Method: POST, Route: api/user/avatar]
+in SYSTEMPATH\BaseModel.php on line 993.
+ 1 SYSTEMPATH\BaseModel.php(993): CodeIgniter\Database\Exceptions\DataException::forEmptyDataset('update')
+ 2 SYSTEMPATH\Model.php(860): CodeIgniter\BaseModel->update([...], [])
+ 3 APPPATH\Controllers\Auth.php(138): CodeIgniter\Model->update('2', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->uploadAvatar()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:31:19 --> CodeIgniter\Database\Exceptions\DataException: There is no data to update.
+[Method: POST, Route: api/user/avatar]
+in SYSTEMPATH\BaseModel.php on line 993.
+ 1 SYSTEMPATH\BaseModel.php(993): CodeIgniter\Database\Exceptions\DataException::forEmptyDataset('update')
+ 2 SYSTEMPATH\Model.php(860): CodeIgniter\BaseModel->update([...], [])
+ 3 APPPATH\Controllers\Auth.php(138): CodeIgniter\Model->update('2', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->uploadAvatar()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:32:05 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 222.
+ 1 APPPATH\Controllers\Auth.php(222): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 222)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:34:04 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 222.
+ 1 APPPATH\Controllers\Auth.php(222): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 222)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:36:04 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 222.
+ 1 APPPATH\Controllers\Auth.php(222): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 222)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:37:13 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 222.
+ 1 APPPATH\Controllers\Auth.php(222): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 222)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

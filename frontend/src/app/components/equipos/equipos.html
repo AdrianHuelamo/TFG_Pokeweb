@@ -20,15 +20,25 @@
         
         <div class="team-header">
           <div class="d-flex align-items-center gap-2 overflow-hidden">
-              <h5 class="mb-0 fw-bold text-truncate">{{ equipo.name }}</h5>
-              <button class="btn btn-sm text-white opacity-50 hover-opacity-100 p-0" 
-                      (click)="abrirModalEditar(equipo)" title="Cambiar nombre">
+              
+              <button class="btn btn-sm p-0 border-0" 
+                      (click)="marcarFavorito(equipo)" 
+                      title="Marcar como equipo principal">
+                  <i class="bi" 
+                     [ngClass]="equipo.is_favorite == 1 ? 'bi-star-fill text-warning fs-4' : 'bi-star text-white opacity-50 fs-5'">
+                  </i>
+              </button>
+
+              <h5 class="mb-0 fw-bold text-truncate" title="{{ equipo.name }}">{{ equipo.name }}</h5>
+              
+              <button class="btn btn-sm text-white opacity-50 hover-opacity-100 p-0 ms-1" 
+                      (click)="abrirModalEditar(equipo)">
                   <i class="bi bi-pencil-square"></i>
               </button>
           </div>
 
           <button class="btn btn-sm btn-link text-white opacity-75 hover-opacity-100 p-0" 
-                  (click)="deleteEquipo(equipo.id)" title="Borrar Equipo">
+                  (click)="deleteEquipo(equipo.id)">
             <i class="bi bi-trash-fill fs-5"></i>
           </button>
         </div>

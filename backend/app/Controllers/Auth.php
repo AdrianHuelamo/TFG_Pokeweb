@@ -101,35 +101,44 @@ class Auth extends ResourceController
     }
 
     // 3. SUBIR AVATAR (Protegido)
-    public function uploadAvatar()
-    {
+    public function uploadAvatar() {
+        // 1. Verificar usuario
         $user = $this->getUserFromToken();
-        if (!$user) return $this->failUnauthorized('Sesión inválida');
+        if (!$user) return $this->failUnauthorized();
 
+        // 2. Reglas de validación (AQUÍ ESTÁ EL CAMBIO)
+        $rules = [
+            'avatar' => [
+                'uploaded[avatar]', // Que se haya subido algo
+                'is_image[avatar]', // Que sea una imagen real
+                'mime_in[avatar,image/jpg,image/jpeg,image/png,image/webp]', // Formatos permitidos
+                'max_size[avatar, 4096]', // <--- ¡AQUÍ! Cambiado a 4096 KB (4MB)
+                // 'max_dims[avatar,1024,768]', // Opcional: Desactivado para no limitar dimensiones
+            ]
+        ];
+
+        // 3. Si no cumple las reglas, devolvemos el error
+        if (!$this->validate($rules)) {
+            return $this->fail($this->validator->getErrors());
+        }
+
+        // 4. Procesar el archivo
         $file = $this->request->getFile('avatar');
 
-        if (!$file || !$file->isValid()) {
-            return $this->fail('No se ha subido ningún archivo válido');
+        if (!$file->isValid()) {
+            return $this->fail($file->getErrorString());
         }
 
-        // Generar nombre único
+        // 5. Generar nombre aleatorio y mover
         $newName = $file->getRandomName();
-        
-        // Mover a la carpeta pública (asegúrate de crear esta carpeta)
         $file->move(FCPATH . 'uploads/avatars', $newName);
 
-        // Actualizar Base de Datos
+        // 6. Actualizar base de datos
         $userModel = new UserModel();
-        // Accedemos a ->uid o ['uid'] por seguridad
-        $uid = $user->uid ?? $user->data->uid ?? null; 
-        
-        if($uid) {
-            $userModel->update($uid, ['avatar' => $newName]);
-        }
+        $userModel->update($user->uid, ['avatar' => $newName]);
 
         return $this->respond([
-            'status' => 200, 
-            'mensaje' => 'Avatar actualizado', 
+            'mensaje' => 'Avatar actualizado correctamente',
             'avatar' => $newName
         ]);
     }
@@ -190,5 +199,36 @@ class Auth extends ResourceController
         unset($data['password']);
         
         return $this->respond($data);
+    }
+
+    public function refresh() {
+        // 1. Coger el token que envía el usuario
+        $header = $this->request->getServer('HTTP_AUTHORIZATION');
+        
+        // Truco para XAMPP si no llega la cabecera
+        if (!$header) $header = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? null;
+
+        // Limpiamos "Bearer " para quedarnos solo con el código
+        if ($header && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+            $token = $matches[1];
+            $secret = getenv('JWT_SECRET');
+            
+            // 2. Comprobar si el token es auténtico
+            $datos = is_jwt_valid($token, $secret);
+
+            if ($datos) {
+                // 3. ¡ES VÁLIDO! Creamos uno nuevo usando nuestra función Helper
+                // Aquí es donde llamas a la función que acabamos de crear arriba
+                $newToken = getSignedJWTForUser($datos->uid, $datos->email, $datos->role);
+                
+                return $this->respond([
+                    'status' => 200,
+                    'message' => 'Sesión renovada',
+                    'token' => $newToken
+                ]);
+            }
+        }
+        
+        return $this->failUnauthorized('No se pudo renovar la sesión');
     }
 }

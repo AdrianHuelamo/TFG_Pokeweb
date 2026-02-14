@@ -1,6 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { UserService } from '../../services/userservices';
+import { EquiposServices } from '../../services/equiposservices';
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -12,6 +14,7 @@ export class Profile implements OnInit {
 
   usuario: any = null;
   capturados: number[] = [];
+  equipoFavorito: any = null;
   cargando: boolean = true;
   
   avatarUrl: string = 'assets/default.webp';
@@ -27,11 +30,14 @@ export class Profile implements OnInit {
 
   constructor(
     private userService: UserService,
-    private cd: ChangeDetectorRef
+    private equiposService: EquiposServices,
+    private cd: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.cargarPerfilDesdeBD();
+    this.cargarEquipoFavorito();
   }
 
   cargarPerfilDesdeBD() {
@@ -39,17 +45,25 @@ export class Profile implements OnInit {
 
     this.userService.getUserData().subscribe({
       next: (data) => {
-        this.usuario = data; 
-        
-        this.avatarUrl = this.userService.getAvatarUrl(data.avatar);
-        
+        this.usuario = data;        
+        this.avatarUrl = this.userService.getAvatarUrl(data.avatar)    
         this.cargarCapturas();
+        this.cargando = false;
       },
       error: (err) => {
         console.error('Error cargando perfil', err);
         this.cargando = false;
       }
     });
+  }
+
+  cargarEquipoFavorito() {
+      this.equiposService.getEquipos().subscribe({
+          next: (equipos) => {
+              this.equipoFavorito = equipos.find(e => e.is_favorite == 1 || e.is_favorite === true);
+          },
+          error: (err) => console.log("No se pudieron cargar equipos en perfil")
+      });
   }
 
   cargarCapturas() {
@@ -73,15 +87,38 @@ export class Profile implements OnInit {
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
-        this.userService.uploadAvatar(file).subscribe({
-            next: (resp: any) => {
-                this.avatarUrl = this.userService.getAvatarUrl(resp.avatar);
-                alert("¡Foto actualizada y guardada en la Base de Datos!");
-                this.cd.detectChanges();
-            },
-            error: (err) => alert("Error al subir imagen.")
-        });
+      // Validación básica
+      if (!file.type.startsWith('image/')) {
+          alert("Por favor selecciona un archivo de imagen válido.");
+          return;
+      }
+
+      this.cargando = true;
+      this.userService.uploadAvatar(file).subscribe({
+        next: (resp: any) => {
+          // Forzamos actualización de la URL con un timestamp para evitar caché del navegador
+          const time = new Date().getTime();
+          // Asumimos que el backend devuelve la ruta o simplemente recargamos el usuario
+          this.cargarPerfilDesdeBD(); 
+          this.cargando = false;
+        },
+        error: (err) => {
+          console.error("Error subiendo avatar:", err);
+          this.cargando = false;
+          // Mostramos el mensaje real del servidor si existe
+          const mensaje = err.error?.messages?.error || "Error al subir la imagen. Intenta con una más pequeña.";
+          alert(mensaje);
+        }
+      });
     }
+  }
+
+  getPokemonImage(id: number): string {
+      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+  }
+
+  irADetalle(pokemonId: number) {
+  this.router.navigate(['/pokemon', pokemonId]);
   }
   
   togglePasswordForm() {

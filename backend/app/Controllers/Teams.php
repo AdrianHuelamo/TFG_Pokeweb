@@ -158,4 +158,25 @@ class Teams extends ResourceController
         $memberModel->delete($memberId);
         return $this->respondDeleted(['mensaje' => 'Pokémon liberado']);
     }
+
+    public function setFavorite($id = null) {
+        $user = $this->getUserFromToken();
+        if (!$user) return $this->failUnauthorized();
+
+        $teamModel = new TeamModel();
+        $team = $teamModel->find($id);
+
+        // Seguridad: ¿Es mi equipo?
+        if (!$team || $team['user_id'] != $user->uid) {
+            return $this->failForbidden('No es tu equipo');
+        }
+
+        // 1. Poner TODOS los equipos de este usuario a is_favorite = 0
+        $teamModel->where('user_id', $user->uid)->set(['is_favorite' => 0])->update();
+
+        // 2. Poner ESTE equipo a is_favorite = 1
+        $teamModel->update($id, ['is_favorite' => 1]);
+
+        return $this->respond(['mensaje' => 'Equipo marcado como favorito']);
+    }
 }

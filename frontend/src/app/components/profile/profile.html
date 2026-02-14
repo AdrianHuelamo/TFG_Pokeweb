@@ -17,7 +17,6 @@
           <div class="text-center text-md-start">
             <h5 class="text-white-50 mb-0 text-uppercase fw-bold">{{ usuario?.role || 'Entrenador' }}</h5>
             <h1 class="mb-0 fw-bold">{{ usuario?.username || 'Sin Nombre' }}</h1>
-            <p class="mb-0 text-white-50 small mt-1">ID Entrenador: #{{ usuario?.id | number:'4.0-0' }}</p>
           </div>
           
           <div class="ms-md-auto text-center text-md-end">
@@ -26,6 +25,40 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="row mb-4 animate-fade-in" *ngIf="equipoFavorito">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card-header bg-white border-0 py-3 px-4 d-flex align-items-center">
+                    <div class="bg-warning rounded-circle d-flex align-items-center justify-content-center me-3 shadow-sm" style="width: 40px; height: 40px; color: white;">
+                        <i class="bi bi-star-fill fs-5"></i>
+                    </div>
+                    <div>
+                        <small class="text-muted fw-bold d-block" style="font-size: 0.75rem; letter-spacing: 1px;">EQUIPO INSIGNIA</small>
+                        <h4 class="fw-bold mb-0 text-dark">{{ equipoFavorito.name }}</h4>
+                    </div>
+                </div>
+                <div class="card-body bg-light px-4 pb-4">
+                    <div class="row row-cols-3 row-cols-md-6 g-3 justify-content-center">
+                        <div class="col" *ngFor="let member of equipoFavorito.members">
+                          <div class="bg-white border rounded-4 p-2 text-center h-100 shadow-sm position-relative team-member-card"
+                               (click)="irADetalle(member.pokemon_id)"
+                               style="cursor: pointer;"
+                               title="Ver detalles de Pokémon #{{ member.pokemon_id }}">
+
+                              <img [src]="getPokemonImage(member.pokemon_id)" class="img-fluid" style="max-height: 85px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.1));">
+                          </div>
+                        </div>
+                        <div class="col" *ngFor="let i of [].constructor(6 - equipoFavorito.members.length)">
+                             <div class="bg-transparent border border-2 border-dashed rounded-4 p-2 text-center h-100 d-flex align-items-center justify-content-center opacity-25" style="min-height: 100px;">
+                                 <i class="bi bi-circle-fill fs-6 text-secondary"></i>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row g-4">

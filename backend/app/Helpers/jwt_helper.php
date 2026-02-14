@@ -44,3 +44,23 @@ if (!function_exists('base64url_encode')) {
         return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
     }
 }
+
+if (!function_exists('getSignedJWTForUser')) {
+    function getSignedJWTForUser($uid, $email, $role) {
+        $secret = getenv('JWT_SECRET');
+        
+        $issuedAtTime = time();
+        $tokenTimeToLive = 7200; 
+        $tokenExpiration = $issuedAtTime + $tokenTimeToLive;
+        
+        $payload = [
+            'uid' => $uid,
+            'email' => $email,
+            'role' => $role,
+            'iat' => $issuedAtTime,
+            'exp' => $tokenExpiration,
+        ];
+        $headers = ['typ' => 'JWT', 'alg' => 'HS256'];
+        return generate_jwt($headers, $payload, $secret);
+    }
+}

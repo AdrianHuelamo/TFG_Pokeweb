@@ -27,7 +27,6 @@ export class EquiposServices {
     return this.http.post(this.apiUrl, { name }, this.getAuthHeaders());
   }
 
-  // --- FUNCIÓN QUE FALTABA ---
   updateEquipo(id: number, name: string): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id}`, { name }, this.getAuthHeaders());
   }
@@ -46,5 +45,9 @@ export class EquiposServices {
 
   getAllPokemonList(): Observable<any> {
     return this.http.get('https://pokeapi.co/api/v2/pokemon?limit=1025');
+  }
+
+  setFavorite(id: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${id}/favorite`, {}, this.getAuthHeaders());
   }
 }

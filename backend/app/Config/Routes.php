@@ -40,8 +40,9 @@ $routes->group('api', function($routes) {
         $routes->post('teams/add', 'Teams::addMember');        // Añadir poke
         $routes->put('teams/(:num)', 'Teams::update/$1');
         $routes->delete('teams/member/(:num)', 'Teams::removeMember/$1'); // Quitar poke
-        // =========================================
-        
+        $routes->post('teams/(:num)/favorite', 'Teams::setFavorite/$1');
+
+        $routes->get('auth/refresh', 'Auth::refresh');
     });
 
 });

@@ -132,4 +132,44 @@ export class UserService {
   getUserData(): Observable<any> {
     return this.http.get(`${this.apiUrl}user/me`, this.getAuthHeaders());
   }
+
+  getToken(): string | null {
+    return localStorage.getItem('auth_token');
+  }
+
+  // 2. Guardar el nuevo token (SOLO LOCALSTORAGE)
+  saveToken(token: string) {
+    localStorage.setItem('auth_token', token);
+  }
+
+  // 3. Llamar al Backend para pedir un token nuevo
+  refreshToken(): Observable<any> {
+    const token = this.getToken();
+    if (!token) return new Observable(observer => observer.error("No hay token"));
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    
+    // IMPORTANTE: Asegúrate que la ruta coincide con tu backend (auth/refresh)
+    return this.http.get(`${this.apiUrl}auth/refresh`, { headers });
+  }
+
+  // 4. Calcular cuándo caduca el token
+  getTokenExpiration(): Date | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const parts = token.split('.');
+      if (parts.length !== 3) return null;
+
+      const payloadDecoded = atob(parts[1]); 
+      const payload = JSON.parse(payloadDecoded);
+
+      if (!payload.exp) return null;
+
+      return new Date(payload.exp * 1000);
+    } catch (e) {
+      return null;
+    }
+  }
 }

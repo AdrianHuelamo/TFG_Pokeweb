@@ -159,4 +159,15 @@ export class Equipos implements OnInit { // <--- Nombre correcto 'Equipos'
       const faltan = 6 - currentCount;
       return new Array(faltan > 0 ? faltan : 0);
   }
+
+  marcarFavorito(equipo: any) {
+    if (equipo.is_favorite == 1) return;
+
+    this.equiposService.setFavorite(equipo.id).subscribe({
+      next: () => {
+        this.cargarEquipos(); // Recargamos para actualizar las estrellas
+      },
+      error: (err) => alert('Error al marcar favorito')
+    });
+  }
 }
