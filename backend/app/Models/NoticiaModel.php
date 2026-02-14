@@ -10,7 +10,6 @@ class NoticiaModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $allowedFields = ['titulo', 'resumen', 'contenido', 'imagen', 'autor_id', 'destacada'];
-    
+    protected $allowedFields = ['titulo', 'resumen', 'contenido', 'imagen', 'created_at', 'destacada', 'autor_id'];    
     protected $useTimestamps = false; 
 }

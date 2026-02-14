@@ -3,11 +3,17 @@
 namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
+use App\Models\NoticiaModel;
 
 class Noticias extends ResourceController
 {
     protected $modelName = 'App\Models\NoticiaModel';
     protected $format    = 'json';
+    
+    // Cargar helper JWT
+    protected $helpers = ['jwt'];
+
+    // --- LECTURA PÚBLICA ---
 
     public function index()
     {
@@ -18,7 +24,7 @@ class Noticias extends ResourceController
         
         return $this->respond([
             'status' => 200,
-            'mensaje' => 'Noticias obtenidas correctamente',
+            'mensaje' => 'Noticias obtenidas',
             'data' => $noticias
         ]);
     }
@@ -26,15 +32,101 @@ class Noticias extends ResourceController
     public function show($id = null)
     {
         $data = $this->model->find($id);
-        
-        if (!$data) {
-            return $this->failNotFound('No se encontró la noticia');
-        }
+        if (!$data) return $this->failNotFound('Noticia no encontrada');
 
         return $this->respond([
             'status' => 200,
-            'mensaje' => 'Noticia encontrada',
             'data' => $data
         ]);
+    }
+
+    // --- FUNCIONES PRIVADAS (Auxiliar) ---
+
+    private function getUserFromToken() {
+        $header = $this->request->getServer('HTTP_AUTHORIZATION');
+        if (!$header) $header = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? null;
+
+        if ($header && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+            $token = $matches[1];
+            $secret = getenv('JWT_SECRET');
+            if (function_exists('is_jwt_valid')) {
+                $decoded = is_jwt_valid($token, $secret);
+                return $decoded ? (object) $decoded : null;
+            }
+        }
+        return null;
+    }
+
+    // --- ESCRITURA (Protegida) ---
+
+    public function create() {
+    $user = $this->getUserFromToken();
+    if (!$user) return $this->failUnauthorized();
+
+    // Leemos JSON de Angular
+    $data = $this->request->getJSON(true);
+    if (!$data) $data = $this->request->getPost();
+
+    // Asignamos el autor desde el token
+    $data['autor_id'] = $user->uid;
+
+    // Seguridad: Un usuario con rol campeón no puede marcar noticias como destacadas
+    if ($user->role !== 'admin') {
+        $data['destacada'] = 0;
+    }
+
+    try {
+        if ($this->model->insert($data)) {
+            return $this->respondCreated(['status' => 201, 'mensaje' => 'Noticia creada con éxito']);
+        }
+        return $this->fail($this->model->errors());
+    } catch (\Exception $e) {
+        // Esto te devolverá el error detallado si algo falla en la base de datos
+        return $this->failServerError($e->getMessage());
+    }
+}
+    public function update($id = null) {
+        $user = $this->getUserFromToken();
+        if (!$user) return $this->failUnauthorized();
+
+        $noticia = $this->model->find($id);
+        if (!$noticia) return $this->failNotFound();
+
+        if ($user->role !== 'admin' && $noticia['autor_id'] != $user->uid) {
+            return $this->failForbidden();
+        }
+
+        $data = $this->request->getJSON(true);
+        if (!$data) $data = $this->request->getRawInput();
+
+        if ($user->role !== 'admin' && isset($data['destacada'])) {
+            unset($data['destacada']);
+        }
+
+        try {
+            if ($this->model->update($id, $data)) {
+                return $this->respond(['status' => 200, 'mensaje' => 'Actualizada']);
+            }
+            return $this->fail($this->model->errors());
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    }
+
+    public function delete($id = null) {
+        $user = $this->getUserFromToken();
+        if (!$user) return $this->failUnauthorized();
+
+        $noticia = $this->model->find($id);
+        if (!$noticia) return $this->failNotFound();
+
+        if ($user->role !== 'admin' && $noticia['autor_id'] != $user->uid) {
+            return $this->failForbidden();
+        }
+
+        if ($this->model->delete($id)) {
+            return $this->respondDeleted(['status' => 200, 'mensaje' => 'Eliminada']);
+        }
+        return $this->failServerError('Error al borrar');
     }
 }

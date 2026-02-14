@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ComunidadService } from '../../services/comunidadservices';
+import { ComunidadServices } from '../../services/comunidadservices';
 import { Noticia } from '../../common/noticiainterfaz';
 
 @Component({
@@ -18,7 +18,7 @@ export class NoticiaDetails implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private comunidadService: ComunidadService,
+    private comunidadService: ComunidadServices,
     private cd: ChangeDetectorRef
   ) {}
 
@@ -37,18 +37,23 @@ export class NoticiaDetails implements OnInit {
     this.cargando = true;
     this.error = false;
     
-    this.comunidadService.getNoticiaById(id).subscribe({
-      next: (resp) => {
-        if(resp.status == 200 && resp.data) {
-          this.noticia = resp.data;
+    // --- CORRECCIÓN AQUÍ: 'getNoticia' en vez de 'getNoticiaById' ---
+    this.comunidadService.getNoticia(id).subscribe({
+      next: (resp: any) => {
+        // Adaptamos la respuesta según venga del backend
+        if (resp.status == 200 && resp.data) {
+            this.noticia = resp.data;
+        } else if (resp.id) {
+            // Por si el backend devuelve el objeto directo
+            this.noticia = resp;
         } else {
-          this.error = true;
+            this.error = true;
         }
         this.cargando = false;
         this.cd.detectChanges();
       },
       error: (err) => {
-        console.error(err);
+        console.error("Error cargando noticia", err);
         this.error = true;
         this.cargando = false;
         this.cd.detectChanges();
@@ -59,4 +64,5 @@ export class NoticiaDetails implements OnInit {
   volver() {
     this.router.navigate(['/comunidad']);
   }
+
 }

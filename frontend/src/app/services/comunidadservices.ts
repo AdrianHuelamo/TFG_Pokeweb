@@ -1,24 +1,58 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { NoticiasResponse } from '../common/noticiainterfaz';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ComunidadService {
+export class ComunidadServices {
 
-  // Apunta a tu backend: http://localhost/TFG_Pokeweb/backend/public/index.php/api/
   private apiUrl = environment.apiUrl + 'noticias'; 
+  private uploadUrl = environment.apiUrl + 'upload/noticia';
 
   constructor(private http: HttpClient) { }
 
-  getNoticias(): Observable<NoticiasResponse> {
-    return this.http.get<NoticiasResponse>(this.apiUrl);
+  // Helper para enviar el Token en la cabecera
+  private getAuthHeaders() {
+    const token = localStorage.getItem('auth_token');
+    return {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+      })
+    };
   }
 
-  getNoticiaById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`); 
+  // 1. Obtener todas (Público)
+  getNoticias(): Observable<any> {
+    return this.http.get(this.apiUrl);
+  }
+
+  // 2. Obtener una (Público)
+  getNoticia(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`);
+  }
+
+  // 3. CREAR (Solo Campeón/Admin)
+  createNoticia(noticia: any): Observable<any> {
+    return this.http.post(this.apiUrl, noticia, this.getAuthHeaders());
+  }
+
+  // 4. EDITAR (Solo autor/Admin)
+  updateNoticia(id: number, noticia: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, noticia, this.getAuthHeaders());
+  }
+
+  // 5. BORRAR (Solo autor/Admin)
+  deleteNoticia(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`, this.getAuthHeaders());
+  }
+
+  uploadImage(file: File): Observable<any> {
+  const formData = new FormData();
+  formData.append('image', file);
+  const token = localStorage.getItem('auth_token');
+  const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+  return this.http.post(environment.apiUrl + 'upload/noticia', formData, { headers });
   }
 }

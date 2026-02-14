@@ -262,3 +262,100 @@ in APPPATH\Controllers\Auth.php on line 222.
  5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
  6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
  7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:39:19 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 222.
+ 1 APPPATH\Controllers\Auth.php(222): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 222)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:40:19 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 222.
+ 1 APPPATH\Controllers\Auth.php(222): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 222)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:41:19 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 222.
+ 1 APPPATH\Controllers\Auth.php(222): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 222)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:42:19 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 222.
+ 1 APPPATH\Controllers\Auth.php(222): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 222)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:43:19 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 222.
+ 1 APPPATH\Controllers\Auth.php(222): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 222)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:44:19 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 222.
+ 1 APPPATH\Controllers\Auth.php(222): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 222)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:46:04 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 222.
+ 1 APPPATH\Controllers\Auth.php(222): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 222)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-14 16:47:04 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/auth/refresh]
+in APPPATH\Controllers\Auth.php on line 222.
+ 1 APPPATH\Controllers\Auth.php(222): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Auth.php', 222)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Auth->refresh()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2026-02-14 19:22:29 --> mysqli_sql_exception: Unknown column 'date' in 'field list' in C:\xampp\htdocs\TFG_Pokeweb\backend\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\TFG_Pokeweb\backend\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `no...', 0)
+#1 C:\xampp\htdocs\TFG_Pokeweb\backend\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `no...')
+#2 C:\xampp\htdocs\TFG_Pokeweb\backend\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `no...')
+#3 C:\xampp\htdocs\TFG_Pokeweb\backend\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `no...', Array, false)
+#4 C:\xampp\htdocs\TFG_Pokeweb\backend\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\TFG_Pokeweb\backend\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\TFG_Pokeweb\backend\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\TFG_Pokeweb\backend\app\Controllers\Noticias.php(77): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\TFG_Pokeweb\backend\system\CodeIgniter.php(933): App\Controllers\Noticias->create()
+#9 C:\xampp\htdocs\TFG_Pokeweb\backend\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Noticias))
+#10 C:\xampp\htdocs\TFG_Pokeweb\backend\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\TFG_Pokeweb\backend\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\TFG_Pokeweb\backend\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\TFG_Pokeweb\backend\public\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}

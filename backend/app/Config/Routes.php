@@ -43,6 +43,11 @@ $routes->group('api', function($routes) {
         $routes->post('teams/(:num)/favorite', 'Teams::setFavorite/$1');
 
         $routes->get('auth/refresh', 'Auth::refresh');
+
+        $routes->post('noticias', 'Noticias::create');             // <--- ESTA FALTABA
+        $routes->put('noticias/(:num)', 'Noticias::update/$1');    // <--- ESTA FALTABA
+        $routes->delete('noticias/(:num)', 'Noticias::delete/$1');
+        $routes->post('upload/noticia', 'Uploads::noticia');
     });
 
 });

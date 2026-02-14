@@ -1,141 +1,126 @@
+/* =========================================
+   1. ESTILOS GENERALES
+   ========================================= */
+.comunidad-container {
+    min-height: 100vh;
+    padding-bottom: 80px;
+}
+
+/* =========================================
+   2. TARJETAS
+   ========================================= */
+
+/* Hero Card (Destacada) */
 .hero-card {
     background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
     border: none;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+    overflow: hidden;
 }
 
 .hero-card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.25) !important;
 }
 
-.hero-row {
-    height: 240px; 
+.hero-img-container {
+    min-height: 300px;
 }
 
-.hero-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; 
-    object-position: center top; 
-}
-
-.hero-badge {
-    background-color: #ffcb05; 
-    color: #3b4cca; 
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    z-index: 2;
-}
-
-.text-truncate-multiline {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-@media (max-width: 768px) {
-    .hero-row {
-        height: auto; 
-    }
-    .hero-img {
-        height: 200px;
-    }
-}
-
+/* Grid Cards (Resto) */
 .news-card {
-    transition: all 0.3s ease;
     cursor: pointer;
-    overflow: hidden;
-    background-color: white;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 12px;
+    background: white;
 }
 
 .news-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
 }
 
 .card-img-top {
-    height: 200px;         
-    width: 100%;
-    object-fit: contain;   
-    background-color: #ffffff; 
-    padding: 10px;         
-    border-bottom: 1px solid #f0f0f0;
+    transition: opacity 0.3s;
+}
+.news-card:hover .card-img-top {
+    opacity: 0.9;
 }
 
-.modal-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.8); 
-    z-index: 9999; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-    backdrop-filter: blur(5px); 
-    animation: fadeIn 0.3s ease-out;
+/* --- CLASE LIMPIA PARA TEXTO (SIN ERRORES) --- */
+.text-truncate-multiline {
+    /* Altura fija aproximada para 3 líneas */
+    height: 4.5em; 
+    overflow: hidden;
+    display: block;
+    /* Si el texto es muy largo, simplemente se corta por el overflow */
 }
 
-.modal-content-custom {
-    background: white;
-    width: 100%;
-    max-width: 800px;
-    max-height: 90vh; 
-    border-radius: 12px;
-    overflow-y: auto; 
-    position: relative;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    animation: slideUp 0.3s ease-out;
-}
-
-.close-btn {
+/* Botones de Admin (Flotantes) */
+.admin-tools {
     position: absolute;
-    top: 15px;
-    right: 20px;
-    background: rgba(255,255,255,0.9);
-    border: none;
-    font-size: 2rem;
-    line-height: 1;
-    cursor: pointer;
+    top: 10px;
+    right: 10px;
     z-index: 10;
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s;
+    display: flex;
+    gap: 5px;
 }
 
-.close-btn:hover {
-    background: #ff4d4d;
+/* =========================================
+   3. ESTILO POKÉMON
+   ========================================= */
+
+/* Botón Gigante */
+.btn-poke-create {
+    background-color: #ff3a3a;
     color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 35px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+    border: 3px solid #cc0000;
+    box-shadow: 0 5px 15px rgba(255, 58, 58, 0.4);
 }
 
-.animate-fade-in { animation: fadeIn 0.6s ease-out; }
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.btn-poke-create:hover {
+    background-color: #ff5252;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 58, 58, 0.6);
 }
 
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(50px); }
-    to { opacity: 1; transform: translateY(0); }
+.pokeball-icon {
+    width: 24px;
+    height: 24px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="white" stroke="black" stroke-width="5"/><path d="M 5 50 A 45 45 0 0 1 95 50" fill="white" stroke="none"/><path d="M 5 50 A 45 45 0 0 1 95 50" fill="none" stroke="black" stroke-width="5"/><circle cx="50" cy="50" r="15" fill="white" stroke="black" stroke-width="5"/></svg>');
+    background-size: cover;
+    border-radius: 50%;
 }
 
-@media (max-width: 768px) {
-    .hero-row {
-        height: auto; 
-        flex-direction: column; 
-    }
-    .hero-img {
-        height: 200px; 
-    }
-    .hero-card .col-md-8 {
-        padding-top: 0;
-    }
+/* Modal */
+.poke-modal {
+    border: 4px solid #3b4cca;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.border-dashed {
+    border-style: dashed !important;
+}
+
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    z-index: 1040;
+}
+.modal.show {
+    display: block;
+    z-index: 1050;
 }

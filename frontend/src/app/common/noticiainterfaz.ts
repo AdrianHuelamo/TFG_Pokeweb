@@ -4,8 +4,9 @@ export interface Noticia {
     resumen: string;
     contenido: string;
     imagen: string;
-    created_at: string;
-    destacada?: number;
+    destacada: number;
+    created_at: string;     
+    autor_id: number; 
 }
 
 export interface NoticiasResponse {
