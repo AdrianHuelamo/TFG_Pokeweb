@@ -119,11 +119,6 @@ export class Comunidad implements OnInit {
   cerrarModal() { this.mostrarModal = false; }
 
   guardarNoticia() {
-      if (!this.formNoticia.titulo || !this.formNoticia.contenido) {
-          alert('Rellena los campos obligatorios.');
-          return;
-      }
-
       const req = this.esEdicion 
           ? this.comunidadService.updateNoticia(this.formNoticia.id, this.formNoticia)
           : this.comunidadService.createNoticia(this.formNoticia);

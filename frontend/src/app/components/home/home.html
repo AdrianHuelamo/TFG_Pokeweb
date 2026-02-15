@@ -36,7 +36,7 @@
     </select>
   </div>
 
-  <div class="col-10 col-md-3">
+  <div class="col-7 col-md-3">
      <label class="form-label fw-bold text-secondary ms-1 mb-1 small">Ordenación</label>
      <select class="form-select border-secondary text-secondary fw-bold" 
              [(ngModel)]="ordenActual" 
@@ -48,9 +48,10 @@
     </select>
   </div>
 
-  <div class="col-2 col-md-1">
+  <div class="col-5 col-md-1">
+      <label class="form-label d-block d-md-none mb-1 small">&nbsp;</label> 
       <button 
-          class="btn btn-danger w-100 border-secondary" 
+          class="btn btn-danger w-100 border-secondary fw-bold" 
           (click)="resetearFiltros()" 
           title="Borrar Filtros"
           [disabled]="busqueda === '' && regionSeleccionada === 'all' && tipoSeleccionado === 'all' && ordenActual === 'id-asc'">
@@ -96,12 +97,20 @@
   <button class="btn btn-outline-danger mt-3" (click)="resetearFiltros()">Limpiar filtros</button>
 </div>
 
+<div class="text-center py-4" *ngIf="cargandoMas">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Cargando más Pokémon...</span>
+  </div>
+</div>
+
+<div class="text-center mt-5 mb-5" *ngIf="!cargando && !cargandoMas && pokemonsVisibles.length > 0 && pokemonsVisibles.length >= listaFiltrada.length">
+    <span class="text-muted small">Has llegado al final de la lista.</span>
+</div>
+
 <button class="btn-scroll-top"
         [class.show]="mostrarBotonSubir"
         (click)="subirArriba()">
-    
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
     </svg>
-
 </button>

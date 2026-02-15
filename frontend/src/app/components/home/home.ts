@@ -216,10 +216,16 @@ export class Home implements OnInit, OnDestroy {
   
 
   cargarMas() {
+    if (this.cargandoMas || this.pokemonsVisibles.length >= this.listaFiltrada.length) {
+        return;
+    }
+
+    this.cargandoMas = true; 
+
     const nuevosBasicos = this.listaFiltrada.slice(this.offset, this.offset + this.limitePorPagina);
     
     if (nuevosBasicos.length === 0) {
-        this.cargando = false; 
+        this.cargandoMas = false; 
         return;
     }
 
@@ -236,12 +242,14 @@ export class Home implements OnInit, OnDestroy {
 
             this.pokemonsVisibles = [...this.pokemonsVisibles, ...nuevosCompletos];
             this.offset += this.limitePorPagina;
-            this.cargando = false; 
+            this.cargando = false;     
+            this.cargandoMas = false; 
             this.cd.detectChanges();
         },
         error: (err) => {
             console.error(err);
             this.cargando = false;
+            this.cargandoMas = false; 
         }
     });
   }
@@ -250,10 +258,19 @@ export class Home implements OnInit, OnDestroy {
       return environment.pokemonTypeColors[type] || '#777'; 
   }
 
-  @HostListener('window:scroll')
+  @HostListener('window:scroll', [])
   checkScroll() {
     const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
     this.mostrarBotonSubir = scrollPosition >= 400;
+
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    
+    if ((scrollPosition + windowHeight) >= documentHeight - 100) {
+        if (!this.cargandoMas && !this.cargando) {
+            this.cargarMas();
+        }
+    }
   }
 
   subirArriba() {

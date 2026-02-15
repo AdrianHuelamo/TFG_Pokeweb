@@ -1,10 +1,9 @@
 .equipos-container {
     min-height: 100vh;
-    background-color: #ffffff; /* Blanco puro */
+    background-color: #ffffff; 
     padding-bottom: 80px;
 }
 
-/* --- TARJETA DE EQUIPO --- */
 .team-card {
     background: white;
     border-radius: 16px;
@@ -21,7 +20,6 @@
 }
 
 .team-header {
-    /* Gradiente más moderno */
     background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
     color: white;
     padding: 15px 20px;
@@ -35,20 +33,18 @@
     opacity: 1 !important;
 }
 
-/* --- SLOTS (Huecos) --- */
 .team-slots {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr); 
     gap: 15px;
     padding: 20px;
     background-color: #ffffff;
 }
 
+
 .poke-slot {
-    aspect-ratio: 1; /* Mantiene que sea cuadrado */
-    /* CAMBIO AQUÍ: De 50% a 12px para que sea un cuadrado redondeado */
+    aspect-ratio: 1;
     border-radius: 12px; 
-    
     background: #f8f9fa;
     border: 3px dashed #dee2e6;
     position: relative;
@@ -60,11 +56,16 @@
     overflow: hidden;
 }
 
-/* Slot Lleno */
 .poke-slot.filled {
     border: 3px solid #4caf50;
     background: linear-gradient(135deg, #ffffff 0%, #f0fff0 100%);
     box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
+    cursor: pointer;
+}
+
+.poke-slot.filled:hover {
+    transform: scale(1.05);
+    border-color: #0d6efd; 
 }
 
 .poke-slot img {
@@ -75,7 +76,6 @@
     filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1));
 }
 
-/* Slot Vacío Interactivo */
 .empty-slot-interactive {
     cursor: pointer;
     color: #adb5bd;
@@ -110,16 +110,15 @@
     opacity: 1; 
 }
 
-
 .btn-remove-member {
     position: absolute;
-    top: -2px; 
-    right: -2px;
+    top: 4px; 
+    right: 4px;
     background: rgba(220, 53, 69, 0.9);
     color: white;
     border: 2px solid white;
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     font-size: 14px;
     line-height: 1;
@@ -130,19 +129,13 @@
     cursor: pointer;
     transition: background 0.2s, transform 0.2s;
     padding: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .btn-remove-member:hover {
     background: #c82333;
     transform: scale(1.1);
 }
-
-.empty-state-container {
-    background: rgba(255, 255, 255, 0.9);
-    border-color: #f8d7da !important;
-    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20z' fill='%23dc3545' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
-}
-
 
 .modal-backdrop.show {
     opacity: 0.5; 
@@ -161,12 +154,13 @@
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
     background: white;
+    border: 1px solid #dee2e6;
 }
 
 .pokemon-select-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important;
-    background-color: #fff0f0; /* Tinte rojo muy suave */
+    background-color: #fff0f0; 
     border: 1px solid #ffcccc !important;
 }
 
@@ -186,11 +180,86 @@
     color: #adb5bd;
 }
 
-.poke-slot.filled {
-    cursor: pointer; 
+.empty-state-container {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: #f8d7da !important;
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20z' fill='%23dc3545' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
 }
 
-.poke-slot.filled:hover {
-    transform: scale(1.05);
-    border-color: #0d6efd; 
+@media (max-width: 991.98px) {
+    .team-slots {
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 10px;
+        padding: 15px;
+    }
+
+    .team-header h5 {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .equipos-container {
+        padding: 10px;
+        padding-bottom: 60px;
+    }
+
+    .team-card {
+        margin-bottom: 20px;
+        border-radius: 12px;
+    }
+
+    .team-header {
+        padding: 12px 15px;
+        flex-direction: column; 
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .team-header > div {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end; 
+    }
+
+    .team-slots {
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 8px; 
+        padding: 10px;
+    }
+    
+    .poke-slot {
+        border-width: 2px;
+        border-radius: 8px;
+    }
+
+    .btn-remove-member {
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+        top: 2px;
+        right: 2px;
+    }
+
+    .modal-dialog {
+        margin: 10px;
+    }
+    
+    .pokemon-select-card {
+        padding: 5px !important;
+    }
+    
+    .pokemon-select-card h6 {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 450px) {
+    .team-slots {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+
+    .team-header h5 {
+        font-size: 1rem;
+    }
 }

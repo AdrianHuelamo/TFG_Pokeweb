@@ -105,3 +105,25 @@
     display: block;
     z-index: 1050;
 }
+
+.hero-img-container img {
+    object-fit: contain !important;
+    background-color: rgba(0,0,0,0.2); 
+    padding: 10px; 
+}
+
+.news-img-fit {
+    height: 220px;
+    width: 100%;
+    object-fit: contain !important; 
+    background-color: #f8f9fa; 
+    padding: 15px; 
+    border-bottom: 1px solid #eee;
+}
+
+.news-img-fit {
+    height: 220px;
+    width: 100%;
+    object-fit: cover;
+    object-position: top center; 
+}

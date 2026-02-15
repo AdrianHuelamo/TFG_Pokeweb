@@ -40,7 +40,7 @@
                 </div>
                 <div class="col-md-5 bg-dark text-white d-flex align-items-center">
                     <div class="card-body p-4 p-lg-5">
-                        <small class="text-warning fw-bold text-uppercase mb-2 d-block">{{ noticiaDestacada.created_at | date:'longDate' }}</small>
+                        <small class="text-warning fw-bold text-uppercase mb-2 d-block">{{ noticiaDestacada.created_at | date:'dd/MM/yyyy' }}</small>
                         <h2 class="display-6 fw-bold mb-3">{{ noticiaDestacada.titulo }}</h2>
                         <p class="lead opacity-75 text-truncate-multiline">{{ noticiaDestacada.resumen }}</p>
                         <button class="btn btn-outline-light rounded-pill mt-3 px-4">Leer artículo completo</button>
@@ -134,11 +134,11 @@
       
       <div class="modal-footer bg-dark border-top border-4 border-white">
         <button class="btn btn-secondary rounded-pill px-4" (click)="cerrarModal()">CANCELAR</button>
-        <button class="btn btn-danger rounded-pill px-5 fw-bold shadow" (click)="guardarNoticia()" [disabled]="subiendoImagen">
-            GUARDAR
+        <button class="btn btn-danger rounded-pill px-5 fw-bold shadow" 
+        (click)="guardarNoticia()" 
+        [disabled]="subiendoImagen || !formNoticia.titulo || !formNoticia.contenido"> GUARDAR
         </button>
       </div>
-
     </div>
   </div>
 </div>

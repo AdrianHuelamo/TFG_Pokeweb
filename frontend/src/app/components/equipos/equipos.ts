@@ -8,7 +8,7 @@ import { EquiposServices } from '../../services/equiposservices';
   styleUrls: ['./equipos.css'],
   standalone: false
 })
-export class Equipos implements OnInit { // <--- Nombre correcto 'Equipos'
+export class Equipos implements OnInit { 
 
   equipos: any[] = [];
   cargando: boolean = true; 
@@ -165,7 +165,7 @@ export class Equipos implements OnInit { // <--- Nombre correcto 'Equipos'
 
     this.equiposService.setFavorite(equipo.id).subscribe({
       next: () => {
-        this.cargarEquipos(); // Recargamos para actualizar las estrellas
+        this.cargarEquipos();
       },
       error: (err) => alert('Error al marcar favorito')
     });
