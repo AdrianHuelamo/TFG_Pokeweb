@@ -18,7 +18,6 @@ export class Comunidad implements OnInit {
   error: boolean = false;
   usuario: any = null;
 
-  // Calculamos la base URL para que no falle
   baseUrl: string = environment.apiUrl.replace('index.php/api/', ''); 
 
   mostrarModal: boolean = false;
@@ -39,14 +38,12 @@ export class Comunidad implements OnInit {
   ngOnInit(): void {
   this.cargarNoticias();
   if (this.userService.isLoggedIn()) {
-      // 1. Lo asignamos inmediatamente para que los botones salgan YA
       this.usuario = this.userService.getUsuarioActual();
 
-      // 2. Opcionalmente, refrescamos los datos en segundo plano
       this.userService.getUserData().subscribe({
           next: (data) => {
               this.usuario = data;
-              this.cd.detectChanges(); // Forzamos a Angular a mirar si hay cambios
+              this.cd.detectChanges();
           },
           error: () => this.usuario = null
       });

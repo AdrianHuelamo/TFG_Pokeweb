@@ -37,4 +37,8 @@ export class Navbar implements OnInit {
     this.usuario = null;
     this.router.navigate(['/home']);
   }
+
+  get esAdmin(): boolean {
+    return this.userService.getUserRole() === 'admin';
+}
 }

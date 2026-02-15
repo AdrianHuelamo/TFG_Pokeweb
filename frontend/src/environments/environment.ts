@@ -30,8 +30,3 @@ export const environment = {
     paldea: { min: 906, max: 1025 }
   } as { [key: string]: { min: number, max: number } }
 };
-
-//export const environment = {
-//  production: true,
-//  apiUrl: 'https://mi-tfg-pokeweb.com/api/' 
-//};

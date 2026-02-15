@@ -1,4 +1,3 @@
-/* === ESTRUCTURA PRINCIPAL === */
 .register-container {
     min-height: 80vh;
     display: flex;
@@ -9,8 +8,8 @@
 }
 
 .nintendo-ds {
-    background-color: #d0d0d0; /* Color plástico DS clásica */
-    width: 800px; /* MUCHO MÁS GRANDE */
+    background-color: #d0d0d0; 
+    width: 800px; 
     border-radius: 25px 25px 35px 35px;
     padding: 30px;
     box-shadow: 
@@ -24,7 +23,6 @@
     border: 2px solid #bbb;
 }
 
-/* --- MARCOS DE PANTALLA (Borde Negro) --- */
 .ds-screen-frame {
     background-color: #151515;
     border-radius: 12px;
@@ -33,24 +31,6 @@
     position: relative;
 }
 
-/* Agujeros de altavoz decorativos */
-.speaker-holes {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    gap: 4px;
-}
-.speaker-holes.left { left: -25px; }
-.speaker-holes.right { right: -25px; }
-.speaker-holes span {
-    width: 6px; height: 6px;
-    background-color: #333;
-    border-radius: 50%;
-    box-shadow: inset 1px 1px 1px rgba(0,0,0,0.8);
-}
-
-/* --- PANTALLAS LITERALES (Lo que se ilumina) --- */
 .screen {
     background-color: #fff;
     border-radius: 5px;
@@ -60,20 +40,19 @@
 
 .top-screen {
     height: 400px; /* Más alta */
-    background-image: url('/assets/profesor.webp'); /* Asegura que esta imagen existe */
+    background-image: url('/assets/profesor.webp');
     background-size: cover;
     background-position: center 20%;
     position: relative;
 }
 
 .bottom-screen {
-    height: 380px; /* Más alta para el formulario */
-    background-color: #e8e8e8; /* Tono ligeramente diferente para la táctil */
+    height: 380px; 
+    background-color: #e8e8e8; 
     overflow-y: auto;
     scrollbar-width: thin;
 }
 
-/* Caja de diálogo */
 .dialog-box {
     position: absolute;
     bottom: 15px; left: 15px; right: 15px;
@@ -86,7 +65,6 @@
     box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
 }
 
-/* --- BISAGRA --- */
 .ds-hinge {
     height: 35px;
     background: linear-gradient(to bottom, #b0b0b0, #f0f0f0, #b0b0b0);
@@ -103,7 +81,6 @@
 .power-light { width: 10px; height: 10px; background: #ccc; border-radius: 50%; border: 2px solid #aaa;}
 .power-light.on { background: #00ff00; box-shadow: 0 0 8px #00ff00; }
 
-/* === SECCIÓN INFERIOR (CONTROLES + PANTALLA) === */
 .ds-bottom-half {
     display: flex;
     align-items: center;
@@ -112,19 +89,18 @@
 }
 
 .bottom-frame {
-    flex-grow: 1; /* La pantalla ocupa el espacio central */
-    max-width: 450px; /* Ancho máximo de la pantalla táctil */
+    flex-grow: 1; 
+    max-width: 450px; 
 }
 
 .controls-left, .controls-right {
-    width: 130px; /* Espacio para los controles laterales */
+    width: 130px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-/* --- CRUCETA (D-PAD) --- */
 .d-pad {
     width: 100px; height: 100px;
     position: relative;
@@ -142,9 +118,7 @@
     background: #333; z-index: 2;
     background: radial-gradient(circle at 30% 30%, #444, #333);
 }
-.d-pad:active { transform: scale(0.98); } /* Efecto al pulsar */
-
-/* --- BOTONES DE ACCIÓN (A/B/X/Y) --- */
+.d-pad:active { transform: scale(0.98); } 
 .action-buttons {
     width: 110px; height: 110px;
     position: relative;
@@ -168,7 +142,6 @@
 .btn-a { top: 36px; right: 0; background: #eee; font-size: 1.1rem;}
 .btn-b { bottom: 0; left: 36px; background: #ddd;}
 
-/* Start/Select */
 .start-select { display: flex; gap: 15px; margin-top: 30px; }
 .ss-btn {
     background: #888; color: #ddd;
@@ -177,7 +150,6 @@
     box-shadow: inset 2px 2px 4px rgba(0,0,0,0.5);
 }
 
-/* === ESTILOS DEL FORMULARIO (Más grandes y robustos) === */
 .ds-input {
     border: 3px solid #aaa;
     border-radius: 4px;
@@ -227,12 +199,10 @@ a {
     color: #555555;
 }
 
-/* --- RESPONSIVE --- */
 @media (max-width: 850px) {
     .nintendo-ds { width: 95%; transform: scale(0.8); transform-origin: top center; }
 }
 @media (max-width: 600px) {
-    /* En móviles muy pequeños, ocultamos los controles laterales y dejamos solo las pantallas */
     .nintendo-ds { transform: scale(1); padding: 15px;}
     .ds-bottom-half { flex-direction: column; }
     .controls-left, .controls-right, .speaker-holes { display: none; }

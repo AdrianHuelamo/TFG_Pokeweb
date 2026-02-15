@@ -87,7 +87,6 @@ export class Profile implements OnInit {
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
-      // Validación básica
       if (!file.type.startsWith('image/')) {
           alert("Por favor selecciona un archivo de imagen válido.");
           return;
@@ -96,16 +95,13 @@ export class Profile implements OnInit {
       this.cargando = true;
       this.userService.uploadAvatar(file).subscribe({
         next: (resp: any) => {
-          // Forzamos actualización de la URL con un timestamp para evitar caché del navegador
           const time = new Date().getTime();
-          // Asumimos que el backend devuelve la ruta o simplemente recargamos el usuario
           this.cargarPerfilDesdeBD(); 
           this.cargando = false;
         },
         error: (err) => {
           console.error("Error subiendo avatar:", err);
           this.cargando = false;
-          // Mostramos el mensaje real del servidor si existe
           const mensaje = err.error?.messages?.error || "Error al subir la imagen. Intenta con una más pequeña.";
           alert(mensaje);
         }

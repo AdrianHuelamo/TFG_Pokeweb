@@ -48,6 +48,8 @@ $routes->group('api', function($routes) {
         $routes->put('noticias/(:num)', 'Noticias::update/$1');    // <--- ESTA FALTABA
         $routes->delete('noticias/(:num)', 'Noticias::delete/$1');
         $routes->post('upload/noticia', 'Uploads::noticia');
+
+        $routes->get('admin/stats', 'Admin::dashboardStats');
     });
 
 });

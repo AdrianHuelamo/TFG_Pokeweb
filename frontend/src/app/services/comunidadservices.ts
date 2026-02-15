@@ -13,7 +13,6 @@ export class ComunidadServices {
 
   constructor(private http: HttpClient) { }
 
-  // Helper para enviar el Token en la cabecera
   private getAuthHeaders() {
     const token = localStorage.getItem('auth_token');
     return {
@@ -23,27 +22,22 @@ export class ComunidadServices {
     };
   }
 
-  // 1. Obtener todas (Público)
   getNoticias(): Observable<any> {
     return this.http.get(this.apiUrl);
   }
 
-  // 2. Obtener una (Público)
   getNoticia(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
   }
 
-  // 3. CREAR (Solo Campeón/Admin)
   createNoticia(noticia: any): Observable<any> {
     return this.http.post(this.apiUrl, noticia, this.getAuthHeaders());
   }
 
-  // 4. EDITAR (Solo autor/Admin)
   updateNoticia(id: number, noticia: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id}`, noticia, this.getAuthHeaders());
   }
 
-  // 5. BORRAR (Solo autor/Admin)
   deleteNoticia(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`, this.getAuthHeaders());
   }

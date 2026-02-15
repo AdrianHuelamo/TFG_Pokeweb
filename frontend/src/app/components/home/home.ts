@@ -266,4 +266,13 @@ export class Home implements OnInit, OnDestroy {
       }
       this.cargando = false;
   }
+
+  get esAdmin(): boolean {
+    return this.userService.getUserRole() === 'admin';
+}
+
+    get esUsuarioNormal(): boolean {
+        return this.userService.getUserRole() === 'entrenador' || this.userService.getUserRole() === 'campeon';
+    }
+  
 }

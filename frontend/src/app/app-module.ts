@@ -20,6 +20,7 @@ import { NoticiaDetails } from './components/noticia-details/noticia-details';
 import { Register } from './components/register/register';
 import { Profile } from './components/profile/profile';
 import { Equipos } from './components/equipos/equipos';
+import { Dashboard } from './components/dashboard/dashboard';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { Equipos } from './components/equipos/equipos';
     NoticiaDetails,
     Register,
     Profile,
-    Equipos
+    Equipos,
+    Dashboard
   ],
   imports: [
     BrowserModule,

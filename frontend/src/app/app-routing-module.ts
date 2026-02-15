@@ -12,6 +12,7 @@ import { NoticiaDetails } from './components/noticia-details/noticia-details';
 import { Register } from './components/register/register';
 import { Profile } from './components/profile/profile';
 import { Equipos } from './components/equipos/equipos';
+import { Dashboard } from './components/dashboard/dashboard';
 
 const routes: Routes = [
   { 
@@ -37,6 +38,9 @@ const routes: Routes = [
   },
   { 
     path: 'equipos', component: Equipos 
+  },
+  { 
+    path: 'dashboard', component: Dashboard 
   },
   {
     path: 'pokemon/:id',

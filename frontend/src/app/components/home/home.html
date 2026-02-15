@@ -67,7 +67,7 @@
 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-3 row-cols-xxl-4 g-4" *ngIf="!cargando">
   <div class="col" *ngFor="let poke of pokemonsVisibles">
     <div class="card h-100 border-0 shadow-sm poke-card" [routerLink]="['/pokemon', poke.id]">
-      <div *ngIf="userService.isLoggedIn()" 
+      <div *ngIf="userService.isLoggedIn() && !esAdmin" 
              class="pokeball-btn"
              [class.atrapado]="esCapturado(poke.id)"
              (click)="toggleCaptura(poke.id, $event)"

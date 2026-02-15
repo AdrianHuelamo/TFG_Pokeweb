@@ -4,7 +4,6 @@
     padding-bottom: 50px;
 }
 
-/* --- TARJETA DE ENTRENADOR (Encabezado) --- */
 .trainer-card {
     background: linear-gradient(135deg, #dc3545 0%, #b02a37 100%);
     color: white;
@@ -15,7 +14,6 @@
     overflow: hidden;
 }
 
-/* Patrón de fondo estilo Pokéball sutil */
 .trainer-card::before {
     content: '';
     position: absolute;
@@ -28,42 +26,38 @@
     border: 20px solid rgba(255, 255, 255, 0.1);
 }
 
-/* =========================================
-   NUEVO: ESTILOS PARA EL AVATAR CON HOVER
-   ========================================= */
 .avatar-wrapper {
     position: relative;
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    overflow: hidden; /* Esto recorta la imagen en círculo */
+    overflow: hidden; 
     border: 4px solid rgba(255, 255, 255, 0.5);
     background-color: white;
-    flex-shrink: 0; /* Evita que se aplaste en pantallas pequeñas */
+    flex-shrink: 0; 
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 .trainer-avatar {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Hace que la imagen llene el círculo sin deformarse */
+    object-fit: cover; 
     display: block;
 }
 
-/* Capa oscura con texto "CAMBIAR FOTO" */
 .avatar-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente */
+    background-color: rgba(0, 0, 0, 0.6); 
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    opacity: 0; /* Invisible por defecto */
+    opacity: 0; 
     transition: opacity 0.3s ease;
     cursor: pointer;
     font-size: 0.75rem;
@@ -73,16 +67,10 @@
     letter-spacing: 1px;
 }
 
-/* Al pasar el ratón por el contenedor (.avatar-wrapper), mostramos el overlay */
 .avatar-wrapper:hover .avatar-overlay {
     opacity: 1;
 }
 
-/* =========================================
-   FIN ESTILOS NUEVOS
-   ========================================= */
-
-/* --- ESTADÍSTICAS GLOBALES (Círculos) --- */
 .stat-circle-card {
     background: white;
     border-radius: 15px;
@@ -111,7 +99,6 @@
     letter-spacing: 1px;
 }
 
-/* --- SECCIÓN REGIONES --- */
 .region-card {
     background: white;
     border: 1px solid #eee;
@@ -133,7 +120,6 @@
     color: #444;
 }
 
-/* Barras de progreso */
 .progress {
     height: 10px;
     background-color: #e9ecef;
@@ -148,10 +134,9 @@
 }
 
 .progress-bar.completed {
-    background: #198754; /* Verde victoria */
+    background: #198754; 
 }
 
-/* Medalla */
 .medal-icon {
     position: absolute;
     top: 10px;

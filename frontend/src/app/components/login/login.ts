@@ -26,11 +26,28 @@ export class Login {
     this.errorMsg = '';
 
     this.userService.login(this.user).subscribe({
-      next: (resp) => {
-        setTimeout(() => {
-            this.router.navigate(['/']);
-            this.cargando = false;
-        }, 1000);
+      next: (resp: any) => {
+        if (resp.token) {
+            localStorage.setItem('auth_token', resp.token);
+        }
+
+    this.userService.getUserData().subscribe({
+            next: (usuario) => {
+                this.cargando = false;
+                
+                // 3. Redirección según el rol
+                if (usuario.role === 'admin') {
+                    this.router.navigate(['/dashboard']); // Al Dashboard
+                } else {
+                    this.router.navigate(['/home']);  // Al Home normal
+                }
+            },
+            error: () => {
+                this.cargando = false;
+                // Si falla al obtener usuario, mandamos al home por seguridad
+                this.router.navigate(['/home']); 
+            }
+        });
       },
       error: (err) => {
         this.cargando = false;
@@ -43,9 +60,9 @@ export class Login {
                 this.errorMsg = err.error.messages;
             }
         } else if (err.error && err.error.error) {
-            this.errorMsg = err.error.error; 
+            this.errorMsg = err.error.error;
         } else {
-            this.errorMsg = 'Credenciales incorrectas o error de conexión.';
+            this.errorMsg = 'Error al iniciar sesión. Inténtalo de nuevo.';
         }
       }
     });
