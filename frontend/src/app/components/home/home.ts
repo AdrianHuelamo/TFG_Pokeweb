@@ -44,6 +44,7 @@ export class Home implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const savedState = this.dataService.getHomeState();
+    this.cargarCapturas();
     if (savedState) {
         this.restaurarEstado(savedState);
     } else {
@@ -248,7 +249,7 @@ export class Home implements OnInit, OnDestroy {
       });
   }
 
-  scrollToTop() {
+  subirArriba() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 

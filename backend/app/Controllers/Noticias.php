@@ -18,9 +18,12 @@ class Noticias extends ResourceController
     public function index()
     {
         $noticias = $this->model
-                         ->orderBy('destacada', 'DESC')
-                         ->orderBy('created_at', 'DESC')
-                         ->findAll();
+             ->asArray() // Obliga a devolver array puro
+             ->select('noticias.*, users.email as autor_email') // Selecciona el email
+             ->join('users', 'users.id = noticias.autor_id', 'left') // LEFT JOIN para no perder la noticia si el usuario no existe
+             ->orderBy('destacada', 'DESC')
+             ->orderBy('created_at', 'DESC')
+             ->findAll();
         
         return $this->respond([
             'status' => 200,
@@ -33,11 +36,7 @@ class Noticias extends ResourceController
     {
         $data = $this->model->find($id);
         if (!$data) return $this->failNotFound('Noticia no encontrada');
-
-        return $this->respond([
-            'status' => 200,
-            'data' => $data
-        ]);
+        return $this->respond(['status' => 200, 'data' => $data]);
     }
 
     // --- FUNCIONES PRIVADAS (Auxiliar) ---
