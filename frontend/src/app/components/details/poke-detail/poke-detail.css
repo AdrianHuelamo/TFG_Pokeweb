@@ -5,7 +5,6 @@
     text-align: center;
     border: 2px solid #e5e7eb;
     
-    /* ALTURA FIJA PARA EVITAR SALTOS */
     height: 500px; 
     
     display: flex;

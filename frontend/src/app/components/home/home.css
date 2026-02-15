@@ -76,9 +76,6 @@
     box-shadow: none;
 }
 
-/* ... (estilos anteriores igual) ... */
-
-/* --- BOTÓN VOLVER ARRIBA (Minimalista) --- */
 .btn-scroll-top {
     position: fixed;
     bottom: 30px;
@@ -88,20 +85,16 @@
     border-radius: 50%;
     z-index: 1000;
     
-    /* Diseño Plano (Flat) y Limpio */
-    background-color: #333; /* Gris oscuro elegante (o usa #dc3545 si prefieres rojo) */
+    background-color: #333;
     color: white;
     border: none;
     
-    /* Centrado perfecto del icono */
     display: flex;
     align-items: center;
     justify-content: center;
     
-    /* Sombra suave */
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     
-    /* Animaciones */
     opacity: 0;
     visibility: hidden;
     transform: translateY(20px);
@@ -110,8 +103,8 @@
 }
 
 .btn-scroll-top:hover {
-    background-color: #000; /* Se oscurece un poco al pasar el ratón */
-    transform: translateY(-5px); /* Se eleva ligeramente */
+    background-color: #000; 
+    transform: translateY(-5px); 
     box-shadow: 0 6px 15px rgba(0,0,0,0.4);
 }
 
@@ -133,24 +126,21 @@
     cursor: pointer;
     transition: all 0.3s ease;
     
-    /* DIBUJO DE LA POKÉBALL (Gris por defecto/Sin capturar) */
     background: linear-gradient(
         to bottom,
-        #ddd 0%,    /* Arriba Gris claro */
+        #ddd 0%,    
         #ddd 45%,
-        #333 45%,   /* Línea negra central */
+        #333 45%,   
         #333 55%,
-        #fff 55%,   /* Abajo Blanco */
+        #fff 55%,   
         #fff 100%
     );
     box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
     
-    /* Estado apagado: un poco transparente */
     opacity: 0.6; 
     filter: grayscale(100%); 
 }
 
-/* BOTÓN CENTRAL DE LA POKÉBALL */
 .pokeball-btn::after {
     content: '';
     position: absolute;
@@ -165,15 +155,12 @@
     transition: background-color 0.3s;
 }
 
-/* HOVER: Al pasar el ratón se ilumina un poco */
 .pokeball-btn:hover {
     transform: scale(1.1);
     opacity: 0.9;
 }
 
-/* --- ESTADO CAPTURADO (A TODO COLOR) --- */
 .pokeball-btn.atrapado {
-    /* Color Rojo Oficial Pokémon */
     background: linear-gradient(
         to bottom,
         #ff0000 0%, 
@@ -183,19 +170,17 @@
         #fff 55%,
         #fff 100%
     );
-    opacity: 1; /* Totalmente visible */
-    filter: none; /* Quitamos escala de grises */
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.6); /* Brillo rojo */
-    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; /* Animación al capturar */
+    opacity: 1;
+    filter: none;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.6); 
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; 
 }
 
-/* El botón central brilla rojo al atrapar */
 .pokeball-btn.atrapado::after {
     background-color: #ffcccc; 
     box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
 }
 
-/* --- ANIMACIÓN DE AGITAR (SHAKE) --- */
 @keyframes shake {
   10%, 90% { transform: translate3d(-1px, 0, 0) rotate(-5deg); }
   20%, 80% { transform: translate3d(2px, 0, 0) rotate(5deg); }

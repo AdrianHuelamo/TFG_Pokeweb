@@ -35,16 +35,14 @@ export class Login {
             next: (usuario) => {
                 this.cargando = false;
                 
-                // 3. Redirección según el rol
                 if (usuario.role === 'admin') {
-                    this.router.navigate(['/dashboard']); // Al Dashboard
+                    this.router.navigate(['/dashboard']); 
                 } else {
-                    this.router.navigate(['/home']);  // Al Home normal
+                    this.router.navigate(['/home']); 
                 }
             },
             error: () => {
                 this.cargando = false;
-                // Si falla al obtener usuario, mandamos al home por seguridad
                 this.router.navigate(['/home']); 
             }
         });

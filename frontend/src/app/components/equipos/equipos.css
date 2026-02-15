@@ -102,19 +102,18 @@
     font-weight: bold;
     text-transform: uppercase;
     margin-top: 4px;
-    opacity: 0; /* Oculto por defecto */
+    opacity: 0;
     transition: opacity 0.2s;
 }
 
 .empty-slot-interactive:hover .add-text {
-    opacity: 1; /* Visible al pasar el ratón */
+    opacity: 1; 
 }
 
 
-/* Botón de eliminar miembro (X) */
 .btn-remove-member {
     position: absolute;
-    top: -2px; /* Ajustado ligeramente para que sobresalga un poco del borde */
+    top: -2px; 
     right: -2px;
     background: rgba(220, 53, 69, 0.9);
     color: white;
@@ -138,22 +137,18 @@
     transform: scale(1.1);
 }
 
-/* --- ESTADO VACÍO TEMATIZADO (Empty State) --- */
 .empty-state-container {
     background: rgba(255, 255, 255, 0.9);
     border-color: #f8d7da !important;
-    /* Fondo opcional para la caja vacía, como un patrón de PC */
     background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20z' fill='%23dc3545' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
 }
 
 
-/* --- MODAL PROPIO (Ajustes para que se vea bien sobre todo) --- */
 .modal-backdrop.show {
-    opacity: 0.5; /* Oscurecer el fondo */
+    opacity: 0.5; 
     background-color: #000;
 }
 
-/* Animación suave para el modal */
 .modal.fade .modal-dialog {
     transition: transform 0.3s ease-out;
     transform: scale(0.95);
@@ -187,17 +182,15 @@
     font-size: 0.85rem;
 }
 
-/* Ajuste para que el input del buscador se vea bien en dark */
 .form-control::placeholder {
     color: #adb5bd;
 }
 
 .poke-slot.filled {
-    cursor: pointer; /* Manita al pasar el ratón */
+    cursor: pointer; 
 }
 
-/* Efecto visual al pasar el ratón */
 .poke-slot.filled:hover {
     transform: scale(1.05);
-    border-color: #0d6efd; /* Azul al hacer hover */
+    border-color: #0d6efd; 
 }

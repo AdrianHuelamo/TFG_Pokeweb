@@ -2,8 +2,6 @@ export interface UserLogin {
     email: string;
     password: string;
 }
-
-// Actualizada con confirmPassword
 export interface UserRegister {
     username: string;
     email: string;

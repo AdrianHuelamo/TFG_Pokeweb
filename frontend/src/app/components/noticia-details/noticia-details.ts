@@ -37,14 +37,11 @@ export class NoticiaDetails implements OnInit {
     this.cargando = true;
     this.error = false;
     
-    // --- CORRECCIÓN AQUÍ: 'getNoticia' en vez de 'getNoticiaById' ---
     this.comunidadService.getNoticia(id).subscribe({
       next: (resp: any) => {
-        // Adaptamos la respuesta según venga del backend
         if (resp.status == 200 && resp.data) {
             this.noticia = resp.data;
         } else if (resp.id) {
-            // Por si el backend devuelve el objeto directo
             this.noticia = resp;
         } else {
             this.error = true;

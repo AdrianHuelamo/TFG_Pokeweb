@@ -41,15 +41,13 @@
     color: #b02a37 !important; 
 }
 
-/* Estilos para el botón de Acceder */
 .btn-acceder-custom {
-    transition: all 0.3s ease; /* Para que el cambio de color sea suave */
+    transition: all 0.3s ease; 
     border: 2px solid transparent;
 }
 
-/* Efecto al pasar el ratón (Hover) */
 .btn-acceder-custom:hover {
-    background-color: #dc3545 !important; /* El mismo rojo que el fondo del navbar */
-    color: white !important;              /* Letras en blanco */
-    border-color: white !important;       /* Borde en blanco */
+    background-color: #dc3545 !important; 
+    color: white !important;              
+    border-color: white !important;       
 }

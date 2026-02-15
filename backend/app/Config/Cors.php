@@ -25,11 +25,11 @@ class Cors extends BaseConfig
      *  }
      */
     public $default = [
-        'allowedOrigins'         => ['http://localhost:4200'], // Tu Angular
+        'allowedOrigins'         => ['http://localhost:4200'],
         'allowedOriginsPatterns' => [],
         'supportsCredentials'    => true,
-        'allowedHeaders'         => ['*'], // Permitir todas las cabeceras
-        'allowedMethods'         => ['*'], // Permitir todos los métodos (GET, POST, etc)
+        'allowedHeaders'         => ['*'], 
+        'allowedMethods'         => ['*'], 
         'exposedHeaders'         => [],
         'maxAge'                 => 7200,
     ];

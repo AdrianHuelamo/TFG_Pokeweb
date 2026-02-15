@@ -39,7 +39,7 @@
 }
 
 .top-screen {
-    height: 400px; /* Más alta */
+    height: 400px; 
     background-image: url('/assets/profesor.webp');
     background-size: cover;
     background-position: center 20%;

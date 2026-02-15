@@ -9,10 +9,8 @@ class Api extends BaseController
 {
     use ResponseTrait;
 
-    // Función LOGIN
     public function login()
     {
-        // 1. Añadimos cabeceras CORS manualmente a ESTA respuesta
         $this->response->setHeader('Access-Control-Allow-Origin', '*')
                        ->setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
                        ->setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
@@ -39,10 +37,8 @@ class Api extends BaseController
         }
     }
 
-    // Función REGISTER
     public function register()
     {
-        // 1. Añadimos cabeceras CORS manualmente también aquí
         $this->response->setHeader('Access-Control-Allow-Origin', '*')
                        ->setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
                        ->setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
@@ -62,7 +58,6 @@ class Api extends BaseController
         return $this->respondCreated(['status' => 200, 'mensaje' => 'Usuario registrado']);
     }
 
-    // Función OPTIONS (El portero)
     public function options()
     {
         return $this->response

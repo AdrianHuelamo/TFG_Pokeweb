@@ -1,11 +1,9 @@
-/* src/app/components/noticia-details/noticia-details.css */
-
 .text-justify {
     text-align: justify;
 }
 
 .article-content {
-    line-height: 1.9; /* Un poco más de aire para leer mejor */
+    line-height: 1.9; 
     white-space: pre-line;
 }
 

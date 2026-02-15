@@ -8,9 +8,8 @@ use App\Models\CapturaModel;
 class Pokemon extends ResourceController
 {
     protected $format = 'json';
-    protected $helpers = ['jwt']; // Aseguramos carga del helper
+    protected $helpers = ['jwt']; 
 
-    // --- FUNCIÓN SEGURA ---
     private function getUserFromToken()
     {
         $header = $this->request->getServer('HTTP_AUTHORIZATION');
@@ -25,7 +24,6 @@ class Pokemon extends ResourceController
         return null;
     }
 
-    // 1. ALTERNAR CAPTURA
     public function toggleCatch()
     {
         $user = $this->getUserFromToken();
@@ -41,7 +39,6 @@ class Pokemon extends ResourceController
 
         $capturaModel = new CapturaModel();
         
-        // Acceso seguro al ID
         $userId = $user->uid ?? null;
 
         $existe = $capturaModel->where('user_id', $userId)
@@ -49,11 +46,9 @@ class Pokemon extends ResourceController
                                ->first();
 
         if ($existe) {
-            // Soltar
             $capturaModel->delete($existe['id']);
             return $this->respond(['status' => 'released']);
         } else {
-            // Atrapar
             $capturaModel->insert([
                 'user_id' => $userId,
                 'pokemon_id' => $pokemonId
@@ -62,10 +57,8 @@ class Pokemon extends ResourceController
         }
     }
 
-    // 2. OBTENER CAPTURAS
     public function getCapturas($userId = null)
     {
-        // Si no viene ID en la URL, usamos el del token
         if (!$userId) {
             $user = $this->getUserFromToken();
             $userId = $user->uid ?? null;
@@ -74,12 +67,10 @@ class Pokemon extends ResourceController
         if (!$userId) return $this->fail('Usuario desconocido');
 
         $capturaModel = new CapturaModel();
-        // Seleccionamos solo la columna pokemon_id para devolver array simple
         $data = $capturaModel->select('pokemon_id')->where('user_id', $userId)->findAll();
         
         $ids = array_column($data, 'pokemon_id');
 
-        // Nos aseguramos de devolver números enteros, no strings
         $ids = array_map('intval', $ids);
 
         return $this->respond($ids);

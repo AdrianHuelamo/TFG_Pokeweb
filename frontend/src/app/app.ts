@@ -14,7 +14,6 @@ export class App implements OnInit, OnDestroy {
   
   private refreshInterval: any;
   
-  // Esta variable controla el HTML que te acabo de pasar
   esModoAdmin: boolean = false; 
 
   constructor(
@@ -24,7 +23,6 @@ export class App implements OnInit, OnDestroy {
       this.router.events.pipe(
           filter(event => event instanceof NavigationEnd)
       ).subscribe((event: any) => {
-          // Si estamos en /admin o /dashboard, activamos el modo limpio
           this.esModoAdmin = event.url.includes('/admin') || event.url.includes('/dashboard');
       });
   }
@@ -33,7 +31,6 @@ export class App implements OnInit, OnDestroy {
     this.iniciarVigilanteSesion();
   }
 
-  // ... (Resto de tu código de sesión se mantiene igual)
   ngOnDestroy() {
     if (this.refreshInterval) {
       clearInterval(this.refreshInterval);

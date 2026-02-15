@@ -10,20 +10,15 @@ class Noticias extends ResourceController
     protected $modelName = 'App\Models\NoticiaModel';
     protected $format    = 'json';
     
-    // Cargar helper JWT
     protected $helpers = ['jwt'];
 
-    // --- LECTURA PÚBLICA ---
 
     public function index()
     {
         $noticias = $this->model
-             ->asArray() // Obliga a devolver array puro
-             ->select('noticias.*, users.email as autor_email') // Selecciona el email
-             ->join('users', 'users.id = noticias.autor_id', 'left') // LEFT JOIN para no perder la noticia si el usuario no existe
-             ->orderBy('destacada', 'DESC')
-             ->orderBy('created_at', 'DESC')
-             ->findAll();
+                         ->orderBy('destacada', 'DESC')
+                         ->orderBy('created_at', 'DESC')
+                         ->findAll();
         
         return $this->respond([
             'status' => 200,
@@ -36,10 +31,13 @@ class Noticias extends ResourceController
     {
         $data = $this->model->find($id);
         if (!$data) return $this->failNotFound('Noticia no encontrada');
-        return $this->respond(['status' => 200, 'data' => $data]);
+
+        return $this->respond([
+            'status' => 200,
+            'data' => $data
+        ]);
     }
 
-    // --- FUNCIONES PRIVADAS (Auxiliar) ---
 
     private function getUserFromToken() {
         $header = $this->request->getServer('HTTP_AUTHORIZATION');
@@ -56,20 +54,16 @@ class Noticias extends ResourceController
         return null;
     }
 
-    // --- ESCRITURA (Protegida) ---
 
     public function create() {
     $user = $this->getUserFromToken();
     if (!$user) return $this->failUnauthorized();
 
-    // Leemos JSON de Angular
     $data = $this->request->getJSON(true);
     if (!$data) $data = $this->request->getPost();
 
-    // Asignamos el autor desde el token
     $data['autor_id'] = $user->uid;
 
-    // Seguridad: Un usuario con rol campeón no puede marcar noticias como destacadas
     if ($user->role !== 'admin') {
         $data['destacada'] = 0;
     }
@@ -80,7 +74,6 @@ class Noticias extends ResourceController
         }
         return $this->fail($this->model->errors());
     } catch (\Exception $e) {
-        // Esto te devolverá el error detallado si algo falla en la base de datos
         return $this->failServerError($e->getMessage());
     }
 }

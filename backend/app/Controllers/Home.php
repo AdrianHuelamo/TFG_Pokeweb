@@ -11,7 +11,6 @@ class Home extends BaseController
 
     public function testApi()
 {
-    // Habilitamos CORS manualmente para esta prueba rápida si la config general falla
     header('Access-Control-Allow-Origin: *'); 
     header('Access-Control-Allow-Headers: Content-Type');
     
