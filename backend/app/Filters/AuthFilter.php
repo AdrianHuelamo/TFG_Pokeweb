@@ -10,6 +10,10 @@ class AuthFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
+        if ($request->getMethod() === 'options') {
+            return;
+        }
+        
         helper('jwt');
 
         $header = $request->getServer('HTTP_AUTHORIZATION');

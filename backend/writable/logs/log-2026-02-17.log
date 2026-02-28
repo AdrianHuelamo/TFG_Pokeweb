@@ -1,0 +1,132 @@
+CRITICAL - 2026-02-17 18:23:54 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/admin/stats]
+in APPPATH\Controllers\Admin.php on line 185.
+ 1 APPPATH\Controllers\Admin.php(185): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Admin.php', 185)
+ 2 APPPATH\Controllers\Admin.php(170): App\Controllers\Admin->getUserFromToken()
+ 3 APPPATH\Controllers\Admin.php(17): App\Controllers\Admin->esAdmin()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin->dashboardStats()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-17 18:24:10 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/admin/stats]
+in APPPATH\Controllers\Admin.php on line 185.
+ 1 APPPATH\Controllers\Admin.php(185): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Admin.php', 185)
+ 2 APPPATH\Controllers\Admin.php(170): App\Controllers\Admin->getUserFromToken()
+ 3 APPPATH\Controllers\Admin.php(17): App\Controllers\Admin->esAdmin()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin->dashboardStats()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-17 18:28:52 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/admin/stats]
+in APPPATH\Controllers\Admin.php on line 185.
+ 1 APPPATH\Controllers\Admin.php(185): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Admin.php', 185)
+ 2 APPPATH\Controllers\Admin.php(170): App\Controllers\Admin->getUserFromToken()
+ 3 APPPATH\Controllers\Admin.php(17): App\Controllers\Admin->esAdmin()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin->dashboardStats()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-17 18:29:21 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/admin/stats]
+in APPPATH\Controllers\Admin.php on line 185.
+ 1 APPPATH\Controllers\Admin.php(185): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Admin.php', 185)
+ 2 APPPATH\Controllers\Admin.php(170): App\Controllers\Admin->getUserFromToken()
+ 3 APPPATH\Controllers\Admin.php(17): App\Controllers\Admin->esAdmin()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin->dashboardStats()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-17 18:29:24 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/admin/stats]
+in APPPATH\Controllers\Admin.php on line 185.
+ 1 APPPATH\Controllers\Admin.php(185): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Admin.php', 185)
+ 2 APPPATH\Controllers\Admin.php(170): App\Controllers\Admin->getUserFromToken()
+ 3 APPPATH\Controllers\Admin.php(17): App\Controllers\Admin->esAdmin()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin->dashboardStats()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-17 18:29:43 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/admin/stats]
+in APPPATH\Controllers\Admin.php on line 185.
+ 1 APPPATH\Controllers\Admin.php(185): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Admin.php', 185)
+ 2 APPPATH\Controllers\Admin.php(170): App\Controllers\Admin->getUserFromToken()
+ 3 APPPATH\Controllers\Admin.php(17): App\Controllers\Admin->esAdmin()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin->dashboardStats()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-17 18:39:49 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/admin/stats]
+in APPPATH\Controllers\Admin.php on line 185.
+ 1 APPPATH\Controllers\Admin.php(185): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Admin.php', 185)
+ 2 APPPATH\Controllers\Admin.php(170): App\Controllers\Admin->getUserFromToken()
+ 3 APPPATH\Controllers\Admin.php(17): App\Controllers\Admin->esAdmin()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin->dashboardStats()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-17 18:50:33 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/admin/stats]
+in APPPATH\Controllers\Admin.php on line 185.
+ 1 APPPATH\Controllers\Admin.php(185): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Admin.php', 185)
+ 2 APPPATH\Controllers\Admin.php(170): App\Controllers\Admin->getUserFromToken()
+ 3 APPPATH\Controllers\Admin.php(17): App\Controllers\Admin->esAdmin()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin->dashboardStats()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-17 19:02:52 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/admin/stats]
+in APPPATH\Controllers\Admin.php on line 185.
+ 1 APPPATH\Controllers\Admin.php(185): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Admin.php', 185)
+ 2 APPPATH\Controllers\Admin.php(170): App\Controllers\Admin->getUserFromToken()
+ 3 APPPATH\Controllers\Admin.php(17): App\Controllers\Admin->esAdmin()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin->dashboardStats()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-17 19:02:55 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/admin/stats]
+in APPPATH\Controllers\Admin.php on line 185.
+ 1 APPPATH\Controllers\Admin.php(185): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Admin.php', 185)
+ 2 APPPATH\Controllers\Admin.php(170): App\Controllers\Admin->getUserFromToken()
+ 3 APPPATH\Controllers\Admin.php(17): App\Controllers\Admin->esAdmin()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin->dashboardStats()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-17 19:07:56 --> ErrorException: Attempt to read property "uid" on array
+[Method: GET, Route: api/admin/stats]
+in APPPATH\Controllers\Admin.php on line 185.
+ 1 APPPATH\Controllers\Admin.php(185): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "uid" on array', 'C:\\xampp\\htdocs\\TFG_Pokeweb\\backend\\app\\Controllers\\Admin.php', 185)
+ 2 APPPATH\Controllers\Admin.php(170): App\Controllers\Admin->getUserFromToken()
+ 3 APPPATH\Controllers\Admin.php(17): App\Controllers\Admin->esAdmin()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin->dashboardStats()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

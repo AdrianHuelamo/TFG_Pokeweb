@@ -15,6 +15,7 @@
     padding: 20px;
     position: fixed;
     height: 100%;
+    z-index: 100;
 }
 
 .brand {
@@ -46,29 +47,20 @@
     gap: 10px;
 }
 
-.menu a:hover {
-    background-color: #2a2a2a;
+.menu a:hover, .menu a.active {
+    background-color: #333;
     color: white;
-}
-
-.menu a.active {
-    background-color: #dc3545; 
-    color: white;
-    font-weight: bold;
-}
-
-.menu a.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
 }
 
 .bottom-actions {
+    margin-top: auto;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
 .btn-public, .btn-logout {
+    width: 100%;
     padding: 10px;
     border: none;
     border-radius: 8px;
@@ -117,27 +109,82 @@
 }
 
 .icon-box {
-    width: 60px;
-    height: 60px;
-    border-radius: 12px;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
 }
 
-.info h3 {
-    margin: 0;
-    font-size: 2rem;
+.loading-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.cursor-pointer { cursor: pointer; }
+
+.modal-backdrop {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    z-index: 1050;
+    backdrop-filter: blur(5px);
+}
+
+.modal-card {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%; max-width: 500px;
+    background-color: #212529;
+    border: 1px solid #444;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    z-index: 1100;
+    padding: 0;
+    overflow: hidden;
+}
+
+.modal-header {
+    background-color: #2c3034;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+}
+
+.modal-header h4 { margin: 0; font-size: 1.2rem; }
+
+.modal-body { padding: 20px; }
+
+.modal-footer {
+    padding: 15px 20px;
+    background-color: #2c3034;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid #333;
+}
+
+.badge-campeon {
+    background-color: #ffd700 !important; 
+    color: #000 !important; 
     font-weight: bold;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5); 
 }
-
-.info span {
-    font-size: 0.9rem;
-    color: #888;
-}
-
-.bg-primary-subtle { background-color: rgba(13, 110, 253, 0.15); color: #0d6efd; }
-.bg-danger-subtle { background-color: rgba(220, 53, 69, 0.15); color: #dc3545; }
-.bg-success-subtle { background-color: rgba(25, 135, 84, 0.15); color: #198754; }
-.bg-warning-subtle { background-color: rgba(255, 193, 7, 0.15); color: #ffc107; }
