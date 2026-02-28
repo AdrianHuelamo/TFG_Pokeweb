@@ -258,6 +258,10 @@
         max-height: 110px;
     }
 }
+
+/* ========================================================= */
+/* ESTILOS UNIFICADOS PARA MÓVIL (Menos de 768px)            */
+/* ========================================================= */
 @media (max-width: 767.98px) {
     .pokedex-case {
         border-bottom: 8px solid #b02a37;
@@ -308,4 +312,68 @@
         top: 8px;
         right: 8px;
     }
+
+    /* Modificaciones específicas de la tarjeta en móvil */
+    .poke-card {
+        padding: 0 !important;
+        border-radius: 15px !important; 
+    }
+
+    /* Botón de Pokéball adaptado para la fila del móvil */
+    .pokeball-btn-mobile {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 2px solid #333;
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+        transition: all 0.3s ease;
+        background: linear-gradient(
+            to bottom,
+            #ddd 0%,    
+            #ddd 45%,
+            #333 45%,   
+            #333 55%,
+            #fff 55%,   
+            #fff 100%
+        );
+        box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        opacity: 0.6;
+        filter: grayscale(100%);
+    }
+
+    .pokeball-btn-mobile::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 8px;
+        height: 8px;
+        background-color: white;
+        border: 1px solid #333;
+        border-radius: 50%;
+    }
+
+    .pokeball-btn-mobile.atrapado {
+        background: linear-gradient(
+            to bottom,
+            #ff0000 0%, 
+            #cc0000 45%,
+            #333 45%,
+            #333 55%,
+            #fff 55%,
+            #fff 100%
+        );
+        opacity: 1;
+        filter: none;
+        box-shadow: 0 0 6px rgba(255, 0, 0, 0.5);
+        animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    }
+
+    .pokeball-btn-mobile.atrapado::after {
+        background-color: #ffcccc;
+    }
+    
 }

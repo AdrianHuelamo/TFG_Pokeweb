@@ -10,7 +10,8 @@
         
         <ng-container *ngFor="let base of evolutionTree">
             
-            <div class="d-flex align-items-center">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                
                 <div class="evo-card" 
                      [class.current]="base.name === pokemon.name"
                      [routerLink]="['/pokemon', base.id]">
@@ -18,14 +19,13 @@
                     <div class="fw-bold text-capitalize small">{{ base.name }}</div>
                 </div>
 
-                <div *ngIf="base.evolves_to.length > 0" class="d-flex flex-column gap-3 ms-3">
+                <div *ngIf="base.evolves_to.length > 0" class="d-flex flex-column gap-3 mt-3 mt-md-0 ms-md-4">
                     
-                    <div *ngFor="let evo1 of base.evolves_to" class="d-flex align-items-center">
+                    <div *ngFor="let evo1 of base.evolves_to" class="d-flex flex-column flex-md-row align-items-center">
                         
-                        <div class="arrow-horizontal mx-2 text-center">
-                            <small class="req-badge">{{ evo1.req }}</small>
-                            <div class="text-muted fs-4">→</div>
-                        </div>
+                        <div class="arrow-horizontal mx-2 my-2 my-md-0 text-center">
+                            <small class="req-badge d-block mb-1">{{ evo1.req }}</small>
+                            <div class="text-muted fs-4 lh-1 d-none d-md-block">→</div> <div class="text-muted fs-4 lh-1 d-block d-md-none">↓</div> </div>
 
                         <div class="evo-card" 
                              [class.current]="evo1.name === pokemon.name"
@@ -34,13 +34,13 @@
                             <div class="fw-bold text-capitalize small">{{ evo1.name }}</div>
                         </div>
 
-                        <div *ngIf="evo1.evolves_to.length > 0" class="d-flex flex-column gap-3 ms-3">
+                        <div *ngIf="evo1.evolves_to.length > 0" class="d-flex flex-column gap-3 mt-3 mt-md-0 ms-md-4">
                             
-                            <div *ngFor="let evo2 of evo1.evolves_to" class="d-flex align-items-center">
-                                <div class="arrow-horizontal mx-2 text-center">
-                                    <small class="req-badge">{{ evo2.req }}</small>
-                                    <div class="text-muted fs-4">→</div>
-                                </div>
+                            <div *ngFor="let evo2 of evo1.evolves_to" class="d-flex flex-column flex-md-row align-items-center">
+                                
+                                <div class="arrow-horizontal mx-2 my-2 my-md-0 text-center">
+                                    <small class="req-badge d-block mb-1">{{ evo2.req }}</small>
+                                    <div class="text-muted fs-4 lh-1 d-none d-md-block">→</div> <div class="text-muted fs-4 lh-1 d-block d-md-none">↓</div> </div>
 
                                 <div class="evo-card" 
                                      [class.current]="evo2.name === pokemon.name"
@@ -50,8 +50,10 @@
                                 </div>
                             </div>
 
-                        </div> </div> 
-                </div> </div>
+                        </div> 
+                    </div> 
+                </div> 
+            </div>
         </ng-container>
 
     </div>
