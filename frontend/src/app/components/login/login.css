@@ -54,7 +54,6 @@
 .top-screen {
     height: 400px;
     background-color: #333; 
-    background-image: url('/assets/profe-login.webp'); 
     background-size: cover;
     background-position: center;
     position: relative;
@@ -149,49 +148,45 @@
 .btn-login:hover { filter: brightness(1.1); }
 .btn-login:active { transform: translateY(4px); box-shadow: 0 1px 0 #0a53be; }
 
-@media (max-width: 900px) {
-    .nintendo-ds {
-        width: 100%;
-        max-width: 700px;
-        transform: scale(0.9);
-        padding: 20px;
-    }
-    
-    .ds-bottom-half {
-        gap: 10px;
-    }
-    
-    .controls-left, .controls-right {
-        transform: scale(0.8); 
-        width: 100px;
-    }
-}
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
     .login-container {
-        padding: 10px;
-        align-items: flex-start;
-        padding-top: 20px;
+        margin: -1.5rem; 
+        padding: 15px; /* Un poco menos de padding exterior */
+        min-height: calc(100vh - 80px);
+        align-items: center;
+        border-radius: 1rem;
     }
 
     .nintendo-ds {
         transform: none; 
         width: 100%;
-        padding: 15px;
-        border-radius: 15px;
-        gap: 10px;
-    }
-
-    .top-screen, .bottom-screen {
-        height: 250px;
+        max-width: 420px; /* Ganamos un poquito de ancho máximo */
+        padding: 8px; /* Borde exterior mucho más fino en móvil */
+        border-radius: 12px;
+        gap: 6px;
+        border-width: 1px;
     }
 
     .ds-screen-frame {
-        padding: 10px;
+        padding: 6px; /* Borde interno de pantalla más fino */
+        border-radius: 6px;
+    }
+
+    .top-screen {
+        height: 220px; /* Un poco más de altura para la imagen */
+        /* CORRECCIÓN DE IMAGEN: Centrada y escalada para que no se corte el Prof. */
+        background-position: center 20%; 
+        background-size: cover; 
+    }
+
+    .bottom-screen {
+        height: auto; 
+        min-height: 280px; 
     }
 
     .controls-left, .controls-right, .speaker-holes {
-        display: none;
+        display: none !important;
     }
 
     .ds-bottom-half {
@@ -203,22 +198,36 @@
         width: 100%;
     }
 
+    .ds-input {
+        padding: 10px 12px;
+        font-size: 0.95rem;
+    }
+
     .btn-login {
         font-size: 1rem;
         padding: 10px;
     }
     
+    /* Recuadro de texto ajustado para no tapar la cara */
     .rpg-box {
         font-size: 0.8rem;
-        padding: 5px;
+        padding: 8px 10px;
+        bottom: 5px; /* Pegado abajo */
+        left: 5px; right: 5px;
+        border-width: 2px;
+        position: absolute;
     }
-}
 
-@media (max-width: 380px) {
-    .top-screen {
-        height: 180px; 
+    .ds-hinge {
+        height: 20px;
+        margin: 0;
     }
-    .bottom-screen {
-        height: 300px; 
+    
+    .hinge-barrel {
+        width: 15px;
+    }
+
+    .hinge-text {
+        font-size: 0.65rem;
     }
 }

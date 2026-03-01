@@ -1,0 +1,20 @@
+@media (max-width: 767.98px) {
+    .page-background {
+        background-color: #dc3545 !important; 
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100vw !important; /* Ocupa todo el ancho de la ventana */
+        overflow-x: hidden; /* Evita scroll horizontal indeseado */
+    }
+
+    .pokedex-case {
+        max-width: 100% !important;
+        width: 100% !important;
+        min-height: 100vh !important;
+        margin: 0 !important;
+        padding: 15px !important; /* Mantiene un poquito de aire por dentro */
+        border-radius: 0 !important; /* Esto quita las curvas solo en móvil */
+        border: none !important;
+        box-shadow: none !important;
+    }
+}

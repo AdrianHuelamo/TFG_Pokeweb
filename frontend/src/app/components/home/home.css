@@ -375,5 +375,16 @@
     .pokeball-btn-mobile.atrapado::after {
         background-color: #ffcccc;
     }
+
+    .page-background {
+        background-color: #dc3545 !important; 
+        padding: 0 !important;
+    }
+
+    .pokedex-case {
+        min-height: 100vh !important;
+        margin: 0 !important;
+        border-bottom: none !important;
+    }
     
 }

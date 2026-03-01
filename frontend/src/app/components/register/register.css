@@ -42,7 +42,6 @@
 
 .top-screen {
     height: 400px; 
-    background-image: url('/assets/profesor.webp');
     background-size: cover;
     background-position: center 20%;
     position: relative;
@@ -203,53 +202,43 @@ a {
 }
 
 @media (max-width: 900px) {
-    .nintendo-ds {
-        width: 100%;
-        max-width: 700px;
-        transform: scale(0.9);
-        padding: 20px;
-    }
-    
-    .ds-bottom-half {
-        gap: 10px;
-    }
-    
-    .controls-left, .controls-right {
-        transform: scale(0.8);
-        width: 100px;
-    }
-}
-
-@media (max-width: 600px) {
     .register-container {
-        padding: 10px;
-        align-items: flex-start;
-        padding-top: 20px;
+        margin: -1.5rem; 
+        padding: 15px;
+        min-height: calc(100vh - 80px);
+        align-items: center;
+        border-radius: 1rem;
     }
 
     .nintendo-ds {
-        transform: none;
+        transform: none; 
         width: 100%;
-        padding: 15px;
-        border-radius: 15px;
-        gap: 10px;
-    }
-
-    .top-screen {
-        height: 180px; 
-        background-position: center top;
-    }
-
-    .bottom-screen {
-        height: 400px; 
+        max-width: 420px;
+        padding: 8px; /* Borde exterior fino */
+        border-radius: 12px;
+        gap: 6px;
+        border-width: 1px;
     }
 
     .ds-screen-frame {
-        padding: 10px;
+        padding: 6px;
+        border-radius: 6px;
+    }
+
+    .top-screen {
+        height: 200px; /* Un poco más alta */
+        /* CORRECCIÓN DE IMAGEN: Profesor Cáñamo centrado */
+        background-position: center 15%; 
+        background-size: cover; 
+    }
+
+    .bottom-screen {
+        height: auto; 
+        min-height: 420px; 
     }
 
     .controls-left, .controls-right, .speaker-holes {
-        display: none;
+        display: none !important;
     }
 
     .ds-bottom-half {
@@ -261,22 +250,40 @@ a {
         width: 100%;
     }
 
+    .ds-input {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+    }
+
     .btn-start {
         font-size: 1rem;
         padding: 10px;
     }
     
+    /* Ajuste del cuadro de diálogo para que baje un poco */
     .dialog-box {
-        padding: 8px;
         font-size: 0.8rem;
+        padding: 8px 10px;
+        bottom: 5px; /* Pegado abajo */
+        left: 5px; right: 5px;
+        border-width: 2px;
+        position: absolute;
     }
-}
 
-@media (max-width: 380px) {
-    .top-screen {
-        height: 120px; 
+    .ds-hinge {
+        height: 20px;
+        margin: 0;
     }
-    .bottom-screen {
-        height: 350px;
+    
+    .hinge-barrel {
+        width: 15px;
+    }
+
+    .hinge-middle {
+        font-size: 0.65rem;
+    }
+    
+    .req-indicators span {
+        font-size: 0.7rem;
     }
 }

@@ -1,6 +1,7 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost/TFG_Pokeweb/backend/public/index.php/api/',
+  //apiUrl: 'http://localhost/TFG_Pokeweb/backend/public/index.php/api/',
+  apiUrl: 'https://adrian.org.es/pokeweb/backend/public/index.php/api/',
   pokeApiUrl: 'https://pokeapi.co/api/v2',
 
   pokemonTypeColors: {

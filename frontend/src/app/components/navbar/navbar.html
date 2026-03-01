@@ -10,24 +10,24 @@
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
         
         <li class="nav-item">
-          <a class="nav-link" routerLink="/home" routerLinkActive="active">Inicio</a>
+          <a class="nav-link" routerLink="/home" routerLinkActive="active" (click)="menuAbierto = false">Inicio</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="/comunidad" routerLinkActive="active">Comunidad</a>
+          <a class="nav-link" routerLink="/comunidad" routerLinkActive="active" (click)="menuAbierto = false">Comunidad</a>
         </li>
 
         <li class="nav-item animate-fade-in" 
             *ngIf="userService.isLoggedIn() && 
                    (userService.getUsuarioActual()?.role === 'entrenador' || userService.getUsuarioActual()?.role === 'campeon') && !esAdmin">
           
-          <a class="nav-link fw-bold text-warning" routerLink="/equipos" routerLinkActive="active">
+          <a class="nav-link fw-bold text-warning" routerLink="/equipos" routerLinkActive="active" (click)="menuAbierto = false">
             Mis Equipos
           </a>
         </li>
 
         <li class="nav-item" *ngIf="esAdmin">
-          <a class="nav-link" routerLink="/dashboard">
+          <a class="nav-link" routerLink="/dashboard" (click)="menuAbierto = false">
             DASHBOARD
           </a>
         </li>
@@ -36,7 +36,7 @@
 
         <li class="nav-item" *ngIf="!userService.isLoggedIn()">
           <a class="btn btn-light text-danger fw-bold rounded-pill px-5 py-2 shadow-sm btn-acceder-custom" 
-             routerLink="/login">
+             routerLink="/login" (click)="menuAbierto = false">
             Acceder
           </a>
         </li>
@@ -52,7 +52,7 @@
               [class.show]="desplegableAbierto">
             
             <li *ngIf="!esAdmin">
-                <a class="dropdown-item fw-bold rounded-3 py-2" routerLink="/profile" (click)="desplegableAbierto = false">
+                <a class="dropdown-item fw-bold rounded-3 py-2" routerLink="/profile" (click)="desplegableAbierto = false; menuAbierto = false">
                   Mi Perfil
                 </a>
             </li>

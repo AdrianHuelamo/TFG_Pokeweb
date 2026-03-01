@@ -3,8 +3,8 @@
   <div class="nintendo-ds">
     
     <div class="ds-screen-frame top-frame">
-      <div class="screen top-screen">
-        <div class="rpg-box">
+      <div class="screen top-screen" [style.background-image]="'url(assets/profe-login.webp)'">
+        <div class="rpg-box shadow-sm">
           <p class="mb-0">
             ¡Hola de nuevo! <br>
             Introduce tus credenciales para adentrarte al mundo Pokémon.
@@ -15,7 +15,7 @@
 
     <div class="ds-hinge">
       <div class="hinge-barrel"></div>
-      <div class="text-muted fw-bold small">POKÉWEB</div>
+      <div class="text-muted fw-bold small hinge-text">POKÉWEB</div>
       <div class="hinge-barrel d-flex align-items-center justify-content-end px-2">
          <div class="power-light"></div>
       </div>
@@ -32,12 +32,12 @@
       </div>
 
       <div class="ds-screen-frame bottom-frame">
-        <div class="screen bottom-screen px-4">
+        <div class="screen bottom-screen p-3 p-md-4">
           
-          <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+          <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="d-flex flex-column h-100 justify-content-center">
             
             <div class="text-center mb-3">
-              <h5 class="fw-bold text-secondary">INICIA SESIÓN</h5>
+              <h5 class="fw-bold text-secondary mb-0">INICIA SESIÓN</h5>
             </div>
 
             <div class="mb-3">
@@ -52,8 +52,8 @@
                      name="password" [(ngModel)]="user.password" required>
             </div>
 
-            <div class="d-grid">
-              <button type="submit" class="btn btn-login" [disabled]="!loginForm.form.valid || cargando">
+            <div class="d-grid mt-auto">
+              <button type="submit" class="btn btn-login shadow-sm" [disabled]="!loginForm.form.valid || cargando">
                 <span *ngIf="!cargando">ENTRAR</span>
                 <span *ngIf="cargando">CARGANDO...</span>
               </button>
